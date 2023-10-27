@@ -1,4 +1,4 @@
-package com.example.panoply;
+package com.example.panoply.GUI;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

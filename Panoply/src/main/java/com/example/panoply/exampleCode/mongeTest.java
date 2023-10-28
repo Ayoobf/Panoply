@@ -13,7 +13,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class mongeTest {
     public static void main(String[] args) {
-        String uri = "mongodb+srv://ayoobf:yBQGLXOwDdw6HUrp@documentmanagercluster.ewmjoau.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
+        String uri = "";
 
         String databaseName = "dms_collections";
 

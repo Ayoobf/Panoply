@@ -13,7 +13,11 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class mongeTest {
     public static void main(String[] args) {
-        String uri = "";
+
+        final String PASSWORD = System.getenv("PASSWORD");
+
+
+        String uri = "mongodb+srv://ayoobf:"+ PASSWORD +"@documentmanagercluster.ewmjoau.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
 
         String databaseName = "dms_collections";
 

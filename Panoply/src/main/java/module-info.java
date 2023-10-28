@@ -15,5 +15,7 @@ module com.example.panoply {
     exports com.example.panoply;
     exports com.example.panoply.GUI;
     opens com.example.panoply.GUI to javafx.fxml;
+    exports com.example.panoply.exampleCode;
+    opens com.example.panoply.exampleCode to javafx.fxml;
 
 }

@@ -20,7 +20,22 @@ public class MongoDBHandler {
         database = mongoClient.getDatabase(databaseName);
 
     }
+    public void insertUser(String userName, String password, ObjectId team_id, boolean isAdmin){
+        String databaseUsers = "users";
 
+        MongoCollection<Document> collection = database.getCollection(databaseUsers);
+
+        collection.insertOne(new Document()
+                .append("_id", new ObjectId())
+                .append("username", userName)
+                .append("password", password)
+                .append("team_id", team_id)
+                .append("is_admin", isAdmin)
+                .append("first_name", null)
+                .append("last_name", null)
+                .append("phone_number", null)
+        );
+    }
     public void insertUser(String userName, String password, ObjectId team_id, boolean isAdmin, String firstName, String lastName, String phone){
         String databaseUsers = "users";
 

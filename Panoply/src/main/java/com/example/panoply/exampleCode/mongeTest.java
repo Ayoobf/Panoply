@@ -6,7 +6,10 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Projections;
+
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -29,6 +32,7 @@ public class mongeTest {
                 "Ayoob",
                 "Florival",
                 "1234567890");
+
 
     }
 }

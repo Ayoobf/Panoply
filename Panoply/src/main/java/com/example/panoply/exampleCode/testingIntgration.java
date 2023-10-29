@@ -1,4 +1,4 @@
 package com.example.panoply.exampleCode;
 
-public class testingImpression {
+public class testingIntgration {
 }

@@ -18,7 +18,7 @@ public class testDocumentUpload {
     public static void main(String[] args) {
         // test file variables
 
-        String fileName = "hello world 06";
+        String fileName = "hello world 07";
         String filePath = "C:\\Users\\rfloo\\OneDrive - Brookdale Community College\\Brookdale Courses\\COMP296\\panoply\\Panoply\\src\\main\\java\\com\\example\\panoply\\folder\\Test.txt";
         // Initialize a Storage object
         Storage storage = StorageOptions.newBuilder().setProjectId(PROJECTID).build().getService();

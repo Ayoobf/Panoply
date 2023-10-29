@@ -74,10 +74,10 @@ public class testLogin {
         // confirm password
         while (true) {
             System.out.print("password: ");
-             password = scanner.nextLine();
+            password = scanner.nextLine();
 
             System.out.print("Confirm Password: ");
-             confirmPassword = scanner.nextLine();
+            confirmPassword = scanner.nextLine();
 
             if (password.equals(confirmPassword)) {
                 break;
@@ -91,13 +91,13 @@ public class testLogin {
         System.out.print("Are yo an admin (Y/N): ");
         char isAdminC = scanner.nextLine().toUpperCase().charAt(0);
         boolean isAdmin = false;
-        while (true){
-            if (isAdminC == 'Y' ) {
+        while (true) {
+            if (isAdminC == 'Y') {
                 isAdmin = true;
                 break;
-            } else if ( isAdminC == 'N'){
+            } else if (isAdminC == 'N') {
                 break;
-            }else {
+            } else {
                 System.out.println("incorrect response. Try again");
                 System.out.print("Are yo an admin (Y/N): ");
                 isAdminC = scanner.nextLine().toUpperCase().charAt(0);
@@ -110,7 +110,7 @@ public class testLogin {
                 password,
                 new ObjectId("651aff049f8c00e5a601cd33"),
                 isAdmin
-                );
+        );
 
     }
 

@@ -136,7 +136,7 @@ public class testLogin {
             String storedPass = retrievedDoc.getString("password");
 
             if (password.equals(storedPass)) {
-                System.out.println("Authentication Good");
+                System.out.println("Login Successful");
             } else {
                 System.out.println("bad Auth");
             }

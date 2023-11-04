@@ -4,23 +4,23 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
-
-import static com.mongodb.client.model.Filters.eq;
 
 public class MongoDBHandler {
 
     private final MongoClient mongoClient;
     private final MongoDatabase database;
 
-    public MongoDBHandler(String connectionString, String databaseName){
+    public MongoDBHandler(String connectionString, String databaseName) {
 
         mongoClient = MongoClients.create(connectionString);
         database = mongoClient.getDatabase(databaseName);
 
     }
-    public void insertUser(String userName, String password, ObjectId team_id, boolean isAdmin){
+
+    public void insertUser(String userName, String password, ObjectId team_id, boolean isAdmin) {
         String databaseUsers = "users";
 
         MongoCollection<Document> collection = database.getCollection(databaseUsers);
@@ -36,7 +36,8 @@ public class MongoDBHandler {
                 .append("phone_number", null)
         );
     }
-    public void insertUser(String userName, String password, ObjectId team_id, boolean isAdmin, String firstName, String lastName, String phone){
+
+    public void insertUser(String userName, String password, ObjectId team_id, boolean isAdmin, String firstName, String lastName, String phone) {
         String databaseUsers = "users";
 
         MongoCollection<Document> collection = database.getCollection(databaseUsers);
@@ -54,12 +55,12 @@ public class MongoDBHandler {
     }
 
     //TODO
-    public void insertTeams(){
+    public void insertTeams() {
         String databaseTeams = "teams";
 
         MongoCollection<Document> collection = database.getCollection(databaseTeams);
         collection.insertOne(new Document()
-                .append("","")
+                .append("", "")
 
 
         );
@@ -68,13 +69,13 @@ public class MongoDBHandler {
     }
 
     //TODO
-    public void insertDocument(){
+    public void insertDocument() {
         String databaseDocuments = "documents";
 
         MongoCollection<Document> collection = database.getCollection(databaseDocuments);
 
         collection.insertOne(new Document()
-                .append("","")
+                .append("", "")
         );
     }
 }

@@ -23,6 +23,9 @@ public class LoginController {
     private Button btLogin;
 
     @FXML
+    private Button btBack;
+
+    @FXML
     private Pane imageArea;
 
     @FXML
@@ -60,6 +63,7 @@ public class LoginController {
 
     }
 
+
     @FXML
     void lCreateAccount(ActionEvent event) {
         System.out.println("create");
@@ -96,8 +100,6 @@ public class LoginController {
         String username = tfUsername.getText();
 
     }
-
-
 
 
 }

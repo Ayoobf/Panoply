@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/20.0.1"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21"
             fx:controller="com.example.panoply.controllers.HomePageController">
     <children>
-        <Hyperlink layoutX="196.0" layoutY="189.0" text="Hyperlink"/>
         <Button fx:id="btBack" layoutX="23.0" layoutY="20.0" mnemonicParsing="false" onAction="#btBack" text="back"/>
     </children>
 </AnchorPane>

@@ -1,9 +1,11 @@
 package com.example.panoply;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -15,13 +17,20 @@ public class Main extends Application {
     // helps change scene
     private static Stage psg;
     private double x, y;
+    private static Main appicationInstance;
 
     public static void main(String[] args) {
         launch();
     }
 
+    public static Main getApplicationInstance() {
+        return appicationInstance;
+    }
+
     @Override
     public void start(Stage primaryStage) throws IOException {
+        appicationInstance = this;
+
         // preserve primary stage state for changeScene()
         psg = primaryStage;
 
@@ -44,10 +53,13 @@ public class Main extends Application {
             primaryStage.setY(mouseEvent.getScreenY() - y);
 
         });
+
+
         primaryStage.show();
 
 
     }
+
 
     public void changeScene(String newScreen) throws IOException {
         Parent pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(newScreen)));

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,14 +46,19 @@ public class LoginController implements Initializable {
 
     @FXML
     private TextField tfUsername;
+
     @FXML
     private Stage stage;
     @FXML
     private Scene scene;
+    private String username;
+    private String password;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        tfUsername.setText(username);
 
     }
 
@@ -67,6 +73,7 @@ public class LoginController implements Initializable {
             int auth = new MongoDBHandlerExtra().authenticateUser(username, password);
             if (auth == 1) {
                 switchScene("homePage.fxml");
+                tfUsername.setText(username);
             } else if (auth == 0) {
                 // alert user of wrong input
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Wrong Username or Password", ButtonType.OK);
@@ -110,7 +117,7 @@ public class LoginController implements Initializable {
 
     // Helper method for switching views
     private void switchScene(String fxml) {
-        Main mainScene = new Main();
+        Main mainScene = Main.getApplicationInstance();
         try {
             mainScene.changeScene(fxml);
         } catch (IOException e) {

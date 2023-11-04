@@ -11,120 +11,143 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" id="Login Screen" focusTraversable="true" maxHeight="600.0"
+            maxWidth="1024.0"
+            minHeight="600.0" minWidth="1024.0" prefHeight="600.0"
+            prefWidth="1024.0" style="-fx-background-color: #EEEEEE; -fx-border-radius: 15;"
+            xmlns="http://javafx.com/javafx/21" fx:controller="com.example.panoply.Controller">
+    <top>
+        <ToolBar id="windowsButtons" maxHeight="25.0" maxWidth="1024.0" minHeight="25.0" minWidth="1024.0"
+                 prefHeight="25.0" prefWidth="1024.0" style="-fx-background-color: EEEEEE;"
+                 BorderPane.alignment="CENTER">
+            <Pane style="-fx-background-color: EEEEEE;" HBox.hgrow="ALWAYS"/>
+            <Button fx:id="btExit" focusTraversable="false" onAction="#btExit" style="-fx-background-color: EEEEEE;"
+                    text="X">
+                <font>
+                    <Font name="Arial Black" size="12.0"/>
+                </font>
+            </Button>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" id="Login Screen" focusTraversable="true" maxHeight="600.0" maxWidth="1024.0"
-            minHeight="600.0" minWidth="1024.0" prefHeight="600.0" prefWidth="1024.0"
-            style="-fx-background-color: #EEEEEE;" xmlns="http://javafx.com/javafx/21"
-            fx:controller="com.example.panoply.Controller">
-   <top>
-      <ToolBar id="windowsButtons" maxHeight="25.0" maxWidth="1024.0" minHeight="25.0" minWidth="1024.0"
-               prefHeight="25.0" prefWidth="1024.0" style="-fx-background-color: EEEEEE;" BorderPane.alignment="CENTER">
-         <Pane style="-fx-background-color: EEEEEE;" HBox.hgrow="ALWAYS"/>
-         <Button fx:id="btExit" focusTraversable="false" onAction="#btExit" style="-fx-background-color: EEEEEE;"
-                 text="X">
-            <font>
-               <Font name="Arial Black" size="12.0"/>
-            </font>
-         </Button>
-
-      </ToolBar>
-   </top>
-   <left>
-      <Pane prefHeight="200.0" prefWidth="200.0"
-            style="-fx-min-width: 484; -fx-background-color: #ADD8E6; -fx-min-height: 575;"
-            BorderPane.alignment="CENTER"/>
-   </left>
-   <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-min-width: 540; -fx-min-height: 575;"
-            BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Panoply Login">
-               <font>
-                  <Font name='Poppins Bold' size="41.89"/>
-               </font>
-               <padding>
-                  <Insets bottom="28.0"/>
-               </padding>
-            </Label>
-            <TextField maxHeight="58.0" maxWidth="460.0" minHeight="58.0" minWidth="460.0" prefHeight="58.0"
-                       prefWidth="460.0" promptText="Username"
-                       style="-fx-background-color: EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10;">
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-               </padding>
-               <VBox.margin>
-                  <Insets bottom="18.0"/>
-               </VBox.margin>
-               <font>
-                  <Font name="Poppins SemiBold" size="16.0"/>
-               </font>
-            </TextField>
-            <TextField maxHeight="58.0" maxWidth="460.0" minHeight="58.0" minWidth="460.0" prefHeight="58.0"
-                       prefWidth="460.0" promptText="Password"
-                       style="-fx-background-color: EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10;">
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-               </padding>
-               <VBox.margin>
-                  <Insets bottom="23.0"/>
-               </VBox.margin>
-               <font>
-                  <Font name="Poppins SemiBold" size="16.0"/>
-               </font>
-            </TextField>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label opacity="0.5" text="Forgot password?">
-                     <font>
-                        <Font name="Poppins Bold" size="16.0"/>
-                     </font>
-                     <HBox.margin>
-                        <Insets top="20.0"/>
-                     </HBox.margin>
-                  </Label>
-                  <Hyperlink alignment="TOP_LEFT" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" text="Reset">
-                     <font>
-                        <Font name="Poppins Bold" size="16.0"/>
-                     </font>
-                     <opaqueInsets>
-                        <Insets/>
-                     </opaqueInsets>
-                     <padding>
-                        <Insets bottom="4.0"/>
-                     </padding>
-                     <HBox.margin>
-                        <Insets left="1.0" top="20.0"/>
-                     </HBox.margin>
-                  </Hyperlink>
-                  <Button contentDisplay="CENTER" maxHeight="58.0" maxWidth="218.0" minHeight="58.0" minWidth="218.0"
-                          mnemonicParsing="false" prefHeight="58.0" prefWidth="218.0"
-                          style="-fx-background-color: F78888; -fx-background-radius: 10;" text="Login"
-                          textFill="#eeeeee">
-                     <font>
-                        <Font name="Poppins Bold" size="16.0"/>
-                     </font>
-                     <padding>
+        </ToolBar>
+    </top>
+    <left>
+        <Pane fx:id="imageArea" prefHeight="200.0" prefWidth="200.0"
+              style="-fx-min-width: 484; -fx-background-color: #ADD8E6; -fx-min-height: 575;"
+              BorderPane.alignment="CENTER"/>
+    </left>
+    <center>
+        <VBox fx:id="loginArea" prefHeight="200.0" prefWidth="100.0" style="-fx-min-width: 540; -fx-min-height: 575;"
+              BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Panoply Login">
+                    <font>
+                        <Font name="Segoe UI Bold" size="41.89"/>
+                    </font>
+                    <padding>
+                        <Insets bottom="28.0"/>
+                    </padding>
+                </Label>
+                <TextField fx:id="tfUsername" maxHeight="58.0" maxWidth="460.0" minHeight="58.0" minWidth="460.0"
+                           onAction="#tfUsername" prefHeight="58.0" prefWidth="460.0" promptText="Username"
+                           style="-fx-background-color: EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10;">
+                    <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                     </padding>
-                     <opaqueInsets>
-                        <Insets/>
-                     </opaqueInsets>
-                     <HBox.margin>
-                        <Insets left="46.0"/>
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label text="Label"/>
-                  <Button mnemonicParsing="false" text="Button"/>
-               </children>
-            </HBox>
-         </children>
-         <padding>
-            <Insets bottom="127.0" left="40.0" right="40.0" top="100.0"/>
-         </padding>
-      </VBox>
-   </center>
+                    </padding>
+                    <VBox.margin>
+                        <Insets bottom="18.0"/>
+                    </VBox.margin>
+                    <font>
+                        <Font name="Segoe UI Bold" size="16.0"/>
+                    </font>
+                </TextField>
+                <TextField fx:id="tfPassword" maxHeight="58.0" maxWidth="460.0" minHeight="58.0" minWidth="460.0"
+                           onAction="#tfPassword" prefHeight="58.0" prefWidth="460.0" promptText="Password"
+                           style="-fx-background-color: EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10;">
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                    <VBox.margin>
+                        <Insets bottom="23.0"/>
+                    </VBox.margin>
+                    <font>
+                        <Font name="Segoe UI Bold" size="16.0"/>
+                    </font>
+                </TextField>
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label opacity="0.5" text="Forgot password?">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0"/>
+                            </font>
+                            <HBox.margin>
+                                <Insets top="20.0"/>
+                            </HBox.margin>
+                        </Label>
+                        <Hyperlink fx:id="lReset" alignment="TOP_LEFT" maxHeight="25.0" minHeight="25.0"
+                                   onAction="#lReset"
+                                   prefHeight="25.0" text="Reset">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0"/>
+                            </font>
+                            <opaqueInsets>
+                                <Insets/>
+                            </opaqueInsets>
+                            <padding>
+                                <Insets bottom="4.0"/>
+                            </padding>
+                            <HBox.margin>
+                                <Insets left="1.0" top="20.0"/>
+                            </HBox.margin>
+                        </Hyperlink>
+                        <Button fx:id="btLogin" contentDisplay="CENTER" maxHeight="58.0" maxWidth="218.0"
+                                minHeight="58.0"
+                                minWidth="218.0" mnemonicParsing="false" onAction="#btLogin" prefHeight="58.0"
+                                prefWidth="218.0" style="-fx-background-color: F78888; -fx-background-radius: 10;"
+                                text="Login" textFill="#eeeeee">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0"/>
+                            </font>
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </padding>
+                            <opaqueInsets>
+                                <Insets/>
+                            </opaqueInsets>
+                            <HBox.margin>
+                                <Insets left="63.0"/>
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label maxHeight="24.0" minHeight="24.0" opacity="0.5" prefHeight="24.0"
+                               text="Don't have an account?">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0"/>
+                            </font>
+                            <HBox.margin>
+                                <Insets left="80.0"/>
+                            </HBox.margin>
+                        </Label>
+                        <Hyperlink fx:id="lCreateAccount" maxHeight="24.0" minHeight="24.0" onAction="#lCreateAccount"
+                                   prefHeight="24.0" text="Create Account">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0"/>
+                            </font>
+                            <HBox.margin>
+                                <Insets/>
+                            </HBox.margin>
+                        </Hyperlink>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="18.0"/>
+                    </VBox.margin>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="127.0" left="40.0" right="40.0" top="100.0"/>
+            </padding>
+        </VBox>
+    </center>
 </BorderPane>

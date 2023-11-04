@@ -5,25 +5,21 @@ import com.example.panoply.mongoDB.MongoDBHandlerExtra;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 public class LoginController implements Initializable {
 
@@ -35,10 +31,6 @@ public class LoginController implements Initializable {
 
     @FXML
     private Button btBack;
-
-    @FXML
-    private Pane imageArea;
-
     @FXML
     private Hyperlink lCreateAccount;
 
@@ -49,7 +41,7 @@ public class LoginController implements Initializable {
     private VBox loginArea;
 
     @FXML
-    private TextField tfPassword;
+    private PasswordField tfPassword;
 
     @FXML
     private TextField tfUsername;
@@ -58,28 +50,25 @@ public class LoginController implements Initializable {
     @FXML
     private Scene scene;
 
-    private String username;
-    private String password;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 
-
     @FXML
     void btLogin(ActionEvent event) throws IOException {
         // if fields are not empty
         if (!tfUsername.getText().isEmpty() && !tfPassword.getText().isEmpty()) {
-            username = tfUsername.getText().trim();
-            password = tfPassword.getText().trim();
+            String username = tfUsername.getText().trim();
+            String password = tfPassword.getText().trim();
 
-            // authenticate user 1=good 0=badz
+            // authenticate user 1=good 0=bad
             int auth = new MongoDBHandlerExtra().authenticateUser(username, password);
             if (auth == 1) {
                 switchScene("homePage.fxml");
             } else if (auth == 0) {
+                // alert user of wrong input
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Wrong Username or Password", ButtonType.OK);
                 alert.setHeaderText("INCORRECT INPUT");
                 alert.show();
@@ -87,6 +76,10 @@ public class LoginController implements Initializable {
         }
     }
 
+    @FXML
+    void btExit(ActionEvent event) {
+        Platform.exit();
+    }
 
     @FXML
     void lCreateAccount(ActionEvent event) {

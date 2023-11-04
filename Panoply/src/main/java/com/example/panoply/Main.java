@@ -34,8 +34,8 @@ public class Main extends Application {
 
     }
 
-    public void changeScene(String fxml) throws IOException {
-        Parent pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxml)));
+    public void changeScene(String newScreen) throws IOException {
+        Parent pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(newScreen)));
         psg.getScene().setRoot(pane);
 
     }

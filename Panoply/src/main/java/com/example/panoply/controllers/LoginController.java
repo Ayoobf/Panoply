@@ -1,8 +1,9 @@
-package com.example.panoply;
+package com.example.panoply.controllers;
+
+import com.example.panoply.Main;
 
 import java.io.IOException;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -13,7 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Controller {
+public class LoginController {
 
     @FXML
     private Button btExit;
@@ -43,17 +44,18 @@ public class Controller {
     @FXML
     private Scene scene;
 
-    @FXML
-    void btExit(ActionEvent event) {
-        Platform.exit();
-    }
 
     @FXML
     void btLogin(ActionEvent event) {
-
         if (!tfUsername.getText().isEmpty() && !tfPassword.getText().isEmpty()) {
             System.out.println(tfUsername.getText().trim() + " " + tfPassword.getText().trim());
+        }
 
+        Main mainScene = new Main();
+        try {
+            mainScene.changeScene("homePage.fxml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -72,7 +74,13 @@ public class Controller {
 
     @FXML
     void lReset(ActionEvent event) {
-        System.out.println("reset");
+
+        Main mainScene = new Main();
+        try {
+            mainScene.changeScene("resetPassword.fxml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

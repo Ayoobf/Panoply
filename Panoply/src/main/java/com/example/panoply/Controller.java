@@ -1,14 +1,14 @@
 package com.example.panoply;
 
+import java.io.IOException;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -38,8 +38,6 @@ public class Controller {
 
     @FXML
     private TextField tfUsername;
-
-    final Delta dragDelta = new Delta();
     @FXML
     private Stage stage;
     @FXML
@@ -63,6 +61,13 @@ public class Controller {
     @FXML
     void lCreateAccount(ActionEvent event) {
         System.out.println("create");
+        Main mainScene = new Main();
+        try {
+            mainScene.changeScene("createAccount.fxml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @FXML
@@ -84,23 +89,7 @@ public class Controller {
 
     }
 
-    @FXML
-    void stageMouseDragged(MouseEvent event) {
 
-        stage.setX(event.getScreenX() + dragDelta.x);
-        stage.setY(event.getScreenY() + dragDelta.y);
-
-
-    }
-
-    @FXML
-    void stageMousePressed(MouseEvent event) {
-
-        dragDelta.x = stage.getX() - event.getScreenX();
-        dragDelta.y = stage.getY() - event.getScreenY();
-
-
-    }
 
 
 }

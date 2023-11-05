@@ -39,23 +39,30 @@ public class Main extends Application {
         Scene primaryScene = new Scene(root);
         primaryStage.setScene(primaryScene);
 
-        // implement my own title bar
+        // implement my own title bar and drag behavior
         primaryStage.initStyle(StageStyle.UNDECORATED);
-        root.setOnMousePressed(mouseEvent -> {
-            x = mouseEvent.getSceneX();
-            y = mouseEvent.getSceneY();
-        });
-
-        root.setOnMouseDragged(mouseEvent -> {
-            primaryStage.setX(mouseEvent.getScreenX() - x);
-            primaryStage.setY(mouseEvent.getScreenY() - y);
-
-        });
+        mousePressedForDrag(root);
+        mouseDraggedForDrag(primaryStage, root);
 
 
         primaryStage.show();
 
 
+    }
+
+    public void mouseDraggedForDrag(Stage primaryStage, Parent root) {
+        root.setOnMouseDragged(mouseEvent -> {
+            primaryStage.setX(mouseEvent.getScreenX() - x);
+            primaryStage.setY(mouseEvent.getScreenY() - y);
+
+        });
+    }
+
+    public void mousePressedForDrag(Parent root) {
+        root.setOnMousePressed(mouseEvent -> {
+            x = mouseEvent.getSceneX();
+            y = mouseEvent.getSceneY();
+        });
     }
 
 

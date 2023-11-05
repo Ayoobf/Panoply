@@ -3,21 +3,26 @@ package com.example.panoply.controllers;
 import com.example.panoply.Main;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class CreateAccountController {
+public class CreateAccountController implements Initializable {
 
     @FXML
     private HBox Contact;
@@ -28,14 +33,17 @@ public class CreateAccountController {
     @FXML
     private HBox TitleBar;
 
+    private final String[] choiceBoxOptions = {"Yes", "No"};
     @FXML
-    private ChoiceBox<?> cbAdbmin;
+    private ChoiceBox<String> cbAdmin;
 
     @FXML
     private CheckBox cbTOS;
 
     @FXML
     private Pane imageArea;
+    @FXML
+    private BorderPane createPane;
 
     @FXML
     private VBox loginArea;
@@ -69,6 +77,25 @@ public class CreateAccountController {
 
     @FXML
     private TextField tfPhoneNumber;
+    private double x, y;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        cbAdmin.getItems().addAll(choiceBoxOptions);
+
+        createPane.setOnMouseDragged(mouseEvent -> {
+            Stage stage = (Stage) createPane.getScene().getWindow();
+            stage.setX(mouseEvent.getScreenX() - x);
+            stage.setY(mouseEvent.getScreenY() - y);
+
+        });
+
+        createPane.setOnMousePressed(mouseEvent -> {
+            x = mouseEvent.getSceneX();
+            y = mouseEvent.getSceneY();
+        });
+
+    }
 
 
     @FXML
@@ -78,6 +105,23 @@ public class CreateAccountController {
 
     @FXML
     void btSignup(ActionEvent event) {
+        String firstName, lastName, email, phoneNumber, password, confirmPassword, team, sAdmin;
+        boolean admin;
+
+        firstName = tfFirstName.getText();
+        lastName = tfLastName.getText();
+        email = tfEmail.getText();
+        phoneNumber = tfPhoneNumber.getText();
+        password = pfPassword.getText();
+        confirmPassword = pfConfirmPassword.getText();
+        team = teamName.getText();
+        sAdmin = cbAdmin.getValue();
+        if (sAdmin.equals("Yes")) {
+            admin = true;
+        } else {
+            admin = false;
+        }
+
 
     }
 

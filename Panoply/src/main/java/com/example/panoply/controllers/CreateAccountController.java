@@ -1,7 +1,6 @@
 package com.example.panoply.controllers;
 
 import com.example.panoply.Main;
-import com.example.panoply.mongoDB.MongoDBHandler;
 import com.example.panoply.mongoDB.MongoDBHandlerExtra;
 
 import java.io.IOException;
@@ -12,7 +11,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
@@ -128,36 +126,40 @@ public class CreateAccountController implements Initializable {
         // Check if inputted password is correct
         if (!password.equals(confirmPassword)) {
             // If not, alert user
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Passwords do not match", ButtonType.OK);
-            alert.setHeaderText("INCORRECT INPUT");
-            alert.show();
+            showAlert("passwords do not match");
 
         } else {
-            MongoDBHandlerExtra md = new MongoDBHandlerExtra();
-            teamId = md.findTeam(teamNameLocal);
+            MongoDBHandlerExtra mongoDBHandler = new MongoDBHandlerExtra();
+            teamId = mongoDBHandler.findTeam(teamNameLocal);
 
-            // If team name does not exist, and user is not an admin
-            if (teamId == null && !isAdmin) {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Team Not found", ButtonType.OK);
-                alert.setHeaderText("INCORRECT INPUT");
-                alert.show();
-                System.out.println(teamId);
+            if (teamId == null) {
+                if (!isAdmin) {
+                    // if team was not found and user is not an admin
+                    showAlert("Team not found");
 
-            }
-            // If team name does not exist, and user is an admin
-            else if (teamId == null) {
-                md.signUpUser(firstName, lastName, email, password, isAdmin, phoneNumber);
-                md.makeTeam(teamNameLocal, md.findUser(email));
-                md.updateUser(md.findUser(email), md.findTeam(teamNameLocal));
-                clearForm();
-                System.out.println("User account has been created and a Team has also been created");
+                } else {
+                    // team was not found and user is an admin
+                    mongoDBHandler.signUpUser(firstName, lastName, email, password, isAdmin, phoneNumber);
+                    mongoDBHandler.makeTeam(teamNameLocal, mongoDBHandler.findUser(email));
+                    mongoDBHandler.updateUser(mongoDBHandler.findUser(email), mongoDBHandler.findTeam(teamNameLocal));
+                    clearForm();
+                }
+
             } else {
-                md.signUpUser(firstName, lastName, email, password, isAdmin, teamId, phoneNumber);
+                // team was found and user is not admin
+                mongoDBHandler.signUpUser(firstName, lastName, email, password, isAdmin, teamId, phoneNumber);
                 clearForm();
             }
+
         }
 
 
+    }
+
+    private void showAlert(String alertMessage) {
+        Alert alert = new Alert(Alert.AlertType.WARNING, alertMessage, ButtonType.OK);
+        alert.setHeaderText("INCORRECT INPUT");
+        alert.show();
     }
 
     // set everything to null

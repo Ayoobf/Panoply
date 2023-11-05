@@ -88,21 +88,6 @@ public class CreateAccountController implements Initializable {
 
     }
 
-    private void makeDraggable(Pane window) {
-        window.setOnMouseDragged(mouseEvent -> {
-            Stage stage = (Stage) window.getScene().getWindow();
-            stage.setX(mouseEvent.getScreenX() - x);
-            stage.setY(mouseEvent.getScreenY() - y);
-
-        });
-
-        window.setOnMousePressed(mouseEvent -> {
-            x = mouseEvent.getSceneX();
-            y = mouseEvent.getSceneY();
-        });
-    }
-
-
     @FXML
     void btExit(ActionEvent event) {
         Platform.exit();
@@ -150,10 +135,47 @@ public class CreateAccountController implements Initializable {
                 mongoDBHandler.signUpUser(firstName, lastName, email, password, isAdmin, teamId, phoneNumber);
                 clearForm();
             }
-
         }
 
 
+    }
+
+
+    // TODO
+    @FXML
+    void cbTOS(ActionEvent event) {
+
+    }
+
+    @FXML
+    void lLogIn(ActionEvent event) {
+        switchScene("login.fxml");
+
+    }
+
+    // Helper Methods
+    /*-------------------------------------------------------------------------------------------------------------------------*/
+    private void switchScene(String fxml) {
+        Main mainScene = Main.getApplicationInstance();
+        try {
+            mainScene.changeScene(fxml);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void makeDraggable(Pane window) {
+        window.setOnMouseDragged(mouseEvent -> {
+            Stage stage = (Stage) window.getScene().getWindow();
+            stage.setX(mouseEvent.getScreenX() - x);
+            stage.setY(mouseEvent.getScreenY() - y);
+
+        });
+
+        window.setOnMousePressed(mouseEvent -> {
+            x = mouseEvent.getSceneX();
+            y = mouseEvent.getSceneY();
+        });
     }
 
     private void showAlert(String alertMessage) {
@@ -173,27 +195,6 @@ public class CreateAccountController implements Initializable {
         teamName.clear();
         cbAdmin.setValue(null);
         cbTOS.setSelected(false);
-    }
-
-    @FXML
-    void cbTOS(ActionEvent event) {
-
-    }
-
-    @FXML
-    void lLogIn(ActionEvent event) {
-        switchScene("login.fxml");
-
-    }
-
-    // Helper method for switching views
-    private void switchScene(String fxml) {
-        Main mainScene = Main.getApplicationInstance();
-        try {
-            mainScene.changeScene(fxml);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }

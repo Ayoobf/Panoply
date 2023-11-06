@@ -9,6 +9,9 @@ module com.example.panoply {
     requires google.cloud.core;
     requires org.mongodb.driver.sync.client;
     requires org.mongodb.bson;
+    requires spring.security.core;
+    requires spring.security.config;
+    requires spring.security.crypto;
     requires org.mongodb.driver.core;
 
     //    exports com.example.panoply.GUI;

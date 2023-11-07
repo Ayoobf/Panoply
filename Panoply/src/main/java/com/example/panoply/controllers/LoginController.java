@@ -87,7 +87,6 @@ public class LoginController implements Initializable {
 
     @FXML
     void lCreateAccount(ActionEvent event) {
-        System.out.println("create");
         switchScene("createAccount.fxml");
 
     }

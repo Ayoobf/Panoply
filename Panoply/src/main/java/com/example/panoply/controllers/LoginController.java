@@ -3,7 +3,6 @@ package com.example.panoply.controllers;
 import com.example.panoply.Main;
 import com.example.panoply.mongoDB.MongoDBHandlerExtra;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -12,9 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -106,13 +103,13 @@ public class LoginController extends DefaultController implements Initializable 
 
     @FXML
     void tfPassword(ActionEvent event) {
-        String password = tfPassword.getText();
+        tfPassword.getText();
 
     }
 
     @FXML
     void tfUsername(ActionEvent event) {
-        String username = tfUsername.getText();
+        tfUsername.getText();
 
     }
 

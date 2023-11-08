@@ -1,7 +1,4 @@
 package com.example.panoply;
-
-import com.example.panoply.controllers.DefaultController;
-
 import java.io.IOException;
 import java.util.Objects;
 
@@ -16,20 +13,19 @@ public class Main extends Application {
 
     // helps change scene
     private static Stage psg;
-    private static Main appicationInstance;
-    private double x, y;
+    private static Main applicationInstance;
 
     public static void main(String[] args) {
         launch();
     }
 
     public static Main getApplicationInstance() {
-        return appicationInstance;
+        return applicationInstance;
     }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        appicationInstance = this;
+        applicationInstance = this;
 
         // preserve primary stage state for changeScene()
         psg = primaryStage;
@@ -45,7 +41,22 @@ public class Main extends Application {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
 
+
+        // TODO: THIS IS REFRENCE CODE FOR LATER
+        // LOAD HOMESCREEN ELEMENT --> LOAD ASSET PANE/BUTTON/SCENE --> ADD CHILDREN TO HOMSCREEN
+//        VBox homeScreenPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("test1.fxml")));
+//
+//
+//        for (int i = 0; i <50; i++) {
+//            Button element1Pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("test2.fxml")));
+//
+//            element1Pane.setText(String.valueOf(i));
+//            homeScreenPane.getChildren().add(element1Pane);
+//        }
+
+
     }
+
 
     public void changeScene(String newScreen) throws IOException {
         Parent pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(newScreen)));

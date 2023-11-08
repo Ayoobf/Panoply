@@ -1,9 +1,7 @@
 package com.example.panoply.controllers;
 
-import com.example.panoply.Main;
 import com.example.panoply.mongoDB.MongoDBHandlerExtra;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -11,8 +9,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -23,7 +19,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class CreateAccountController extends DefaultController implements Initializable {
 
@@ -167,11 +162,44 @@ public class CreateAccountController extends DefaultController implements Initia
 
     @FXML
     private void cbTOS(ActionEvent event) {
-        try {
-            enableButton();
-        } catch (NullPointerException ignore) {
-        }
+        tryToEnableButton();
 
+    }
+
+
+    @FXML
+    void pfConfirmPassword(ActionEvent event) {
+        tryToEnableButton();
+    }
+
+    @FXML
+    void pfPassword(ActionEvent event) {
+        tryToEnableButton();
+    }
+
+    @FXML
+    void teamName(ActionEvent event) {
+        tryToEnableButton();
+    }
+
+    @FXML
+    void tfEmail(ActionEvent event) {
+        tryToEnableButton();
+    }
+
+    @FXML
+    void tfFirstName(ActionEvent event) {
+        tryToEnableButton();
+    }
+
+    @FXML
+    void tfLastName(ActionEvent event) {
+        tryToEnableButton();
+    }
+
+    @FXML
+    void tfPhoneNumber(ActionEvent event) {
+        tryToEnableButton();
     }
 
     @FXML
@@ -196,22 +224,28 @@ public class CreateAccountController extends DefaultController implements Initia
     }
 
     private boolean textFieldsAreFull() {
-        return !(tfFirstName.getText().isEmpty() &&
-                tfLastName.getText().isEmpty() &&
-                tfEmail.getText().isEmpty() &&
-                tfPhoneNumber.getText().isEmpty() &&
-                pfPassword.getText().isEmpty() &&
-                pfConfirmPassword.getText().isEmpty() &&
-                teamName.getText().isEmpty() &&
-                cbAdmin.getValue().isEmpty() &&
-                cbTOS.isSelected());
+        return !(tfFirstName.getText().isBlank() ||
+                tfLastName.getText().isBlank() ||
+                tfEmail.getText().isBlank() ||
+                tfPhoneNumber.getText().isBlank() ||
+                pfPassword.getText().isBlank() ||
+                pfConfirmPassword.getText().isBlank() ||
+                teamName.getText().isBlank() ||
+                cbAdmin.getValue().isBlank() ||
+                !cbTOS.isSelected());
     }
 
     private void enableButton() {
         if (textFieldsAreFull()) {
             btSignup.setDisable(false);
         }
+    }
 
+    private void tryToEnableButton() {
+        try {
+            enableButton();
+        } catch (NullPointerException ignore) {
+        }
     }
 
 }

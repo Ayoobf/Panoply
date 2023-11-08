@@ -17,6 +17,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -24,18 +25,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class CreateAccountController implements Initializable {
-
-    @FXML
-    private HBox Contact;
-
-    @FXML
-    private Label Title;
-
-    @FXML
-    private HBox TitleBar;
+public class CreateAccountController extends DefaultController implements Initializable {
 
     private final String[] choiceBoxOptions = {"Yes", "No"};
+    @FXML
+    private HBox Contact;
+    @FXML
+    private Label Title;
+    @FXML
+    private HBox TitleBar;
     @FXML
     private ChoiceBox<String> cbAdmin;
 
@@ -79,22 +77,28 @@ public class CreateAccountController implements Initializable {
 
     @FXML
     private TextField tfPhoneNumber;
-    private double x, y;
+
+    @FXML
+    private Button btSignup;
+
+//    private double x, y;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cbAdmin.getItems().addAll(choiceBoxOptions);
         makeDraggable(createPane);
+        btSignup.setDisable(true);
 
     }
 
+
     @FXML
-    void btExit(ActionEvent event) {
+    private void btExit(ActionEvent event) {
         Platform.exit();
     }
 
     @FXML
-    void btSignup(ActionEvent event) {
+    private void btSignup(ActionEvent event) {
         String firstName, lastName, email, phoneNumber, password, confirmPassword, teamNameLocal, sAdmin, teamId;
         boolean isAdmin;
 
@@ -124,67 +128,61 @@ public class CreateAccountController implements Initializable {
 
                 } else {
                     // team was not found and user is an admin
-                    mongoDBHandler.signUpUser(firstName, lastName, email, password, isAdmin, phoneNumber);
-                    mongoDBHandler.makeTeam(teamNameLocal, mongoDBHandler.findUser(email));
-                    mongoDBHandler.updateUser(mongoDBHandler.findUser(email), mongoDBHandler.findTeam(teamNameLocal));
+                    mongoDBHandler.signUpUser(
+                            firstName,
+                            lastName,
+                            email,
+                            password,
+                            isAdmin,
+                            phoneNumber
+                    );
+                    mongoDBHandler.makeTeam(
+                            teamNameLocal,
+                            mongoDBHandler.findUser(email)
+                    );
+                    mongoDBHandler.updateUser(
+                            mongoDBHandler.findUser(email),
+                            mongoDBHandler.findTeam(teamNameLocal)
+                    );
                     clearForm();
+
                 }
 
             } else {
                 // team was found and user is not admin
-                mongoDBHandler.signUpUser(firstName, lastName, email, password, isAdmin, teamId, phoneNumber);
+                mongoDBHandler.signUpUser(
+                        firstName,
+                        lastName,
+                        email,
+                        password,
+                        isAdmin,
+                        teamId,
+                        phoneNumber
+                );
                 clearForm();
+
             }
         }
-
-
-    }
-
-
-    // TODO
-    @FXML
-    void cbTOS(ActionEvent event) {
-
     }
 
     @FXML
-    void lLogIn(ActionEvent event) {
+    private void cbTOS(ActionEvent event) {
+        try {
+            enableButton();
+        } catch (NullPointerException ignore) {
+        }
+
+    }
+
+    @FXML
+    private void lLogIn(ActionEvent event) {
         switchScene("login.fxml");
 
     }
 
     // Helper Methods
     /*-------------------------------------------------------------------------------------------------------------------------*/
-    private void switchScene(String fxml) {
-        Main mainScene = Main.getApplicationInstance();
-        try {
-            mainScene.changeScene(fxml);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    private void makeDraggable(Pane window) {
-        window.setOnMouseDragged(mouseEvent -> {
-            Stage stage = (Stage) window.getScene().getWindow();
-            stage.setX(mouseEvent.getScreenX() - x);
-            stage.setY(mouseEvent.getScreenY() - y);
-
-        });
-
-        window.setOnMousePressed(mouseEvent -> {
-            x = mouseEvent.getSceneX();
-            y = mouseEvent.getSceneY();
-        });
-    }
-
-    private void showAlert(String alertMessage) {
-        Alert alert = new Alert(Alert.AlertType.WARNING, alertMessage, ButtonType.OK);
-        alert.setHeaderText("INCORRECT INPUT");
-        alert.show();
-    }
-
-    // set everything to null
     private void clearForm() {
         tfFirstName.clear();
         tfLastName.clear();
@@ -195,6 +193,25 @@ public class CreateAccountController implements Initializable {
         teamName.clear();
         cbAdmin.setValue(null);
         cbTOS.setSelected(false);
+    }
+
+    private boolean textFieldsAreFull() {
+        return !(tfFirstName.getText().isEmpty() &&
+                tfLastName.getText().isEmpty() &&
+                tfEmail.getText().isEmpty() &&
+                tfPhoneNumber.getText().isEmpty() &&
+                pfPassword.getText().isEmpty() &&
+                pfConfirmPassword.getText().isEmpty() &&
+                teamName.getText().isEmpty() &&
+                cbAdmin.getValue().isEmpty() &&
+                cbTOS.isSelected());
+    }
+
+    private void enableButton() {
+        if (textFieldsAreFull()) {
+            btSignup.setDisable(false);
+        }
+
     }
 
 }

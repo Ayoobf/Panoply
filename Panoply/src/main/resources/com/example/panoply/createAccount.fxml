@@ -16,205 +16,205 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="createPane" id="Create Account Screen" focusTraversable="true" maxHeight="600.0"
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" id="Create Account Screen" fx:id="createPane" focusTraversable="true" maxHeight="600.0"
             maxWidth="1024.0" minHeight="600.0" minWidth="1024.0" prefHeight="600.0"
             prefWidth="1024.0" style="-fx-background-color: #EEEEEE; -fx-border-radius: 15;"
             xmlns="http://javafx.com/javafx/21" fx:controller="com.example.panoply.controllers.CreateAccountController">
-   <left>
-      <Pane fx:id="imageArea" minWidth="300.0" prefHeight="600.0" prefWidth="300.0"
-            style="-fx-min-width: 200; -fx-background-color: #ADD8E6; -fx-min-height: 575;"
-            BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="600.0" fitWidth="300.0" opacity="0.32" pickOnBounds="true" smooth="false">
-               <image>
-                  <Image url="@assets/loginStockPhoto.jpg"/>
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
+    <left>
+        <Pane fx:id="imageArea" minWidth="300.0" prefHeight="600.0" prefWidth="300.0"
+              style="-fx-min-width: 200; -fx-background-color: #ADD8E6; -fx-min-height: 575;"
+              BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="600.0" fitWidth="300.0" opacity="0.32" pickOnBounds="true" smooth="false">
+                    <image>
+                        <Image url="@assets/loginStockPhoto.jpg"/>
+                    </image>
+                </ImageView>
+            </children>
+        </Pane>
    </left>
    <center>
-      <VBox fx:id="loginArea" prefHeight="200.0" prefWidth="100.0"
-            style="-fx-min-width: 540; -fx-min-height: 575; -fx-border-radius: 15;" BorderPane.alignment="CENTER">
-         <children>
-            <HBox fx:id="TitleBar">
-               <children>
-                  <Pane prefHeight="14.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
-                  <Button mnemonicParsing="false" onAction="#btExit" opacity="0.63"
-                          style="-fx-background-color: #eeeeee;" text="X">
-                     <font>
-                        <Font name="Segoe UI Bold Italic" size="14.0"/>
-                     </font>
-                     <HBox.margin>
-                        <Insets right="-35.0" top="5.0"/>
-                     </HBox.margin>
-                  </Button>
-               </children>
+       <VBox fx:id="loginArea" prefHeight="200.0" prefWidth="100.0"
+             style="-fx-min-width: 540; -fx-min-height: 575; -fx-border-radius: 15;" BorderPane.alignment="CENTER">
+           <children>
+               <HBox fx:id="TitleBar">
+                   <children>
+                       <Pane prefHeight="14.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
+                       <Button mnemonicParsing="false" onAction="#btExit" opacity="0.63"
+                               style="-fx-background-color: #eeeeee;" text="X">
+                           <font>
+                               <Font name="Segoe UI Bold Italic" size="14.0"/>
+                           </font>
+                           <HBox.margin>
+                               <Insets right="-35.0" top="5.0"/>
+                           </HBox.margin>
+                       </Button>
+                   </children>
             </HBox>
             <Label fx:id="Title" text="Panoply Sign Up">
                <font>
-                  <Font name="Segoe UI Bold" size="41.89"/>
+                   <Font name="Segoe UI Bold" size="41.89"/>
                </font>
                <VBox.margin>
-                  <Insets bottom="5.0" top="10.0"/>
+                   <Insets bottom="5.0" top="10.0"/>
                </VBox.margin>
             </Label>
             <Label opacity="0.8" text="Create an account to take advantage of Panoply.">
                <VBox.margin>
-                  <Insets bottom="25.0"/>
+                   <Insets bottom="25.0"/>
                </VBox.margin>
                <font>
-                  <Font name="Segoe UI Bold" size="12.0"/>
+                   <Font name="Segoe UI Bold" size="12.0"/>
                </font>
             </Label>
             <HBox fx:id="nameEntryBox">
                <VBox.margin>
-                  <Insets bottom="15.0"/>
+                   <Insets bottom="15.0"/>
                </VBox.margin>
                <children>
-                  <TextField fx:id="tfFirstName" maxHeight="45.0" maxWidth="274.5" minHeight="45.0" minWidth="274.5"
-                             prefHeight="45.0" prefWidth="274.5" promptText="First Name"
-                             style="-fx-background-color: #EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10; -fx-background-radius: 10;">
-                     <HBox.margin>
-                        <Insets right="15.0"/>
-                     </HBox.margin>
-                     <font>
-                        <Font name="Segoe UI Bold" size="16.0"/>
-                     </font>
-                  </TextField>
-                  <TextField fx:id="tfLastName" maxHeight="45.0" maxWidth="274.5" minHeight="45.0" minWidth="274.5"
-                             prefHeight="45.0" prefWidth="274.5" promptText="Last Name"
-                             style="-fx-background-color: #EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10; -fx-background-radius: 10;">
-                     <font>
-                        <Font name="Segoe UI Bold" size="16.0"/>
-                     </font>
-                  </TextField>
+                   <TextField fx:id="tfFirstName" maxHeight="45.0" maxWidth="274.5" minHeight="45.0" minWidth="274.5"
+                              prefHeight="45.0" prefWidth="274.5" promptText="First Name"
+                              style="-fx-background-color: #EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10; -fx-background-radius: 10;">
+                       <HBox.margin>
+                           <Insets right="15.0"/>
+                       </HBox.margin>
+                       <font>
+                           <Font name="Segoe UI Bold" size="16.0"/>
+                       </font>
+                   </TextField>
+                   <TextField fx:id="tfLastName" maxHeight="45.0" maxWidth="274.5" minHeight="45.0" minWidth="274.5"
+                              prefHeight="45.0" prefWidth="274.5" promptText="Last Name"
+                              style="-fx-background-color: #EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10; -fx-background-radius: 10;">
+                       <font>
+                           <Font name="Segoe UI Bold" size="16.0"/>
+                       </font>
+                   </TextField>
                </children>
             </HBox>
             <HBox fx:id="Contact" layoutX="50.0" layoutY="105.0">
                <children>
-                  <TextField fx:id="tfEmail" maxHeight="45.0" maxWidth="274.5" minHeight="45.0" minWidth="274.5"
-                             prefHeight="45.0" prefWidth="274.5" promptText="Email"
-                             style="-fx-background-color: #EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10; -fx-background-radius: 10;">
-                     <HBox.margin>
-                        <Insets right="15.0"/>
-                     </HBox.margin>
-                     <font>
-                        <Font name="Segoe UI Bold" size="16.0"/>
-                     </font>
-                  </TextField>
-                  <TextField fx:id="tfPhoneNumber" maxHeight="45.0" maxWidth="274.5" minHeight="45.0" minWidth="274.5"
-                             prefHeight="45.0" prefWidth="274.5" promptText="Phone Number"
-                             style="-fx-background-color: #EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10; -fx-background-radius: 10;">
-                     <font>
-                        <Font name="Segoe UI Bold" size="16.0"/>
-                     </font>
-                  </TextField>
+                   <TextField fx:id="tfEmail" maxHeight="45.0" maxWidth="274.5" minHeight="45.0" minWidth="274.5"
+                              prefHeight="45.0" prefWidth="274.5" promptText="Email"
+                              style="-fx-background-color: #EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10; -fx-background-radius: 10;">
+                       <HBox.margin>
+                           <Insets right="15.0"/>
+                       </HBox.margin>
+                       <font>
+                           <Font name="Segoe UI Bold" size="16.0"/>
+                       </font>
+                   </TextField>
+                   <TextField fx:id="tfPhoneNumber" maxHeight="45.0" maxWidth="274.5" minHeight="45.0" minWidth="274.5"
+                              prefHeight="45.0" prefWidth="274.5" promptText="Phone Number"
+                              style="-fx-background-color: #EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10; -fx-background-radius: 10;">
+                       <font>
+                           <Font name="Segoe UI Bold" size="16.0"/>
+                       </font>
+                   </TextField>
                </children>
                <VBox.margin>
-                  <Insets bottom="15.0"/>
+                   <Insets bottom="15.0"/>
                </VBox.margin>
             </HBox>
             <HBox fx:id="passwordBox">
                <children>
-                  <PasswordField fx:id="pfPassword" maxHeight="45.0" maxWidth="274.5" minHeight="45.0" minWidth="274.5"
-                                 prefHeight="45.0" prefWidth="274.5" promptText="Password"
-                                 style="-fx-background-color: #EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10; -fx-background-radius: 10;">
-                     <font>
-                        <Font name="Segoe UI Bold" size="16.0"/>
-                     </font>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                     </padding>
-                     <HBox.margin>
-                        <Insets right="15.0"/>
-                     </HBox.margin>
-                  </PasswordField>
-                  <PasswordField fx:id="pfConfirmPassword" maxHeight="45.0" maxWidth="274.5" minHeight="45.0"
-                                 minWidth="274.5" prefHeight="45.0" prefWidth="274.5" promptText="Confirm Password"
-                                 style="-fx-background-color: #EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10; -fx-background-radius: 10;">
-                     <font>
-                        <Font name="Segoe UI Bold" size="16.0"/>
-                     </font>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                     </padding>
-                  </PasswordField>
+                   <PasswordField fx:id="pfPassword" maxHeight="45.0" maxWidth="274.5" minHeight="45.0" minWidth="274.5"
+                                  prefHeight="45.0" prefWidth="274.5" promptText="Password"
+                                  style="-fx-background-color: #EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10; -fx-background-radius: 10;">
+                       <font>
+                           <Font name="Segoe UI Bold" size="16.0"/>
+                       </font>
+                       <padding>
+                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                       </padding>
+                       <HBox.margin>
+                           <Insets right="15.0"/>
+                       </HBox.margin>
+                   </PasswordField>
+                   <PasswordField fx:id="pfConfirmPassword" maxHeight="45.0" maxWidth="274.5" minHeight="45.0"
+                                  minWidth="274.5" prefHeight="45.0" prefWidth="274.5" promptText="Confirm Password"
+                                  style="-fx-background-color: #EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10; -fx-background-radius: 10;">
+                       <font>
+                           <Font name="Segoe UI Bold" size="16.0"/>
+                       </font>
+                       <padding>
+                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                       </padding>
+                   </PasswordField>
                </children>
                <VBox.margin>
-                  <Insets bottom="15.0"/>
+                   <Insets bottom="15.0"/>
                </VBox.margin>
             </HBox>
             <HBox fx:id="team">
                <children>
                   <Label opacity="0.7" text="Are you team Admin? ">
                      <font>
-                        <Font name="Segoe UI Bold" size="16.0"/>
+                         <Font name="Segoe UI Bold" size="16.0"/>
                      </font>
                      <HBox.margin>
-                        <Insets top="15.0"/>
+                         <Insets top="15.0"/>
                      </HBox.margin>
                   </Label>
-                  <ChoiceBox fx:id="cbAdmin" prefHeight="25.0" prefWidth="109.0"
-                             style="-fx-background-color: #eeeeee; -fx-border-color: #00000080; -fx-background-radius: 10; -fx-border-radius: 10;">
-                     <HBox.margin>
-                        <Insets right="15.0" top="10.0"/>
-                     </HBox.margin>
-                  </ChoiceBox>
-                  <TextField fx:id="teamName" maxHeight="45.0" maxWidth="274.5" minHeight="45.0" minWidth="274.5"
-                             prefHeight="45.0" prefWidth="274.5" promptText="Team Name"
-                             style="-fx-background-color: #EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10; -fx-background-radius: 10;">
-                     <font>
-                        <Font name="Segoe UI Bold" size="16.0"/>
-                     </font>
-                  </TextField>
+                   <ChoiceBox fx:id="cbAdmin" prefHeight="25.0" prefWidth="109.0"
+                              style="-fx-background-color: #eeeeee; -fx-border-color: #00000080; -fx-background-radius: 10; -fx-border-radius: 10;">
+                       <HBox.margin>
+                           <Insets right="15.0" top="10.0"/>
+                       </HBox.margin>
+                   </ChoiceBox>
+                   <TextField fx:id="teamName" maxHeight="45.0" maxWidth="274.5" minHeight="45.0" minWidth="274.5"
+                              prefHeight="45.0" prefWidth="274.5" promptText="Team Name"
+                              style="-fx-background-color: #EEEEEE; -fx-border-color: #00000080; -fx-border-radius: 10; -fx-background-radius: 10;">
+                       <font>
+                           <Font name="Segoe UI Bold" size="16.0"/>
+                       </font>
+                   </TextField>
                </children>
                <VBox.margin>
-                  <Insets bottom="15.0"/>
+                   <Insets bottom="15.0"/>
                </VBox.margin>
             </HBox>
-            <CheckBox fx:id="cbTOS" mnemonicParsing="false" onAction="#cbTOS" opacity="0.8"
-                      text="  I've read and accept the Terms of Service and orur Privacy Policy">
-               <font>
-                  <Font name="System Bold" size="12.0"/>
-               </font>
-               <VBox.margin>
-                  <Insets bottom="15.0"/>
-               </VBox.margin>
-            </CheckBox>
-            <Button cancelButton="true" contentDisplay="CENTER" defaultButton="true" maxHeight="45.0" maxWidth="564.0"
-                    minHeight="45.0" minWidth="564.0" mnemonicParsing="false" onAction="#btSignup" prefHeight="45.0"
-                    prefWidth="564.0"
-                    style="-fx-background-color: F78888; -fx-background-radius: 10; -fx-border-radius: 10;"
-                    text="Sign Up" textFill="WHITE">
-               <font>
-                  <Font name="Segoe UI Bold" size="16.0"/>
-               </font>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-               </padding>
-               <opaqueInsets>
-                  <Insets/>
-               </opaqueInsets>
-               <VBox.margin>
-                  <Insets bottom="15.0"/>
+               <CheckBox fx:id="cbTOS" mnemonicParsing="false" onAction="#cbTOS" opacity="0.8"
+                         text="  I've read and accept the Terms of Service and orur Privacy Policy">
+                   <font>
+                       <Font name="System Bold" size="12.0"/>
+                   </font>
+                   <VBox.margin>
+                       <Insets bottom="15.0"/>
+                   </VBox.margin>
+               </CheckBox>
+               <Button fx:id="btSignup" cancelButton="true" contentDisplay="CENTER" defaultButton="true"
+                       maxHeight="45.0" maxWidth="564.0" minHeight="45.0" minWidth="564.0" mnemonicParsing="false"
+                       onAction="#btSignup" prefHeight="45.0" prefWidth="564.0"
+                       style="-fx-background-color: F78888; -fx-background-radius: 10; -fx-border-radius: 10;"
+                       text="Sign Up" textFill="WHITE">
+                   <font>
+                       <Font name="Segoe UI Bold" size="16.0"/>
+                   </font>
+                   <padding>
+                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                   </padding>
+                   <opaqueInsets>
+                       <Insets/>
+                   </opaqueInsets>
+                   <VBox.margin>
+                       <Insets bottom="15.0"/>
                </VBox.margin>
             </Button>
             <Hyperlink onAction="#lLogIn" opacity="0.8" text="Log In">
                <graphic>
                   <Label text="Already have an account? ">
                      <font>
-                        <Font name="Segoe UI Bold" size="12.0"/>
+                         <Font name="Segoe UI Bold" size="12.0"/>
                      </font>
                   </Label>
                </graphic>
                <font>
-                  <Font name="Segoe UI Bold" size="12.0"/>
+                   <Font name="Segoe UI Bold" size="12.0"/>
                </font>
             </Hyperlink>
          </children>
          <padding>
-            <Insets bottom="60.0" left="80.0" right="40.0"/>
+             <Insets bottom="60.0" left="80.0" right="40.0"/>
          </padding>
       </VBox>
    </center>

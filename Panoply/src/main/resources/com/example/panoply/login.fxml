@@ -14,7 +14,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" id="Login Screen" focusTraversable="true" maxHeight="600.0" maxWidth="1024.0"
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="loginScreen" id="Login Screen" focusTraversable="true"
+            maxHeight="600.0" maxWidth="1024.0"
             minHeight="600.0" minWidth="1024.0" prefHeight="600.0"
             prefWidth="1024.0" style="-fx-background-color: #EEEEEE; -fx-border-radius: 15;"
             xmlns="http://javafx.com/javafx/21" fx:controller="com.example.panoply.controllers.LoginController">

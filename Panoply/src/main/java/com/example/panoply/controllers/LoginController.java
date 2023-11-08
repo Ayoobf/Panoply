@@ -18,10 +18,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class LoginController implements Initializable {
+public class LoginController extends DefaultController implements Initializable {
 
     @FXML
     private Button btExit;
@@ -47,6 +48,8 @@ public class LoginController implements Initializable {
     private TextField tfUsername;
 
     @FXML
+    private BorderPane loginScreen;
+    @FXML
     private Stage stage;
     @FXML
     private Scene scene;
@@ -56,28 +59,32 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        makeDraggable(loginScreen);
+        btLogin.setDefaultButton(true);
     }
 
     @FXML
-    void btLogin(ActionEvent event) throws IOException {
-        // if fields are not empty
-        if (!tfUsername.getText().isEmpty() && !tfPassword.getText().isEmpty()) {
+    void btLogin(ActionEvent event) {
+
+        if (tfUsername.getText().isEmpty() || tfPassword.getText().isEmpty()) {
+            showAlert("one or more fields are empty");
+        } else {
             String username = tfUsername.getText().trim();
             String password = tfPassword.getText().trim();
 
-            // authenticate user 1=good 0=bad
-            int auth = new MongoDBHandlerExtra().authenticateUser(username, password);
-            if (auth == 1) {
+            int authentication = new MongoDBHandlerExtra().authenticateUser(username, password);
+            if (authentication == 1) {
                 switchScene("homePage.fxml");
 
-            } else if (auth == 0) {
-                // alert user of wrong input
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Wrong Username or Password", ButtonType.OK);
-                alert.setHeaderText("INCORRECT INPUT");
-                alert.show();
             }
+
+            if (authentication == 0) {
+                // alert user of wrong input
+                showAlert("Incorrect username/password");
+            }
+
         }
+
     }
 
     @FXML
@@ -99,26 +106,14 @@ public class LoginController implements Initializable {
 
     @FXML
     void tfPassword(ActionEvent event) {
-
         String password = tfPassword.getText();
 
     }
 
     @FXML
     void tfUsername(ActionEvent event) {
-
         String username = tfUsername.getText();
 
-    }
-
-    // Helper method for switching views
-    private void switchScene(String fxml) {
-        Main mainScene = Main.getApplicationInstance();
-        try {
-            mainScene.changeScene(fxml);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 

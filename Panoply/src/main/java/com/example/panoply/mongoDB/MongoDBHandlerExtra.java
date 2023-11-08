@@ -1,5 +1,6 @@
 package com.example.panoply.mongoDB;
 
+
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -15,15 +16,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class MongoDBHandlerExtra {
     final static String PASSWORD = System.getenv("PASSWORD");
-    private static String databaseName = "dms_collections";
-    private static String uri = "mongodb+srv://ayoobf:" + PASSWORD + "@documentmanagercluster.ewmjoau.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
-    private static MongoClient client = MongoClients.create(uri);
-    private static MongoDatabase database = client.getDatabase(databaseName);
-    private static MongoCollection<Document> userCollection = database.getCollection("users");
-    private static MongoCollection<Document> teamsCollection = database.getCollection("teams");
-    private static BCryptPasswordEncoder authenticator = new BCryptPasswordEncoder();
-    String databaseUsers = "users";
-    String databaseTeams = "teams";
+    private static final String uri = "mongodb+srv://ayoobf:" + PASSWORD + "@documentmanagercluster.ewmjoau.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
+    private static final MongoClient client = MongoClients.create(uri);
+    private static final MongoDatabase database = client.getDatabase("dms_collections");
+    private static final MongoCollection<Document> userCollection = database.getCollection("users");
+    private static final MongoCollection<Document> teamsCollection = database.getCollection("teams");
+    private static final BCryptPasswordEncoder authenticator = new BCryptPasswordEncoder();
 
     public MongoDBHandlerExtra() {
 
@@ -47,10 +45,9 @@ public class MongoDBHandlerExtra {
 
     public void signUpUser(String firstName, String lastName, String email, String password, boolean isAdmin, String teamId, String phoneNumber) {
 
-        MongoCollection<Document> collection = database.getCollection(databaseUsers);
         String securePassword = authenticator.encode(password);
 
-        collection.insertOne(new Document()
+        userCollection.insertOne(new Document()
                 .append("_id", new ObjectId())
                 .append("username", email)
                 .append("password", securePassword)
@@ -66,11 +63,10 @@ public class MongoDBHandlerExtra {
 
     public void signUpUser(String firstName, String lastName, String email, String password, boolean isAdmin, String phoneNumber) {
 
-        MongoCollection<Document> collection = database.getCollection(databaseUsers);
 
         String securePassword = authenticator.encode(password);
 
-        collection.insertOne(new Document()
+        userCollection.insertOne(new Document()
                 .append("_id", new ObjectId())
                 .append("username", email)
                 .append("password", securePassword)

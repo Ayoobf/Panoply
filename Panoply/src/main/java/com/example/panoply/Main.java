@@ -1,5 +1,7 @@
 package com.example.panoply;
 
+import com.example.panoply.controllers.DefaultController;
+
 import java.io.IOException;
 import java.util.Objects;
 
@@ -41,30 +43,9 @@ public class Main extends Application {
 
         // implement my own title bar and drag behavior
         primaryStage.initStyle(StageStyle.UNDECORATED);
-        mousePressedForDrag(root);
-        mouseDraggedForDrag(primaryStage, root);
-
-
         primaryStage.show();
 
-
     }
-
-    public void mouseDraggedForDrag(Stage primaryStage, Parent root) {
-        root.setOnMouseDragged(mouseEvent -> {
-            primaryStage.setX(mouseEvent.getScreenX() - x);
-            primaryStage.setY(mouseEvent.getScreenY() - y);
-
-        });
-    }
-
-    public void mousePressedForDrag(Parent root) {
-        root.setOnMousePressed(mouseEvent -> {
-            x = mouseEvent.getSceneX();
-            y = mouseEvent.getSceneY();
-        });
-    }
-
 
     public void changeScene(String newScreen) throws IOException {
         Parent pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(newScreen)));

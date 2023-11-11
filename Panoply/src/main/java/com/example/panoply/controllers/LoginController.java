@@ -15,8 +15,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 public class LoginController extends DefaultController implements Initializable {
@@ -58,6 +60,8 @@ public class LoginController extends DefaultController implements Initializable 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         makeDraggable(loginScreen);
         btLogin.setDefaultButton(true);
+        btLogin.setOnMouseEntered(e -> btLogin.setStyle("-fx-background-color: FF7777; -fx-background-radius: 10;"));
+        btLogin.setOnMouseExited(e -> btLogin.setStyle("-fx-background-color: F78888; -fx-background-radius: 10;"));
     }
 
     @FXML

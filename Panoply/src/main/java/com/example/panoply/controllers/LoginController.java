@@ -55,6 +55,7 @@ public class LoginController extends DefaultController implements Initializable 
     private String username;
     private String password;
 
+    private HomePageController homePageController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -62,6 +63,8 @@ public class LoginController extends DefaultController implements Initializable 
         btLogin.setDefaultButton(true);
         btLogin.setOnMouseEntered(e -> btLogin.setStyle("-fx-background-color: FF7777; -fx-background-radius: 10;"));
         btLogin.setOnMouseExited(e -> btLogin.setStyle("-fx-background-color: F78888; -fx-background-radius: 10;"));
+
+
     }
 
     @FXML
@@ -69,6 +72,7 @@ public class LoginController extends DefaultController implements Initializable 
 
         if (tfUsername.getText().isEmpty() || tfPassword.getText().isEmpty()) {
             showAlert("one or more fields are empty");
+
         } else {
             String username = tfUsername.getText().trim();
             String password = tfPassword.getText().trim();
@@ -82,6 +86,7 @@ public class LoginController extends DefaultController implements Initializable 
             if (authentication == 0) {
                 // alert user of wrong input
                 showAlert("Incorrect username/password");
+
             }
 
         }

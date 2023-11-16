@@ -2,36 +2,40 @@ package com.example.panoply.controllers;
 
 import com.example.panoply.Main;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
+import javafx.scene.control.SplitPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 public class HomePageController extends DefaultController implements Initializable {
 
-    @FXML
-    Button btBack;
-
-    @FXML
-    void btBack(ActionEvent event) {
-
-        Main mainScene = Main.getApplicationInstance();
-        try {
-            mainScene.changeScene("login.fxml");
-            LoginController lg = new FXMLLoader(getClass().getResource("login.fxml")).getController();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    public Pane imageArea;
+    public VBox loginArea;
+    public HBox TitleBar;
+    public VBox homePage;
+    public SplitPane divPane;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        changeWindowSize(1366, 782);
+        makeDraggable(homePage);
+
 
     }
+
+    @FXML
+    void btExit(ActionEvent event) {
+        Platform.exit();
+    }
+
 }

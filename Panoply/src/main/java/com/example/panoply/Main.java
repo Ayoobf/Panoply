@@ -1,11 +1,15 @@
 package com.example.panoply;
+import com.example.panoply.controllers.LoginController;
+
 import java.io.IOException;
 import java.util.Objects;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -23,6 +27,11 @@ public class Main extends Application {
         return applicationInstance;
     }
 
+    static double xOffset, yOffset;
+    private Boolean resizebottom = false;
+    private double dx;
+    private double dy;
+
     @Override
     public void start(Stage primaryStage) throws IOException {
         applicationInstance = this;
@@ -31,14 +40,13 @@ public class Main extends Application {
         psg = primaryStage;
 
         // default bs
-        primaryStage.setResizable(false);
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
         primaryStage.setTitle("Panoply Login");
-        Scene primaryScene = new Scene(root);
+        Scene primaryScene = new Scene(root, 1024, 600);
         primaryStage.setScene(primaryScene);
 
         // implement my own title bar and drag behavior
-        primaryStage.initStyle(StageStyle.UNDECORATED);
+        psg.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
 
 
@@ -57,10 +65,20 @@ public class Main extends Application {
 
     }
 
-
     public void changeScene(String newScreen) throws IOException {
         Parent pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(newScreen)));
         psg.getScene().setRoot(pane);
 
     }
+
+    // This code may seem convoluted...
+    // however, javaFX will not allow me to change scene sizes within controller classes.
+    public void setWindowSize(double width, double height) {
+        psg.setMinWidth(width);
+        psg.setMinHeight(height);
+        psg.setMaxWidth(width);
+        psg.setMaxHeight(height);
+
+    }
+
 }

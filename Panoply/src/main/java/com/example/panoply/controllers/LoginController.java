@@ -4,6 +4,8 @@ import com.example.panoply.Main;
 import com.example.panoply.mongoDB.MongoDBHandlerExtra;
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -64,6 +66,9 @@ public class LoginController extends DefaultController implements Initializable 
         btLogin.setOnMouseEntered(e -> btLogin.setStyle("-fx-background-color: FF7777; -fx-background-radius: 10;"));
         btLogin.setOnMouseExited(e -> btLogin.setStyle("-fx-background-color: F78888; -fx-background-radius: 10;"));
 
+        btHoverEffect(Collections.singletonList(btLogin),
+                "-fx-background-color: F78888; -fx-background-radius: 10;",
+                "-fx-background-color: FF7777; -fx-background-radius: 10;");
 
     }
 

@@ -3,9 +3,12 @@ package com.example.panoply.controllers;
 import com.example.panoply.Main;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -50,6 +53,16 @@ public abstract class DefaultController {
     public void changeWindowSize(double width, double height) {
         Main mainScene = Main.getApplicationInstance();
         mainScene.setWindowSize(width, height);
+
+    }
+
+    // Takes in a collection of buttons and makes them have the on dragable behavior
+    public void btHoverEffect(Collection<Button> buttons, String oldStyle, String newStyle) {
+        ArrayList<Button> listOfButtons = new ArrayList<>(buttons);
+        for (Button button : listOfButtons) {
+            button.setOnMouseEntered(e -> button.setStyle(newStyle));
+            button.setOnMouseExited(e -> button.setStyle(oldStyle));
+        }
 
     }
 

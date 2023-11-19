@@ -1,13 +1,10 @@
 package com.example.panoply.controllers;
 
-import com.example.panoply.Main;
 import com.example.panoply.User;
 import com.example.panoply.UserHolder;
 import com.example.panoply.mongoDB.MongoDBHandlerExtra;
-import com.mongodb.client.model.Filters;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
@@ -20,10 +17,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 public class LoginController extends DefaultController implements Initializable {
@@ -66,9 +61,6 @@ public class LoginController extends DefaultController implements Initializable 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         makeDraggable(loginScreen);
         btLogin.setDefaultButton(true);
-        btLogin.setOnMouseEntered(e -> btLogin.setStyle("-fx-background-color: FF7777; -fx-background-radius: 10;"));
-        btLogin.setOnMouseExited(e -> btLogin.setStyle("-fx-background-color: F78888; -fx-background-radius: 10;"));
-
         btHoverEffect(Collections.singletonList(btLogin),
                 "-fx-background-color: F78888; -fx-background-radius: 10;",
                 "-fx-background-color: FF7777; -fx-background-radius: 10;");

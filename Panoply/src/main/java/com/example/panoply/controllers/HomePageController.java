@@ -1,19 +1,15 @@
 package com.example.panoply.controllers;
 
-import com.example.panoply.Main;
 import com.example.panoply.User;
 import com.example.panoply.UserHolder;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -76,6 +72,7 @@ public class HomePageController extends DefaultController implements Initializab
         User user = holder.getUser();
         lblFirstName.setText(user.getFirstName());
 
+        show(defaultHomePage);
     }
 
 
@@ -83,7 +80,6 @@ public class HomePageController extends DefaultController implements Initializab
     void btHome(ActionEvent event) {
         show(defaultHomePage);
     }
-
 
     @FXML
     void btSettings(ActionEvent event) {
@@ -96,7 +92,7 @@ public class HomePageController extends DefaultController implements Initializab
     }
 
     @FXML
-    void btColapseSideBar() {
+    void btCollapseSideBar() {
         sideButtons.setMinWidth(0);
         divPane.setDividerPosition(0, 0);
     }
@@ -114,6 +110,32 @@ public class HomePageController extends DefaultController implements Initializab
     }
 
     // TODO make show method
-    private void show(VBox defaultHomePage) {
+    private void show(VBox activePage) {
+        switch (activePage.getId()) {
+            case "defaultHomePage" -> {
+                defaultHomePage.setVisible(true);
+                defaultHomePage.setDisable(false);
+                users.setVisible(false);
+                users.setDisable(true);
+                settings.setVisible(false);
+                settings.setDisable(true);
+            }
+            case "users" -> {
+                users.setVisible(true);
+                users.setDisable(false);
+                defaultHomePage.setVisible(false);
+                defaultHomePage.setDisable(true);
+                settings.setVisible(false);
+                settings.setDisable(true);
+            }
+            case "settings" -> {
+                settings.setVisible(true);
+                settings.setDisable(false);
+                users.setVisible(false);
+                users.setDisable(true);
+                defaultHomePage.setVisible(false);
+                defaultHomePage.setDisable(true);
+            }
+        }
     }
 }

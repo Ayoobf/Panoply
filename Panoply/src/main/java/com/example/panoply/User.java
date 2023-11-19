@@ -4,8 +4,6 @@ public class User {
 
     String firstName;
 
-    User() {
-    }
 
     public User(String firstName) {
         this.firstName = firstName;

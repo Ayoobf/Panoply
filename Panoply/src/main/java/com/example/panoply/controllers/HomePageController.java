@@ -10,6 +10,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -23,13 +25,47 @@ public class HomePageController extends DefaultController implements Initializab
     public HBox TitleBar;
     public VBox homePage;
     public SplitPane divPane;
+    public VBox sideButtons;
+    public Button btColapseSideBar;
+    public Label lblFirstName;
+    public Button btHome;
+    public Button btUsers;
+    public Button btSettings;
+    public Button btLogout;
+    public Pane containerPane;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         changeWindowSize(1366, 782);
         makeDraggable(homePage);
+    }
 
+    @FXML
+    void btHome(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btSettings(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btUsers(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btColapseSideBar(ActionEvent event) {
+        sideButtons.setMinWidth(0);
+        divPane.setDividerPosition(0, 0);
+    }
+
+    @FXML
+    void btLogout(ActionEvent event) {
+        switchScene("login.fxml");
+        changeWindowSize(1024, 600);
 
     }
 

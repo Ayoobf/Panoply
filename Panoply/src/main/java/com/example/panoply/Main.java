@@ -1,15 +1,12 @@
 package com.example.panoply;
-import com.example.panoply.controllers.LoginController;
 
 import java.io.IOException;
 import java.util.Objects;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -26,11 +23,6 @@ public class Main extends Application {
     public static Main getApplicationInstance() {
         return applicationInstance;
     }
-
-    static double xOffset, yOffset;
-    private Boolean resizebottom = false;
-    private double dx;
-    private double dy;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -50,8 +42,8 @@ public class Main extends Application {
         primaryStage.show();
 
 
-        // TODO: THIS IS REFRENCE CODE FOR LATER
-        // LOAD HOMESCREEN ELEMENT --> LOAD ASSET PANE/BUTTON/SCENE --> ADD CHILDREN TO HOMSCREEN
+        // TODO: THIS IS REFERENCE CODE FOR LATER
+        // LOAD HOME-SCREEN ELEMENT --> LOAD ASSET PANE/BUTTON/SCENE --> ADD CHILDREN TO HOMSCREEN
 //        VBox homeScreenPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("test1.fxml")));
 //
 //

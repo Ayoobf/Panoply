@@ -9,36 +9,17 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class LoginController extends DefaultController implements Initializable {
 
     @FXML
-    private Button btExit;
-
-    @FXML
     private Button btLogin;
-
-    @FXML
-    private Button btBack;
-    @FXML
-    private Hyperlink lCreateAccount;
-
-    @FXML
-    private Hyperlink lReset;
-
-    @FXML
-    private VBox loginArea;
 
     @FXML
     private PasswordField tfPassword;
@@ -48,14 +29,6 @@ public class LoginController extends DefaultController implements Initializable 
 
     @FXML
     private BorderPane loginScreen;
-    @FXML
-    private Stage stage;
-    @FXML
-    private Scene scene;
-    private String username;
-    private String password;
-
-    private HomePageController homePageController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -68,7 +41,7 @@ public class LoginController extends DefaultController implements Initializable 
     }
 
     @FXML
-    void btLogin(ActionEvent event) {
+    void btLogin() {
 
         if (tfUsername.getText().isEmpty() || tfPassword.getText().isEmpty()) {
             showAlert("one or more fields are empty");
@@ -98,30 +71,30 @@ public class LoginController extends DefaultController implements Initializable 
     }
 
     @FXML
-    void btExit(ActionEvent event) {
+    void btExit() {
         Platform.exit();
     }
 
     @FXML
-    void lCreateAccount(ActionEvent event) {
+    void lCreateAccount() {
         switchScene("createAccount.fxml");
 
     }
 
     @FXML
-    void lReset(ActionEvent event) {
+    void lReset() {
 
         switchScene("resetPassword.fxml");
     }
 
     @FXML
-    void tfPassword(ActionEvent event) {
+    void tfPassword() {
         tfPassword.getText();
 
     }
 
     @FXML
-    void tfUsername(ActionEvent event) {
+    void tfUsername() {
         tfUsername.getText();
 
     }

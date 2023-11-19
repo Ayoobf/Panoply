@@ -6,29 +6,19 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
 public class CreateAccountController extends DefaultController implements Initializable {
 
     private final String[] choiceBoxOptions = {"Yes", "No"};
-    @FXML
-    private HBox Contact;
-    @FXML
-    private Label Title;
-    @FXML
-    private HBox TitleBar;
+
     @FXML
     private ChoiceBox<String> cbAdmin;
 
@@ -36,27 +26,13 @@ public class CreateAccountController extends DefaultController implements Initia
     private CheckBox cbTOS;
 
     @FXML
-    private Pane imageArea;
-    @FXML
     private BorderPane createPane;
-
-    @FXML
-    private VBox loginArea;
-
-    @FXML
-    private HBox nameEntryBox;
-
-    @FXML
-    private HBox passwordBox;
 
     @FXML
     private PasswordField pfConfirmPassword;
 
     @FXML
     private PasswordField pfPassword;
-
-    @FXML
-    private HBox team;
 
     @FXML
     private TextField teamName;
@@ -76,8 +52,6 @@ public class CreateAccountController extends DefaultController implements Initia
     @FXML
     private Button btSignup;
 
-//    private double x, y;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cbAdmin.getItems().addAll(choiceBoxOptions);
@@ -88,13 +62,13 @@ public class CreateAccountController extends DefaultController implements Initia
 
 
     @FXML
-    private void btExit(ActionEvent event) {
+    private void btExit() {
         Platform.exit();
     }
 
     @FXML
-    private void btSignup(ActionEvent event) {
-        String firstName, lastName, email, phoneNumber, password, confirmPassword, teamNameLocal, sAdmin, teamId;
+    private void btSignup() {
+        String firstName, lastName, email, phoneNumber, password, confirmPassword, teamNameLocal, teamId;
         boolean isAdmin;
 
         firstName = tfFirstName.getText();
@@ -104,8 +78,7 @@ public class CreateAccountController extends DefaultController implements Initia
         password = pfPassword.getText();
         confirmPassword = pfConfirmPassword.getText();
         teamNameLocal = teamName.getText();
-        sAdmin = cbAdmin.getValue();
-        isAdmin = sAdmin.equals("Yes");
+        isAdmin = cbAdmin.getValue().equals("Yes");
 
         // Check if inputted password is correct
         if (!password.equals(confirmPassword)) {
@@ -161,49 +134,49 @@ public class CreateAccountController extends DefaultController implements Initia
     }
 
     @FXML
-    private void cbTOS(ActionEvent event) {
-        tryToEnableButton();
+    private void cbTOS() {
+        tryToEnableSubmitButton();
 
     }
 
 
     @FXML
-    void pfConfirmPassword(ActionEvent event) {
-        tryToEnableButton();
+    void pfConfirmPassword() {
+        tryToEnableSubmitButton();
     }
 
     @FXML
-    void pfPassword(ActionEvent event) {
-        tryToEnableButton();
+    void pfPassword() {
+        tryToEnableSubmitButton();
     }
 
     @FXML
-    void teamName(ActionEvent event) {
-        tryToEnableButton();
+    void teamName() {
+        tryToEnableSubmitButton();
     }
 
     @FXML
-    void tfEmail(ActionEvent event) {
-        tryToEnableButton();
+    void tfEmail() {
+        tryToEnableSubmitButton();
     }
 
     @FXML
-    void tfFirstName(ActionEvent event) {
-        tryToEnableButton();
+    void tfFirstName() {
+        tryToEnableSubmitButton();
     }
 
     @FXML
-    void tfLastName(ActionEvent event) {
-        tryToEnableButton();
+    void tfLastName() {
+        tryToEnableSubmitButton();
     }
 
     @FXML
-    void tfPhoneNumber(ActionEvent event) {
-        tryToEnableButton();
+    void tfPhoneNumber() {
+        tryToEnableSubmitButton();
     }
 
     @FXML
-    private void lLogIn(ActionEvent event) {
+    private void lLogIn() {
         switchScene("login.fxml");
 
     }
@@ -241,7 +214,7 @@ public class CreateAccountController extends DefaultController implements Initia
         }
     }
 
-    private void tryToEnableButton() {
+    private void tryToEnableSubmitButton() {
         try {
             enableButton();
         } catch (NullPointerException ignore) {

@@ -12,126 +12,112 @@
       minWidth="1366.0"
       prefHeight="782.0" prefWidth="1366.0" style="-fx-background-color: #eeeeee;"
       xmlns="http://javafx.com/javafx/21" fx:controller="com.example.panoply.controllers.HomePageController">
-   <children>
-      <HBox fx:id="TitleBar" style="-fx-border-color: #000000;">
-         <children>
-            <Pane maxHeight="20.0" minHeight="28.0" prefHeight="28.0" prefWidth="200.0"
-                  style="-fx-background-color: #eeeeee;" HBox.hgrow="ALWAYS"/>
-            <Button maxHeight="28.0" maxWidth="28.0" minHeight="28.0" minWidth="28.0" mnemonicParsing="false"
-                    onAction="#btExit" opacity="0.71" prefHeight="28.0" prefWidth="28.0"
-                    style="-fx-background-color: #eeeeee;" text="X">
+   <HBox fx:id="TitleBar" style="-fx-border-color: #000000;">
+      <Pane maxHeight="20.0" minHeight="28.0" prefHeight="28.0" prefWidth="200.0"
+            style="-fx-background-color: #eeeeee;" HBox.hgrow="ALWAYS"/>
+      <Button maxHeight="28.0" maxWidth="28.0" minHeight="28.0" minWidth="28.0" mnemonicParsing="false"
+              onAction="#btExit" opacity="0.71" prefHeight="28.0" prefWidth="28.0"
+              style="-fx-background-color: #eeeeee;" text="X">
+         <font>
+            <Font name="Segoe UI Bold Italic" size="14.0"/>
+         </font>
+      </Button>
+   </HBox>
+   <SplitPane fx:id="divPane" dividerPositions="0.2001466275659824" maxHeight="768.0" maxWidth="1366.0"
+              minHeight="768.0" minWidth="1366.0" prefHeight="768.0" prefWidth="1366.0"
+              style="-fx-background-color: #eeeeee;">
+      <VBox fx:id="sideButtons" maxWidth="270.0" minWidth="125.0" prefHeight="766.0" prefWidth="270.0"
+            style="-fx-background-color: #eeeeee;">
+         <HBox>
+            <VBox.margin>
+               <Insets left="15.0"/>
+            </VBox.margin>
+            <Button fx:id="btCollapseSideBar" maxHeight="40.0" maxWidth="40.0" minHeight="40.0"
+                    minWidth="0.0" mnemonicParsing="false" onAction="#btCollapseSideBar"
+                    prefHeight="40.0" prefWidth="40.0"
+                    style="-fx-background-radius: 100; -fx-background-color: #eeeeee; -fx-border-color: #000000; -fx-border-radius: 100; -fx-rotate: 90;"
+                    text="|||">
                <font>
-                  <Font name="Segoe UI Bold Italic" size="14.0"/>
+                  <Font name="Segoe UI Bold" size="14.0"/>
                </font>
+               <HBox.margin>
+                  <Insets top="10.0"/>
+               </HBox.margin>
             </Button>
-         </children>
-      </HBox>
-      <SplitPane fx:id="divPane" dividerPositions="0.2001466275659824" maxHeight="768.0" maxWidth="1366.0"
-                 minHeight="768.0" minWidth="1366.0" prefHeight="768.0" prefWidth="1366.0"
-                 style="-fx-background-color: #eeeeee;">
-         <items>
-            <VBox fx:id="sideButtons" maxWidth="270.0" minWidth="125.0" prefHeight="766.0" prefWidth="270.0"
-                  style="-fx-background-color: #eeeeee;">
-               <children>
-                  <HBox>
-                     <VBox.margin>
-                        <Insets left="15.0"/>
-                     </VBox.margin>
-                     <children>
-                        <Button fx:id="btColapseSideBar" maxHeight="40.0" maxWidth="40.0" minHeight="40.0"
-                                minWidth="0.0" mnemonicParsing="false" onAction="#btCollapseSideBar"
-                                prefHeight="40.0" prefWidth="40.0"
-                                style="-fx-background-radius: 100; -fx-background-color: #eeeeee; -fx-border-color: #000000; -fx-border-radius: 100; -fx-rotate: 90;"
-                                text="|||">
-                           <font>
-                              <Font name="Segoe UI Bold" size="14.0"/>
-                           </font>
-                           <HBox.margin>
-                              <Insets top="10.0"/>
-                           </HBox.margin>
-                        </Button>
-                        <Label alignment="BOTTOM_CENTER" maxHeight="40.0" minHeight="40.0" minWidth="71.0"
-                               prefHeight="40.0" text="Welcome" textOverrun="CLIP">
-                           <font>
-                              <Font name="Segoe UI Bold" size="16.0"/>
-                           </font>
-                           <HBox.margin>
-                              <Insets left="5.0" top="10.0"/>
-                           </HBox.margin>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <Label fx:id="lblFirstName" maxHeight="50.0" maxWidth="270.0" minHeight="50.0" minWidth="0.0"
-                         prefHeight="50.0" prefWidth="270.0" text="{username}" textFill="#90ccf4"
-                         textOverrun="CLIP">
-                     <font>
-                        <Font name="Segoe UI Bold" size="41.89"/>
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="50.0" left="55.0" top="10.0"/>
-                     </VBox.margin>
-                  </Label>
-                  <Button fx:id="btHome" alignment="CENTER" ellipsisString="" maxHeight="50.0" maxWidth="270.0"
-                          minHeight="50.0" minWidth="108.0" mnemonicParsing="false" onAction="#btHome"
-                          prefHeight="50.0" prefWidth="270.0" style="-fx-background-color: #eeeeee;" text="Home"
-                          textOverrun="CLIP">
-                     <font>
-                        <Font name="Segoe UI Bold" size="25.8"/>
-                     </font>
-                     <opaqueInsets>
-                        <Insets/>
-                     </opaqueInsets>
-                  </Button>
-                  <Button fx:id="btUsers" layoutX="10.0" layoutY="110.0" maxHeight="50.0" maxWidth="270.0"
-                          minHeight="50.0" minWidth="93.0" mnemonicParsing="false" onAction="#btUsers"
-                          prefHeight="50.0" prefWidth="270.0" style="-fx-background-color: #eeeeee;" text="Users"
-                          textOverrun="CLIP">
-                     <font>
-                        <Font name="Segoe UI Bold" size="25.8"/>
-                     </font>
-                  </Button>
-                  <Button fx:id="btSettings" layoutX="10.0" layoutY="185.0" maxHeight="50.0" maxWidth="270.0"
-                          minHeight="50.0" minWidth="136.0" mnemonicParsing="false" onAction="#btSettings"
-                          prefHeight="50.0" prefWidth="270.0" style="-fx-background-color: #eeeeee;"
-                          text="Settings" textOverrun="CLIP">
-                     <font>
-                        <Font name="Segoe UI Bold" size="25.8"/>
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="389.0"/>
-                     </VBox.margin>
-                  </Button>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Button fx:id="btLogout" maxHeight="50.0" maxWidth="270.0" minHeight="50.0"
-                                minWidth="133.0" mnemonicParsing="false" onAction="#btLogout" prefHeight="50.0"
-                                prefWidth="270.0" style="-fx-background-color: #eeeeee;" text="Log Out"
-                                textFill="#f78888">
-                           <font>
-                              <Font name="Segoe UI Bold" size="25.8"/>
-                           </font>
-                           <HBox.margin>
-                              <Insets top="8.0"/>
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <Pane fx:id="containerPane">
-               <children>
-                  <VBox fx:id="defaultHomePage" disable="true" maxHeight="766.0" maxWidth="1358.0"
-                        minHeight="766.0" minWidth="1358.0" prefHeight="766.0" prefWidth="1358.0"
-                        style="-fx-border-radius: 15; -fx-background-color: #000000;" visible="false"/>
-                  <VBox fx:id="users" disable="true" maxHeight="766.0" maxWidth="1358.0" minHeight="766.0"
-                        minWidth="1358.0" prefHeight="766.0" prefWidth="1358.0"
-                        style="-fx-border-radius: 15; -fx-background-color: #FF0000;" visible="false"/>
-                  <VBox fx:id="settings" disable="true" maxHeight="766.0" maxWidth="1358.0" minHeight="766.0"
-                        minWidth="1358.0" prefHeight="766.0" prefWidth="1358.0"
-                        style="-fx-border-radius: 15; -fx-background-color: #0000FF;" visible="false"/>
-               </children>
-            </Pane>
-         </items>
-      </SplitPane>
-   </children>
+            <Label alignment="BOTTOM_CENTER" maxHeight="40.0" minHeight="40.0" minWidth="71.0"
+                   prefHeight="40.0" text="Welcome" textOverrun="CLIP">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0"/>
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0"/>
+               </HBox.margin>
+            </Label>
+         </HBox>
+         <Label fx:id="lblFirstName" maxHeight="50.0" maxWidth="270.0" minHeight="50.0" minWidth="0.0"
+                prefHeight="50.0" prefWidth="270.0" text="{username}" textFill="#90ccf4"
+                textOverrun="CLIP">
+            <font>
+               <Font name="Segoe UI Bold" size="41.89"/>
+            </font>
+            <VBox.margin>
+               <Insets bottom="50.0" left="55.0" top="10.0"/>
+            </VBox.margin>
+         </Label>
+         <Button fx:id="btHome" alignment="CENTER" ellipsisString="" maxHeight="50.0" maxWidth="270.0"
+                 minHeight="50.0" minWidth="108.0" mnemonicParsing="false" onAction="#btHome"
+                 prefHeight="50.0" prefWidth="270.0" style="-fx-background-color: #eeeeee;" text="Home"
+                 textOverrun="CLIP">
+            <font>
+               <Font name="Segoe UI Bold" size="25.8"/>
+            </font>
+            <opaqueInsets>
+               <Insets/>
+            </opaqueInsets>
+         </Button>
+         <Button fx:id="btUsers" layoutX="10.0" layoutY="110.0" maxHeight="50.0" maxWidth="270.0"
+                 minHeight="50.0" minWidth="93.0" mnemonicParsing="false" onAction="#btUsers"
+                 prefHeight="50.0" prefWidth="270.0" style="-fx-background-color: #eeeeee;" text="Users"
+                 textOverrun="CLIP">
+            <font>
+               <Font name="Segoe UI Bold" size="25.8"/>
+            </font>
+         </Button>
+         <Button fx:id="btSettings" layoutX="10.0" layoutY="185.0" maxHeight="50.0" maxWidth="270.0"
+                 minHeight="50.0" minWidth="136.0" mnemonicParsing="false" onAction="#btSettings"
+                 prefHeight="50.0" prefWidth="270.0" style="-fx-background-color: #eeeeee;"
+                 text="Settings" textOverrun="CLIP">
+            <font>
+               <Font name="Segoe UI Bold" size="25.8"/>
+            </font>
+            <VBox.margin>
+               <Insets bottom="389.0"/>
+            </VBox.margin>
+         </Button>
+         <HBox prefHeight="100.0" prefWidth="200.0">
+            <Button fx:id="btLogout" maxHeight="50.0" maxWidth="270.0" minHeight="50.0"
+                    minWidth="133.0" mnemonicParsing="false" onAction="#btLogout" prefHeight="50.0"
+                    prefWidth="270.0" style="-fx-background-color: #eeeeee;" text="Log Out"
+                    textFill="#f78888">
+               <font>
+                  <Font name="Segoe UI Bold" size="25.8"/>
+               </font>
+               <HBox.margin>
+                  <Insets top="8.0"/>
+               </HBox.margin>
+            </Button>
+         </HBox>
+      </VBox>
+      <Pane fx:id="containerPane">
+         <VBox fx:id="defaultHomePage" disable="true" maxHeight="766.0" maxWidth="1358.0"
+               minHeight="766.0" minWidth="1358.0" prefHeight="766.0" prefWidth="1358.0"
+               style="-fx-border-radius: 15; -fx-background-color: #000000;" visible="false"/>
+         <VBox fx:id="users" disable="true" maxHeight="766.0" maxWidth="1358.0" minHeight="766.0"
+               minWidth="1358.0" prefHeight="766.0" prefWidth="1358.0"
+               style="-fx-border-radius: 15; -fx-background-color: #FF0000;" visible="false"/>
+         <VBox fx:id="settings" disable="true" maxHeight="766.0" maxWidth="1358.0" minHeight="766.0"
+               minWidth="1358.0" prefHeight="766.0" prefWidth="1358.0"
+               style="-fx-border-radius: 15; -fx-background-color: #0000FF;" visible="false"/>
+      </Pane>
+   </SplitPane>
 </VBox>

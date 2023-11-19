@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -22,12 +21,11 @@ import javafx.scene.layout.VBox;
 public class HomePageController extends DefaultController implements Initializable {
 
     public Pane imageArea;
-    public VBox loginArea;
     public HBox TitleBar;
     public VBox homePage;
     public SplitPane divPane;
     public VBox sideButtons;
-    public Button btColapseSideBar;
+    public Button btCollapseSideBar;
     public Label lblFirstName;
     public Button btHome;
     public Button btUsers;
@@ -53,7 +51,7 @@ public class HomePageController extends DefaultController implements Initializab
 
         // requires seperate method because its special
         btHoverEffect(
-                Collections.singletonList(btColapseSideBar),
+                Collections.singletonList(btCollapseSideBar),
                 "-fx-background-color:#eeeeee;" +
                         "-fx-background-radius:100;" +
                         "-fx-border-color: #000000;" +
@@ -77,17 +75,17 @@ public class HomePageController extends DefaultController implements Initializab
 
 
     @FXML
-    void btHome(ActionEvent event) {
+    void btHome() {
         show(defaultHomePage);
     }
 
     @FXML
-    void btSettings(ActionEvent event) {
+    void btSettings() {
         show(settings);
     }
 
     @FXML
-    void btUsers(ActionEvent event) {
+    void btUsers() {
         show(users);
     }
 
@@ -101,7 +99,6 @@ public class HomePageController extends DefaultController implements Initializab
     void btLogout() {
         switchScene("login.fxml");
         changeWindowSize(1024, 600);
-
     }
 
     @FXML

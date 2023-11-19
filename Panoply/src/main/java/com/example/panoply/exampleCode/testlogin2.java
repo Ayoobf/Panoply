@@ -8,14 +8,7 @@ public class testlogin2 {
     public static void main(String[] args) {
         MongoDBHandlerExtra md = new MongoDBHandlerExtra();
 
-        String password = "123";
 
-        md.signUpUser("ayoob",
-                "florival",
-                "rflooivl@gmail.com",
-                password,
-                false,
-                "8484599622");
 
     }
 }

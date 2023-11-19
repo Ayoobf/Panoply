@@ -110,6 +110,11 @@ public class MongoDBHandlerExtra {
         return null;
     }
 
+    public String findUserFirstName(String userName) {
+        return userCollection.distinct("first_name", Filters.eq("username", userName), String.class).first();
+
+    }
+
     public String findTeam(String teamName) {
         Document doc = teamsCollection.find(Filters.eq("team_name", teamName)).first();
 

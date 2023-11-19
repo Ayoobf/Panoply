@@ -1,6 +1,8 @@
 package com.example.panoply.controllers;
 
 import com.example.panoply.Main;
+import com.example.panoply.User;
+import com.example.panoply.UserHolder;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ public class HomePageController extends DefaultController implements Initializab
         changeWindowSize(1366, 782);
         makeDraggable(homePage);
 
+        // make buttons more dynamic looking
         btHoverEffect(
                 Arrays.asList(btHome, btLogout, btUsers, btSettings),
                 "-fx-background-color:#EEEEEE",
@@ -66,16 +69,18 @@ public class HomePageController extends DefaultController implements Initializab
                         "-fx-border-color: #000000;" +
                         "-fx-border-radius: 100;" +
                         "-fx-rotate: 90"
-
         );
 
+        // set User lbl
+        UserHolder holder = UserHolder.getINSTANCE();
+        User user = holder.getUser();
+        lblFirstName.setText(user.getFirstName());
 
     }
 
 
     @FXML
     void btHome(ActionEvent event) {
-
         show(defaultHomePage);
     }
 
@@ -91,20 +96,20 @@ public class HomePageController extends DefaultController implements Initializab
     }
 
     @FXML
-    void btColapseSideBar(ActionEvent event) {
+    void btColapseSideBar() {
         sideButtons.setMinWidth(0);
         divPane.setDividerPosition(0, 0);
     }
 
     @FXML
-    void btLogout(ActionEvent event) {
+    void btLogout() {
         switchScene("login.fxml");
         changeWindowSize(1024, 600);
 
     }
 
     @FXML
-    void btExit(ActionEvent event) {
+    void btExit() {
         Platform.exit();
     }
 

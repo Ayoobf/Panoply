@@ -1,7 +1,10 @@
 package com.example.panoply.controllers;
 
 import com.example.panoply.Main;
+import com.example.panoply.User;
+import com.example.panoply.UserHolder;
 import com.example.panoply.mongoDB.MongoDBHandlerExtra;
+import com.mongodb.client.model.Filters;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -84,8 +87,12 @@ public class LoginController extends DefaultController implements Initializable 
 
             int authentication = new MongoDBHandlerExtra().authenticateUser(username, password);
             if (authentication == 1) {
-                switchScene("homePage.fxml");
 
+                User user = new User(new MongoDBHandlerExtra().findUserFirstName(username));
+                UserHolder holder = UserHolder.getINSTANCE();
+                holder.setUser(user);
+
+                switchScene("homePage.fxml");
             }
 
             if (authentication == 0) {

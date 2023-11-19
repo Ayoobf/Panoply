@@ -1,12 +1,21 @@
 package com.example.panoply.exampleCode;
 
+import static com.mongodb.client.model.Filters.eq;
+
 import com.example.panoply.mongoDB.MongoDBHandler;
+import com.mongodb.MongoException;
+import com.mongodb.client.DistinctIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Projections;
+import com.mongodb.client.model.Sorts;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import java.util.Scanner;
@@ -22,41 +31,59 @@ public class testLogin {
 
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+//        Scanner scanner = new Scanner(System.in);
+//
+//        System.out.println("Login (L) or Sign Up (S):");
+//        String decision = scanner.nextLine();
+//
+//        boolean goodInput = false;
+//        boolean login = false;
+//        boolean signUp = false;
+//
+//
+//        while (!goodInput) {
+//            if (decision.equals("L") || decision.equals("l")) {
+//                goodInput = true;
+//                login = true;
+//
+//            } else if (decision.equals("S") | decision.equals("s")) {
+//                goodInput = true;
+//                signUp = true;
+//
+//            } else {
+//                System.out.println("Irregular Input");
+//                System.out.println("Login (L) or Sign Up (S):");
+//                decision = scanner.nextLine();
+//            }
+//        }
+//
+//        if (login) {
+//            login();
+//        }
+//        if (signUp) {
+//            signUp();
+//            System.out.println("now that you created your account, log in!");
+//            login();
+//        }
+//        scanner.close();
 
-        System.out.println("Login (L) or Sign Up (S):");
-        String decision = scanner.nextLine();
-
-        boolean goodInput = false;
-        boolean login = false;
-        boolean signUp = false;
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase(databaseName);
 
 
-        while (!goodInput) {
-            if (decision.equals("L") || decision.equals("l")) {
-                goodInput = true;
-                login = true;
+            try {
+                String docs = collection.distinct("first_name", Filters.eq("username", "r@gmail.com"), String.class).first();
 
-            } else if (decision.equals("S") | decision.equals("s")) {
-                goodInput = true;
-                signUp = true;
+                System.out.println(docs);
 
-            } else {
-                System.out.println("Irregular Input");
-                System.out.println("Login (L) or Sign Up (S):");
-                decision = scanner.nextLine();
+            } catch (MongoException e) {
+                e.printStackTrace();
             }
+
+
         }
 
-        if (login) {
-            login();
-        }
-        if (signUp) {
-            signUp();
-            System.out.println("now that you created your account, log in!");
-            login();
-        }
-        scanner.close();
+
     }
 
 

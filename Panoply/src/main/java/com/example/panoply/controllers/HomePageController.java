@@ -3,13 +3,16 @@ package com.example.panoply.controllers;
 import com.example.panoply.User;
 import com.example.panoply.UserHolder;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -86,11 +89,20 @@ public class HomePageController extends DefaultController implements Initializab
     }
 
     @FXML
-    void btUsers() {
+    void btUsers() throws IOException {
         show(users);
 
+        // for each user in the team show that many amoun of buttons
         User user = UserHolder.getINSTANCE().getUser();
-        System.out.println(user.getTeamSize());
+        for (int i = 0; i < user.getTeamSize(); i++) {
+
+//            Button userButton = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("UserButton.fxml")));
+            Button userButton = new Button(String.valueOf(i));
+            users.getChildren().add(userButton);
+
+        }
+
+
     }
 
     @FXML

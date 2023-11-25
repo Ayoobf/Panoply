@@ -45,4 +45,7 @@ public class User {
         return teamSize;
     }
 
+    public String getTeamId() {
+        return teamId;
+    }
 }

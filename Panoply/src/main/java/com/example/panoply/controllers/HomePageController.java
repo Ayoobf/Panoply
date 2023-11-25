@@ -2,9 +2,11 @@ package com.example.panoply.controllers;
 
 import com.example.panoply.User;
 import com.example.panoply.UserHolder;
+import com.example.panoply.mongoDB.MongoDBHandlerExtra;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects;
@@ -89,19 +91,16 @@ public class HomePageController extends DefaultController implements Initializab
     }
 
     @FXML
-    void btUsers() throws IOException {
+    void btUsers() {
         show(users);
 
-        // for each user in the team show that many amoun of buttons
-        User user = UserHolder.getINSTANCE().getUser();
-        for (int i = 0; i < user.getTeamSize(); i++) {
+        User currentUser = UserHolder.getINSTANCE().getUser();
+        ArrayList<String> listUsers = new MongoDBHandlerExtra().listUsers(currentUser.getTeamId());
 
-//            Button userButton = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("UserButton.fxml")));
-            Button userButton = new Button(String.valueOf(i));
-            users.getChildren().add(userButton);
-
+        for (String user : listUsers) {
+            Button bt = new Button(user);
+            users.getChildren().add(bt);
         }
-
 
     }
 

@@ -1,18 +1,19 @@
 package com.example.panoply.mongoDB;
 
 
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Updates;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MongoDBHandlerExtra {
     final static String PASSWORD = System.getenv("PASSWORD");
@@ -153,5 +154,17 @@ public class MongoDBHandlerExtra {
                 Filters.eq("_id", new ObjectId(teamObjectId)),
                 Updates.set("team_size", currentTeamSize + 1
                 ));
+    }
+
+    public ArrayList<String> listUsers(String teamId) {
+        List<Document> resultList = new ArrayList<>();
+        userCollection.find(Filters.eq("team_id", new ObjectId(teamId))).into(resultList);
+
+        ArrayList<String> users = new ArrayList<>();
+        for (Document result : resultList) {
+            users.add((String) result.get("username"));
+        }
+
+        return users;
     }
 }

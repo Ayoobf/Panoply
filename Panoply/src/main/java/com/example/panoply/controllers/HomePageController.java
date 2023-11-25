@@ -77,6 +77,7 @@ public class HomePageController extends DefaultController implements Initializab
     @FXML
     void btHome() {
         show(defaultHomePage);
+
     }
 
     @FXML
@@ -87,6 +88,9 @@ public class HomePageController extends DefaultController implements Initializab
     @FXML
     void btUsers() {
         show(users);
+
+        User user = UserHolder.getINSTANCE().getUser();
+        System.out.println(user.getTeamSize());
     }
 
     @FXML
@@ -106,7 +110,6 @@ public class HomePageController extends DefaultController implements Initializab
         Platform.exit();
     }
 
-    // TODO make show method
     private void show(VBox activePage) {
         switch (activePage.getId()) {
             case "defaultHomePage" -> {

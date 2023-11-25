@@ -12,14 +12,11 @@ import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
-    // helps change scene
     private static Stage psg;
     private static Main applicationInstance;
-
     public static void main(String[] args) {
         launch();
     }
-
     public static Main getApplicationInstance() {
         return applicationInstance;
     }
@@ -63,8 +60,7 @@ public class Main extends Application {
 
     }
 
-    // This code may seem convoluted...
-    // however, javaFX will not allow me to change scene sizes within controller classes.
+    // This code may seem convoluted and stupid, but it makes my project windows work...
     public void setWindowSize(double width, double height) {
         psg.setMinWidth(width);
         psg.setMinHeight(height);

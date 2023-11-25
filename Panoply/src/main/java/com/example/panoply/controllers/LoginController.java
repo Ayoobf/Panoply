@@ -52,8 +52,8 @@ public class LoginController extends DefaultController implements Initializable 
 
             int authentication = new MongoDBHandlerExtra().authenticateUser(username, password);
             if (authentication == 1) {
-
-                User user = new User(new MongoDBHandlerExtra().findUserFirstName(username));
+                // TODO needs a better implementation
+                User user = new User(new MongoDBHandlerExtra().findUserFirstName(username), "", "", false, username);
                 UserHolder holder = UserHolder.getINSTANCE();
                 holder.setUser(user);
 

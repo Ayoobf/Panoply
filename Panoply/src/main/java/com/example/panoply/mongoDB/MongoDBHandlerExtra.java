@@ -100,6 +100,7 @@ public class MongoDBHandlerExtra {
 
     }
 
+    // Finds User ObjectID
     public String findUser(String email) {
         Document doc = userCollection.find(Filters.eq("username", email)).first();
 
@@ -110,11 +111,19 @@ public class MongoDBHandlerExtra {
         return null;
     }
 
+    // Finds User FirstName (String)
     public String findUserFirstName(String userName) {
         return userCollection.distinct("first_name", Filters.eq("username", userName), String.class).first();
 
     }
 
+    // Finds User TeamID via Username
+    public String findUserTeamId(String userName) {
+        return userCollection.distinct("team_id", Filters.eq("username", userName), ObjectId.class).first().toString();
+
+    }
+
+    // Returns Team Object
     public String findTeam(String teamName) {
         Document doc = teamsCollection.find(Filters.eq("team_name", teamName)).first();
 
@@ -123,9 +132,16 @@ public class MongoDBHandlerExtra {
 
         }
         return null;
-
-
     }
 
+    // finds the size of a team with teamId
+    public int findTeamSize(String teamIdStr) {
+        ObjectId teamId = new ObjectId(teamIdStr);
+        Integer result = teamsCollection.distinct("team_size", Filters.eq("_id", teamId), Integer.class).first();
+        if (result != null) {
+            return result;
+        }
+        return 0;
 
+    }
 }

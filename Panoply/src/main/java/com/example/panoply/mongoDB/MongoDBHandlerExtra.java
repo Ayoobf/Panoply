@@ -58,6 +58,8 @@ public class MongoDBHandlerExtra {
                 .append("phone_number", phoneNumber)
         );
 
+        incrementTeamSize(teamId, findTeamSize(teamId));
+
 
     }
 
@@ -87,6 +89,7 @@ public class MongoDBHandlerExtra {
                 Updates.set("team_id", new ObjectId(teamObjectId)
                 ));
     }
+
 
     public void makeTeam(String teamName, String adminName) {
 
@@ -143,5 +146,12 @@ public class MongoDBHandlerExtra {
         }
         return 0;
 
+    }
+
+    public void incrementTeamSize(String teamObjectId, int currentTeamSize) {
+        teamsCollection.updateOne(
+                Filters.eq("_id", new ObjectId(teamObjectId)),
+                Updates.set("team_size", currentTeamSize + 1
+                ));
     }
 }

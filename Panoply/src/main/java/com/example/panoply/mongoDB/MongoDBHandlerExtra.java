@@ -1,6 +1,5 @@
 package com.example.panoply.mongoDB;
 
-
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -14,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MongoDBHandlerExtra {
     final static String PASSWORD = System.getenv("PASSWORD");
@@ -121,9 +121,27 @@ public class MongoDBHandlerExtra {
 
     }
 
+    // Finds User LastName (String)
+    public String findUserLastName(String userName) {
+        return userCollection.distinct("last_name", Filters.eq("username", userName), String.class).first();
+
+    }
+
+    // Finds User PhoneNumber (String)
+    public String findUserPhoneNumber(String userName) {
+        return userCollection.distinct("phone_number", Filters.eq("username", userName), String.class).first();
+
+    }
+
+    // Finds User adminStatus (bool)
+    public boolean findUserAdminStatus(String userName) {
+        return Boolean.TRUE.equals(userCollection.distinct("is_admin", Filters.eq("username", userName), Boolean.class).first());
+
+    }
+
     // Finds User TeamID via Username
     public String findUserTeamId(String userName) {
-        return userCollection.distinct("team_id", Filters.eq("username", userName), ObjectId.class).first().toString();
+        return Objects.requireNonNull(userCollection.distinct("team_id", Filters.eq("username", userName), ObjectId.class).first()).toString();
 
     }
 
@@ -167,4 +185,12 @@ public class MongoDBHandlerExtra {
 
         return users;
     }
+
+    // returns a list of user Objects
+    public List<Document> listTeamMembers(String teamId) {
+        List<Document> resultList = new ArrayList<>();
+        return userCollection.find(Filters.eq("team_id", new ObjectId(teamId))).into(resultList);
+    }
+
+
 }

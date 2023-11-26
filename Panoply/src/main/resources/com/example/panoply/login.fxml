@@ -14,9 +14,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="loginScreen" id="Login Screen" focusTraversable="true"
-            maxHeight="600.0" maxWidth="1024.0"
-            minHeight="600.0" minWidth="1024.0" prefHeight="600.0"
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" id="Login Screen" fx:id="loginScreen" focusTraversable="true" maxHeight="600.0"
+            maxWidth="1024.0" minHeight="600.0" minWidth="1024.0" prefHeight="600.0"
             prefWidth="1024.0" style="-fx-background-color: #EEEEEE; -fx-border-radius: 15;"
             xmlns="http://javafx.com/javafx/21" fx:controller="com.example.panoply.controllers.LoginController">
     <left>
@@ -89,7 +88,7 @@
                 </PasswordField>
                 <HBox prefHeight="100.0" prefWidth="200.0">
                     <children>
-                        <Label opacity="0.5" text="Forgot password?">
+                        <Label disable="true" opacity="0.5" text="Forgot password?" visible="false">
                             <font>
                                 <Font name="Segoe UI Bold" size="16.0"/>
                             </font>
@@ -98,7 +97,7 @@
                             </HBox.margin>
                         </Label>
                         <Hyperlink fx:id="lReset" alignment="TOP_LEFT" maxHeight="25.0" minHeight="25.0"
-                                   onAction="#lReset" prefHeight="25.0" text="Reset">
+                                   onAction="#lReset" prefHeight="25.0" text="Reset" visible="false" wrapText="true">
                             <font>
                                 <Font name="Segoe UI Bold" size="16.0"/>
                             </font>

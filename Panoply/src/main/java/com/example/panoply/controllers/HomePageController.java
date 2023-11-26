@@ -1,6 +1,7 @@
 package com.example.panoply.controllers;
 
 import com.example.panoply.User;
+import com.example.panoply.User2;
 import com.example.panoply.UserHolder;
 import com.example.panoply.mongoDB.MongoDBHandlerExtra;
 
@@ -9,23 +10,31 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class HomePageController extends DefaultController implements Initializable {
 
-    public Pane imageArea;
+    //    public Pane imageArea;
     public HBox TitleBar;
     public VBox homePage;
     public SplitPane divPane;
@@ -40,6 +49,10 @@ public class HomePageController extends DefaultController implements Initializab
     public VBox defaultHomePage;
     public VBox users;
     public VBox settings;
+    public TableColumn nameCol;
+    public TableColumn emailCol;
+    public TableColumn noteCol;
+    public TableColumn adminCol;
 
 
     @Override
@@ -54,7 +67,7 @@ public class HomePageController extends DefaultController implements Initializab
                 "-fx-background-color:D0D0D0"
         );
 
-        // requires seperate method because its special
+        // requires separate method because its special
         btHoverEffect(
                 Collections.singletonList(btCollapseSideBar),
                 "-fx-background-color:#eeeeee;" +
@@ -76,6 +89,11 @@ public class HomePageController extends DefaultController implements Initializab
         lblFirstName.setText(user.getFirstName());
 
         show(defaultHomePage);
+
+        User currentUser = UserHolder.getINSTANCE().getUser();
+        System.out.println(currentUser.getLastName());
+
+
     }
 
 
@@ -95,12 +113,26 @@ public class HomePageController extends DefaultController implements Initializab
         show(users);
 
         User currentUser = UserHolder.getINSTANCE().getUser();
-        ArrayList<String> listUsers = new MongoDBHandlerExtra().listUsers(currentUser.getTeamId());
+        // Get the list of members
+        List<User> members = List.of(currentUser);
+        ObservableList<User> teamMembers = FXCollections.observableArrayList(members);
 
-        for (String user : listUsers) {
-            Button bt = new Button(user);
-            users.getChildren().add(bt);
-        }
+        // Create table
+        TableView<User> usersTable = new TableView<>();
+        usersTable.setItems(teamMembers);
+        TableColumn<User, String> firstNameCol = new TableColumn<>("First Name");
+        firstNameCol.setCellValueFactory(new PropertyValueFactory<>(members.get(0).firstNameProperty().getName()));
+        TableColumn<User, String> lastNameCol = new TableColumn<>("Last Name");
+        lastNameCol.setCellValueFactory(new PropertyValueFactory<>(members.get(0).lastNameProperty().getName()));
+        TableColumn<User, String> emailCol = new TableColumn<>("Email");
+        emailCol.setCellValueFactory(new PropertyValueFactory<>(members.get(0).emailProperty().getName()));
+        TableColumn<User, String> isAdminCol = new TableColumn<>("Admin Status");
+        isAdminCol.setCellValueFactory(new PropertyValueFactory<>(members.get(0).adminProperty().getName()));
+
+        // Add Table
+        usersTable.getColumns().setAll(firstNameCol, lastNameCol, emailCol, isAdminCol);
+        users.getChildren().add(usersTable);
+
 
     }
 
@@ -130,6 +162,7 @@ public class HomePageController extends DefaultController implements Initializab
                 users.setDisable(true);
                 settings.setVisible(false);
                 settings.setDisable(true);
+
             }
             case "users" -> {
                 users.setVisible(true);

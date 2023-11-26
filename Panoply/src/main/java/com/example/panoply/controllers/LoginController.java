@@ -50,10 +50,12 @@ public class LoginController extends DefaultController implements Initializable 
             String username = tfUsername.getText().trim();
             String password = tfPassword.getText().trim();
 
-            int authentication = new MongoDBHandlerExtra().authenticateUser(username, password);
+            MongoDBHandlerExtra finder = new MongoDBHandlerExtra();
+            int authentication = finder.authenticateUser(username, password);
+
             if (authentication == 1) {
                 // TODO needs a better implementation
-                User user = new User(new MongoDBHandlerExtra().findUserFirstName(username), "", "", false, username);
+                User user = new User(finder.findUserFirstName(username), finder.findUserLastName(username), finder.findUserPhoneNumber(username), finder.findUserAdminStatus(username), username);
                 UserHolder holder = UserHolder.getINSTANCE();
                 holder.setUser(user);
 

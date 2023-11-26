@@ -103,19 +103,6 @@ public class User {
     }
 
 
-//    // For testing
-//    public User(String firstName, String lastName, String email, boolean isAdmin) {
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//
-//        setFirstNameSP(firstName);
-//        setLastNameSP(lastName);
-//        setEmailSP(email);
-//        setAdminSP(String.valueOf(isAdmin));
-//
-//    }
-
-
     @Override
     public String toString() {
         return firstName + " " + lastName + " " + phoneNumber + " " + isAdmin + " " + userName;

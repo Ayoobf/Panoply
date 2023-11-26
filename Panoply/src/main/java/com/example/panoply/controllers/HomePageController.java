@@ -8,7 +8,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -16,15 +15,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.util.Callback;
 
 public class HomePageController extends DefaultController implements Initializable {
 
@@ -43,10 +48,11 @@ public class HomePageController extends DefaultController implements Initializab
     public VBox defaultHomePage;
     public VBox users;
     public VBox settings;
-    public TableColumn nameCol;
-    public TableColumn emailCol;
-    public TableColumn noteCol;
-    public TableColumn adminCol;
+    public TableView<User> usersTB;
+    public TableColumn<User, String> firstNameCol;
+    public TableColumn<User, String> lastNameCol;
+    public TableColumn<User, String> emailCol;
+    public TableColumn<User, String> isAdminCol;
 
 
     @Override
@@ -84,12 +90,7 @@ public class HomePageController extends DefaultController implements Initializab
 
         show(defaultHomePage);
 
-        User currentUser = UserHolder.getINSTANCE().getUser();
-        System.out.println(currentUser.getLastName());
-
-
     }
-
 
     @FXML
     void btHome() {
@@ -105,7 +106,6 @@ public class HomePageController extends DefaultController implements Initializab
     @FXML
     void btUsers() {
         show(users);
-
         User currentUser = UserHolder.getINSTANCE().getUser();
 
         // Get the list of members
@@ -113,43 +113,58 @@ public class HomePageController extends DefaultController implements Initializab
         ObservableList<User> teamMembers = FXCollections.observableArrayList(listOfTeamMembers);
 
         // Create table
-        TableView<User> usersTable = new TableView<>();
-        usersTable.setItems(teamMembers);
+        usersTB.setItems(teamMembers);
 
         //Create Columns
-        TableColumn<User, String> firstNameCol = new TableColumn<>("First Name");
         firstNameCol.setCellValueFactory(new PropertyValueFactory<>(listOfTeamMembers.get(0).firstNameProperty().getName()));
-        TableColumn<User, String> lastNameCol = new TableColumn<>("Last Name");
         lastNameCol.setCellValueFactory(new PropertyValueFactory<>(listOfTeamMembers.get(0).lastNameProperty().getName()));
-        TableColumn<User, String> emailCol = new TableColumn<>("Email");
         emailCol.setCellValueFactory(new PropertyValueFactory<>(listOfTeamMembers.get(0).emailProperty().getName()));
-        TableColumn<User, String> isAdminCol = new TableColumn<>("Admin Status");
         isAdminCol.setCellValueFactory(new PropertyValueFactory<>(listOfTeamMembers.get(0).adminProperty().getName()));
 
-        format(firstNameCol);
-        format(lastNameCol);
-        format(emailCol);
-        format(isAdminCol);
+        styleCol(firstNameCol, Color.BLACK);
+        styleCol(lastNameCol, Color.BLACK);
+        styleCol(emailCol, Color.rgb(144, 204, 244));
+        styleCol(isAdminCol, Color.BLACK);
+
 
         // Add Table
-        usersTable.getColumns().setAll(firstNameCol, lastNameCol, emailCol, isAdminCol);
-        users.getChildren().add(usersTable);
+        usersTB.getColumns().setAll(firstNameCol, lastNameCol, emailCol, isAdminCol);
 
-
+//        if(sidebar is col;lapsed){
+//            firstNameCol.setMinWidth(500);
+//        }
     }
 
-    private void format(TableColumn<User, String> col) {
-        col.setPrefWidth(200);
-        col.setMinWidth(75);
-        col.setMaxWidth(500);
-        col.setResizable(true);
-        col.setReorderable(false);
+    private <T, S> void styleCol(TableColumn<User, String> col, Color color) {
+        col.setCellFactory(new Callback<>() {
+            public TableCell<User, String> call(TableColumn<User, String> param) {
+                return new TableCell<>() {
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!isEmpty()) {
+                            this.setTextFill(color);
+                            this.setFont(Font.font("Segoue UI", FontWeight.BOLD, 16));
+                            this.setAlignment(Pos.CENTER);
+
+
+                            if (item.contains("true"))
+                                this.setTextFill(Color.rgb(243, 210, 80));
+                            setText(item);
+                        }
+                    }
+                };
+            }
+        });
+
     }
 
     @FXML
     void btCollapseSideBar() {
         sideButtons.setMinWidth(0);
         divPane.setDividerPosition(0, 0);
+
     }
 
     @FXML

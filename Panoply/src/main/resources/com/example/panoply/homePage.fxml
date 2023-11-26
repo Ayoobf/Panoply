@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -106,8 +108,55 @@
          <VBox fx:id="defaultHomePage" disable="true" maxHeight="766.0" maxWidth="1358.0" minHeight="766.0"
                minWidth="1358.0" prefHeight="766.0" prefWidth="1358.0"
                style="-fx-border-radius: 15; -fx-background-color: #000000;" visible="false"/>
-         <VBox fx:id="users" disable="true" maxHeight="766.0" maxWidth="1358.0" minHeight="766.0" minWidth="1358.0"
-               prefHeight="766.0" prefWidth="1358.0" style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;"/>
+         <VBox fx:id="users" maxHeight="766.0" maxWidth="1358.0" minHeight="766.0" minWidth="1358.0" prefHeight="766.0"
+               prefWidth="1358.0" style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;">
+            <children>
+               <TableView fx:id="usersTB" prefHeight="766.0" prefWidth="200.0" style="-fx-background-color: #eeeeee;">
+                  <columns>
+                     <TableColumn fx:id="firstNameCol" maxWidth="500.0" minWidth="275.0" prefWidth="275.0"
+                                  style="-fx-background-color: #eeeeee;">
+                        <graphic>
+                           <Label text="First Name">
+                              <font>
+                                 <Font name="Segoe UI Bold Italic" size="18.0"/>
+                              </font>
+                           </Label>
+                        </graphic>
+                     </TableColumn>
+                     <TableColumn fx:id="lastNameCol" maxWidth="500.0" minWidth="275.0" prefWidth="275.0"
+                                  style="-fx-background-color: #eeeeee;">
+                        <graphic>
+                           <Label text="Last Name">
+                              <font>
+                                 <Font name="Segoe UI Bold Italic" size="18.0"/>
+                              </font>
+                           </Label>
+                        </graphic>
+                     </TableColumn>
+                     <TableColumn fx:id="emailCol" maxWidth="500.0" minWidth="275.0" prefWidth="275.0"
+                                  style="-fx-background-color: #eeeeee;">
+                        <graphic>
+                           <Label text="Email">
+                              <font>
+                                 <Font name="Segoe UI Bold Italic" size="18.0"/>
+                              </font>
+                           </Label>
+                        </graphic>
+                     </TableColumn>
+                     <TableColumn fx:id="isAdminCol" maxWidth="500.0" minWidth="275.0" prefWidth="275.0"
+                                  style="-fx-background-color: #eeeeee;">
+                        <graphic>
+                           <Label text="Admin Status">
+                              <font>
+                                 <Font name="Segoe UI Bold Italic" size="18.0"/>
+                              </font>
+                           </Label>
+                        </graphic>
+                     </TableColumn>
+                  </columns>
+               </TableView>
+            </children>
+         </VBox>
          <VBox fx:id="settings" disable="true" maxHeight="766.0" maxWidth="1358.0" minHeight="766.0" minWidth="1358.0"
                prefHeight="766.0" prefWidth="1358.0" style="-fx-border-radius: 15; -fx-background-color: #0000FF;"
                visible="false"/>

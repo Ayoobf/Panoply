@@ -1,5 +1,6 @@
 package com.example.panoply.mongoDB;
 
+import com.example.panoply.User;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -174,22 +175,24 @@ public class MongoDBHandlerExtra {
                 ));
     }
 
-    public ArrayList<String> listUsers(String teamId) {
+    // returns a list of user Objects
+    public ArrayList<User> listTeamMembers(String teamId) {
         List<Document> resultList = new ArrayList<>();
+        ArrayList<User> userList = new ArrayList<>();
         userCollection.find(Filters.eq("team_id", new ObjectId(teamId))).into(resultList);
 
-        ArrayList<String> users = new ArrayList<>();
-        for (Document result : resultList) {
-            users.add((String) result.get("username"));
+        for (Document iUser : resultList) {
+            User user = new User(
+                    iUser.get("first_name").toString(),
+                    iUser.get("last_name").toString(),
+                    iUser.get("phone_number").toString(),
+                    Boolean.parseBoolean(iUser.get("is_admin").toString()),
+                    iUser.get("username").toString());
+            userList.add(user);
         }
 
-        return users;
-    }
+        return userList;
 
-    // returns a list of user Objects
-    public List<Document> listTeamMembers(String teamId) {
-        List<Document> resultList = new ArrayList<>();
-        return userCollection.find(Filters.eq("team_id", new ObjectId(teamId))).into(resultList);
     }
 
 

@@ -1,29 +1,23 @@
 package com.example.panoply.controllers;
 
 import com.example.panoply.User;
-import com.example.panoply.User2;
 import com.example.panoply.UserHolder;
 import com.example.panoply.mongoDB.MongoDBHandlerExtra;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -113,27 +107,43 @@ public class HomePageController extends DefaultController implements Initializab
         show(users);
 
         User currentUser = UserHolder.getINSTANCE().getUser();
+
         // Get the list of members
-        List<User> members = List.of(currentUser);
-        ObservableList<User> teamMembers = FXCollections.observableArrayList(members);
+        ArrayList<User> listOfTeamMembers = new MongoDBHandlerExtra().listTeamMembers(currentUser.getTeamId());
+        ObservableList<User> teamMembers = FXCollections.observableArrayList(listOfTeamMembers);
 
         // Create table
         TableView<User> usersTable = new TableView<>();
         usersTable.setItems(teamMembers);
+
+        //Create Columns
         TableColumn<User, String> firstNameCol = new TableColumn<>("First Name");
-        firstNameCol.setCellValueFactory(new PropertyValueFactory<>(members.get(0).firstNameProperty().getName()));
+        firstNameCol.setCellValueFactory(new PropertyValueFactory<>(listOfTeamMembers.get(0).firstNameProperty().getName()));
         TableColumn<User, String> lastNameCol = new TableColumn<>("Last Name");
-        lastNameCol.setCellValueFactory(new PropertyValueFactory<>(members.get(0).lastNameProperty().getName()));
+        lastNameCol.setCellValueFactory(new PropertyValueFactory<>(listOfTeamMembers.get(0).lastNameProperty().getName()));
         TableColumn<User, String> emailCol = new TableColumn<>("Email");
-        emailCol.setCellValueFactory(new PropertyValueFactory<>(members.get(0).emailProperty().getName()));
+        emailCol.setCellValueFactory(new PropertyValueFactory<>(listOfTeamMembers.get(0).emailProperty().getName()));
         TableColumn<User, String> isAdminCol = new TableColumn<>("Admin Status");
-        isAdminCol.setCellValueFactory(new PropertyValueFactory<>(members.get(0).adminProperty().getName()));
+        isAdminCol.setCellValueFactory(new PropertyValueFactory<>(listOfTeamMembers.get(0).adminProperty().getName()));
+
+        format(firstNameCol);
+        format(lastNameCol);
+        format(emailCol);
+        format(isAdminCol);
 
         // Add Table
         usersTable.getColumns().setAll(firstNameCol, lastNameCol, emailCol, isAdminCol);
         users.getChildren().add(usersTable);
 
 
+    }
+
+    private void format(TableColumn<User, String> col) {
+        col.setPrefWidth(200);
+        col.setMinWidth(75);
+        col.setMaxWidth(500);
+        col.setResizable(true);
+        col.setReorderable(false);
     }
 
     @FXML

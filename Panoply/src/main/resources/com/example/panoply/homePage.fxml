@@ -111,6 +111,14 @@
          <VBox fx:id="users" maxHeight="766.0" maxWidth="1358.0" minHeight="766.0" minWidth="1358.0" prefHeight="766.0"
                prefWidth="1358.0" style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;">
             <children>
+               <Label fx:id="lblTeamName" text="teamName">
+                  <font>
+                     <Font name="Segoe UI Bold" size="41.89"/>
+                  </font>
+                  <VBox.margin>
+                     <Insets bottom="20.0"/>
+                  </VBox.margin>
+               </Label>
                <TableView fx:id="usersTB" prefHeight="766.0" prefWidth="200.0" style="-fx-background-color: #eeeeee;">
                   <columns>
                      <TableColumn fx:id="firstNameCol" maxWidth="500.0" minWidth="275.0" prefWidth="275.0"

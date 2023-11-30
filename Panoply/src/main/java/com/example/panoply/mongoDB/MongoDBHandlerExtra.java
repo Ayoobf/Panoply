@@ -146,17 +146,6 @@ public class MongoDBHandlerExtra {
 
     }
 
-    // Finds User TeamName via TeamId
-    public String findUserTeamName(String teamIdStr) {
-        ObjectId teamId = new ObjectId(teamIdStr);
-        String result = teamsCollection.distinct("team_name", Filters.eq("_id", teamId), String.class).first();
-        if (result != null) {
-            return result;
-        }
-        return null;
-
-    }
-
     // Returns Team Object
     public String findTeam(String teamName) {
         Document doc = teamsCollection.find(Filters.eq("team_name", teamName)).first();

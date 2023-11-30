@@ -53,7 +53,7 @@ public class HomePageController extends DefaultController implements Initializab
     public TableColumn<User, String> lastNameCol;
     public TableColumn<User, String> emailCol;
     public TableColumn<User, String> isAdminCol;
-    public Label lblTeamName;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -103,20 +103,18 @@ public class HomePageController extends DefaultController implements Initializab
         show(settings);
     }
 
-    @SuppressWarnings("unchecked")
     @FXML
     void btUsers() {
         show(users);
         User currentUser = UserHolder.getINSTANCE().getUser();
 
-        lblTeamName.setText(" Team " + new MongoDBHandlerExtra().findUserTeamName(currentUser.getTeamId()) + "'s Users");
-
-
         // Get the list of members
         ArrayList<User> listOfTeamMembers = new MongoDBHandlerExtra().listTeamMembers(currentUser.getTeamId());
         ObservableList<User> teamMembers = FXCollections.observableArrayList(listOfTeamMembers);
 
+        // Create table
         usersTB.setItems(teamMembers);
+
         //Create Columns
         firstNameCol.setCellValueFactory(new PropertyValueFactory<>(listOfTeamMembers.get(0).firstNameProperty().getName()));
         lastNameCol.setCellValueFactory(new PropertyValueFactory<>(listOfTeamMembers.get(0).lastNameProperty().getName()));
@@ -128,11 +126,16 @@ public class HomePageController extends DefaultController implements Initializab
         styleCol(emailCol, Color.rgb(144, 204, 244));
         styleCol(isAdminCol, Color.BLACK);
 
+
         // Add Table
         usersTB.getColumns().setAll(firstNameCol, lastNameCol, emailCol, isAdminCol);
+
+//        if(sidebar is col;lapsed){
+//            firstNameCol.setMinWidth(500);
+//        }
     }
 
-    private void styleCol(TableColumn<User, String> col, Color color) {
+    private <T, S> void styleCol(TableColumn<User, String> col, Color color) {
         col.setCellFactory(new Callback<>() {
             public TableCell<User, String> call(TableColumn<User, String> param) {
                 return new TableCell<>() {
@@ -161,7 +164,6 @@ public class HomePageController extends DefaultController implements Initializab
     void btCollapseSideBar() {
         sideButtons.setMinWidth(0);
         divPane.setDividerPosition(0, 0);
-
 
     }
 

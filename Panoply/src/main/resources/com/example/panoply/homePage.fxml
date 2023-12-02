@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -105,11 +106,29 @@
          </HBox>
       </VBox>
       <Pane fx:id="containerPane">
-         <VBox fx:id="defaultHomePage" disable="true" maxHeight="766.0" maxWidth="1358.0" minHeight="766.0"
-               minWidth="1358.0" prefHeight="766.0" prefWidth="1358.0"
-               style="-fx-border-radius: 15; -fx-background-color: #000000;" visible="false"/>
-         <VBox fx:id="users" maxHeight="766.0" maxWidth="1358.0" minHeight="766.0" minWidth="1358.0" prefHeight="766.0"
-               prefWidth="1358.0" style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;">
+         <VBox fx:id="defaultHomePage" maxHeight="766.0" minHeight="766.0" minWidth="1100.0" prefHeight="766.0"
+               prefWidth="1100.0" style="-fx-border-radius: 15; -fx-background-color: #eeeeee;">
+            <children>
+               <HBox>
+                  <children>
+                     <Label text="Documents">
+                        <font>
+                           <Font name="Segoe UI Bold" size="42.0"/>
+                        </font>
+                     </Label>
+                     <Button fx:id="btAddFile" mnemonicParsing="false" text="Add File"/>
+                  </children>
+               </HBox>
+               <ScrollPane fx:id="sbDocuments" minHeight="714.0" prefHeight="714.0" prefWidth="200.0">
+                  <content>
+                     <VBox fx:id="vbDocuemtns" prefHeight="200.0" prefWidth="200.0"/>
+                  </content>
+               </ScrollPane>
+            </children>
+         </VBox>
+         <VBox fx:id="users" disable="true" maxHeight="766.0" maxWidth="1358.0" minHeight="766.0" minWidth="1358.0"
+               prefHeight="766.0" prefWidth="1358.0" style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;"
+               visible="false">
             <children>
                <TableView fx:id="usersTB" prefHeight="766.0" prefWidth="200.0" style="-fx-background-color: #eeeeee;">
                   <columns>

@@ -2,7 +2,7 @@ package com.example.panoply.controllers;
 
 import com.example.panoply.User;
 import com.example.panoply.UserHolder;
-import com.example.panoply.mongoDB.MongoDBHandlerExtra;
+import com.example.panoply.handlers.MongoDBHandler;
 
 import java.net.URL;
 import java.util.Collections;
@@ -50,7 +50,7 @@ public class LoginController extends DefaultController implements Initializable 
             String username = tfUsername.getText().trim();
             String password = tfPassword.getText().trim();
 
-            MongoDBHandlerExtra finder = new MongoDBHandlerExtra();
+            MongoDBHandler finder = new MongoDBHandler();
             int authentication = finder.authenticateUser(username, password);
 
             if (authentication == 1) {

@@ -1,4 +1,4 @@
-package com.example.panoply.mongoDB;
+package com.example.panoply.handlers;
 
 import com.example.panoply.User;
 import com.mongodb.client.MongoClient;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MongoDBHandlerExtra {
+public class MongoDBHandler {
     final static String PASSWORD = System.getenv("PASSWORD");
     private static final String uri = "mongodb+srv://ayoobf:" + PASSWORD + "@documentmanagercluster.ewmjoau.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
     private static final MongoClient client = MongoClients.create(uri);
@@ -25,7 +25,7 @@ public class MongoDBHandlerExtra {
     private static final MongoCollection<Document> teamsCollection = database.getCollection("teams");
     private static final BCryptPasswordEncoder authenticator = new BCryptPasswordEncoder();
 
-    public MongoDBHandlerExtra() {
+    public MongoDBHandler() {
 
     }
 

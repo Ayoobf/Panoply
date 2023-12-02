@@ -2,7 +2,7 @@ package com.example.panoply.controllers;
 
 import com.example.panoply.User;
 import com.example.panoply.UserHolder;
-import com.example.panoply.mongoDB.MongoDBHandlerExtra;
+import com.example.panoply.handlers.MongoDBHandler;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -53,6 +54,9 @@ public class HomePageController extends DefaultController implements Initializab
     public TableColumn<User, String> lastNameCol;
     public TableColumn<User, String> emailCol;
     public TableColumn<User, String> isAdminCol;
+    public Button btAddFile;
+    public ScrollPane sbDocuments;
+    public VBox vbDocuemtns;
 
 
     @Override
@@ -90,6 +94,7 @@ public class HomePageController extends DefaultController implements Initializab
 
         show(defaultHomePage);
 
+        vbDocuemtns.getChildren().addAll();
     }
 
     @FXML
@@ -109,7 +114,7 @@ public class HomePageController extends DefaultController implements Initializab
         User currentUser = UserHolder.getINSTANCE().getUser();
 
         // Get the list of members
-        ArrayList<User> listOfTeamMembers = new MongoDBHandlerExtra().listTeamMembers(currentUser.getTeamId());
+        ArrayList<User> listOfTeamMembers = new MongoDBHandler().listTeamMembers(currentUser.getTeamId());
         ObservableList<User> teamMembers = FXCollections.observableArrayList(listOfTeamMembers);
 
         // Create table

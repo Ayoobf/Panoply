@@ -1,6 +1,7 @@
 package com.example.panoply.controllers;
 
-import com.example.panoply.mongoDB.MongoDBHandlerExtra;
+import com.example.panoply.handlers.GoogleCloudHandler;
+import com.example.panoply.handlers.MongoDBHandler;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -71,13 +72,13 @@ public class CreateAccountController extends DefaultController implements Initia
         String firstName, lastName, email, phoneNumber, password, confirmPassword, teamNameLocal, teamId;
         boolean isAdmin;
 
-        firstName = tfFirstName.getText();
-        lastName = tfLastName.getText();
-        email = tfEmail.getText();
-        phoneNumber = tfPhoneNumber.getText();
-        password = pfPassword.getText();
-        confirmPassword = pfConfirmPassword.getText();
-        teamNameLocal = teamName.getText();
+        firstName = tfFirstName.getText().trim();
+        lastName = tfLastName.getText().trim();
+        email = tfEmail.getText().trim();
+        phoneNumber = tfPhoneNumber.getText().trim();
+        password = pfPassword.getText().trim();
+        confirmPassword = pfConfirmPassword.getText().trim();
+        teamNameLocal = teamName.getText().trim();
         isAdmin = cbAdmin.getValue().equals("Yes");
 
         // Check if inputted password is correct
@@ -86,7 +87,7 @@ public class CreateAccountController extends DefaultController implements Initia
             showAlert("passwords do not match");
 
         } else {
-            MongoDBHandlerExtra mongoDBHandler = new MongoDBHandlerExtra();
+            MongoDBHandler mongoDBHandler = new MongoDBHandler();
             teamId = mongoDBHandler.findTeam(teamNameLocal);
 
             if (teamId == null) {
@@ -101,7 +102,7 @@ public class CreateAccountController extends DefaultController implements Initia
                             lastName,
                             email,
                             password,
-                            isAdmin,
+                            true,
                             phoneNumber
                     );
                     mongoDBHandler.makeTeam(
@@ -112,6 +113,7 @@ public class CreateAccountController extends DefaultController implements Initia
                             mongoDBHandler.findUser(email),
                             mongoDBHandler.findTeam(teamNameLocal)
                     );
+                    new GoogleCloudHandler().createTeamFolder(teamNameLocal);
                     clearForm();
 
                 }

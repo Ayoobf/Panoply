@@ -1,9 +1,6 @@
 package com.example.panoply;
 
-import com.example.panoply.mongoDB.MongoDBHandlerExtra;
-import com.google.cloud.MonitoredResourceDescriptor;
-
-import org.bson.types.ObjectId;
+import com.example.panoply.handlers.MongoDBHandler;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -49,7 +46,7 @@ public class User {
 
     public User(String firstName, String lastName, String phoneNumber, boolean isAdmin, String userName) {
 
-        MongoDBHandlerExtra md = new MongoDBHandlerExtra();
+        MongoDBHandler md = new MongoDBHandler();
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;

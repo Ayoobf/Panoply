@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
@@ -95,12 +96,14 @@ public class HomePageController extends DefaultController implements Initializab
         // set User lbl
         UserHolder holder = UserHolder.getINSTANCE();
         User user = holder.getUser();
+
         lblFirstName.setText(user.getFirstName());
         String currentUserTeamName = new MongoDBHandler().findTeamName(user.getTeamId());
+        List<Blob> listOfFiles = new GoogleCloudHandler().getFilesInTeamFolder(currentUserTeamName);
 
-        List<Blob> listFiles = new GoogleCloudHandler().getFilesInTeamFolder(currentUserTeamName);
-        for (Blob file : listFiles) {
+        for (Blob file : listOfFiles) {
             Button bt = new Button(file.getName().replace(currentUserTeamName + "/", ""));
+//            Hyperlink hl = new Hyperlink(file.getName().replace(currentUserTeamName + "/", ""));
             bt.setMinWidth(500);
             vbDocuments.getChildren().addAll(bt);
         }

@@ -128,8 +128,8 @@
                      <VBox fx:id="vbDocuments" minHeight="714.0" minWidth="1092.0" prefHeight="714.0"
                            prefWidth="1092.0">
                         <children>
-                           <HBox fx:id="hbPicturesOfTopFiles" minHeight="714.0" minWidth="1092.0" prefHeight="714.0"
-                                 prefWidth="1092.0"/>
+                           <HBox fx:id="hbPicturesOfTopFiles" maxHeight="500.0" minHeight="200.0" minWidth="1092.0"
+                                 prefHeight="200.0" prefWidth="1092.0"/>
                         </children>
                      </VBox>
                   </content>

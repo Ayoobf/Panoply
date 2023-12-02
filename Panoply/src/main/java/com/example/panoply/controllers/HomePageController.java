@@ -60,6 +60,8 @@ public class HomePageController extends DefaultController implements Initializab
     public Button btAddFile;
     public ScrollPane sbDocuments;
     public VBox vbDocuments;
+    public HBox hbPicturesOfTopFiles;
+    public Label lblUsers;
 
 
     @Override
@@ -121,6 +123,7 @@ public class HomePageController extends DefaultController implements Initializab
     void btUsers() {
         show(users);
         User currentUser = UserHolder.getINSTANCE().getUser();
+        lblUsers.setText(new MongoDBHandler().findTeamName(currentUser.getTeamId()) + "'s Users");
 
         // Get the list of members
         ArrayList<User> listOfTeamMembers = new MongoDBHandler().listTeamMembers(currentUser.getTeamId());

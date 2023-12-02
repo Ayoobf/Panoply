@@ -46,8 +46,8 @@
                   <Insets top="10.0"/>
                </HBox.margin>
             </Button>
-            <Label alignment="BOTTOM_CENTER" maxHeight="40.0" minHeight="40.0" minWidth="71.0" prefHeight="40.0"
-                   text="Welcome" textOverrun="CLIP">
+            <Label alignment="BOTTOM_CENTER" disable="true" maxHeight="40.0" minHeight="40.0" minWidth="71.0"
+                   prefHeight="40.0" text="Welcome" textOverrun="CLIP" visible="false">
                <font>
                   <Font name="Segoe UI Bold" size="16.0"/>
                </font>
@@ -106,8 +106,8 @@
          </HBox>
       </VBox>
       <Pane fx:id="containerPane">
-         <VBox fx:id="defaultHomePage" maxHeight="766.0" minHeight="766.0" minWidth="1100.0" prefHeight="766.0"
-               prefWidth="1100.0" style="-fx-border-radius: 15; -fx-background-color: #eeeeee;">
+         <VBox fx:id="defaultHomePage" maxHeight="766.0" minHeight="766.0" minWidth="1092.0" prefHeight="766.0"
+               prefWidth="1092.0" style="-fx-border-radius: 15; -fx-background-color: #eeeeee;">
             <children>
                <HBox>
                   <children>
@@ -115,13 +115,23 @@
                         <font>
                            <Font name="Segoe UI Bold" size="42.0"/>
                         </font>
+                        <HBox.margin>
+                           <Insets bottom="15.0" left="15.0" top="15.0"/>
+                        </HBox.margin>
                      </Label>
+                     <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
                      <Button fx:id="btAddFile" mnemonicParsing="false" text="Add File"/>
                   </children>
                </HBox>
                <ScrollPane fx:id="sbDocuments" minHeight="714.0" prefHeight="714.0" prefWidth="200.0">
                   <content>
-                     <VBox fx:id="vbDocuments" prefHeight="200.0" prefWidth="200.0"/>
+                     <VBox fx:id="vbDocuments" minHeight="714.0" minWidth="1092.0" prefHeight="714.0"
+                           prefWidth="1092.0">
+                        <children>
+                           <HBox fx:id="hbPicturesOfTopFiles" minHeight="714.0" minWidth="1092.0" prefHeight="714.0"
+                                 prefWidth="1092.0"/>
+                        </children>
+                     </VBox>
                   </content>
                </ScrollPane>
             </children>
@@ -130,6 +140,14 @@
                prefHeight="766.0" prefWidth="1358.0" style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;"
                visible="false">
             <children>
+               <Label fx:id="lblUsers" text="{Users}">
+                  <font>
+                     <Font name="Segoe UI Bold" size="42.0"/>
+                  </font>
+                  <VBox.margin>
+                     <Insets bottom="15.0" left="15.0" top="15.0"/>
+                  </VBox.margin>
+               </Label>
                <TableView fx:id="usersTB" prefHeight="766.0" prefWidth="200.0" style="-fx-background-color: #eeeeee;">
                   <columns>
                      <TableColumn fx:id="firstNameCol" maxWidth="500.0" minWidth="275.0" prefWidth="275.0"
@@ -137,7 +155,7 @@
                         <graphic>
                            <Label text="First Name">
                               <font>
-                                 <Font name="Segoe UI Bold Italic" size="18.0"/>
+                                 <Font name="Segoe UI Bold Italic" size="25.8"/>
                               </font>
                            </Label>
                         </graphic>
@@ -147,7 +165,7 @@
                         <graphic>
                            <Label text="Last Name">
                               <font>
-                                 <Font name="Segoe UI Bold Italic" size="18.0"/>
+                                 <Font name="Segoe UI Bold Italic" size="25.8"/>
                               </font>
                            </Label>
                         </graphic>
@@ -157,7 +175,7 @@
                         <graphic>
                            <Label text="Email">
                               <font>
-                                 <Font name="Segoe UI Bold Italic" size="18.0"/>
+                                 <Font name="Segoe UI Bold Italic" size="25.8"/>
                               </font>
                            </Label>
                         </graphic>
@@ -167,7 +185,7 @@
                         <graphic>
                            <Label text="Admin Status">
                               <font>
-                                 <Font name="Segoe UI Bold Italic" size="18.0"/>
+                                 <Font name="Segoe UI Bold Italic" size="25.8"/>
                               </font>
                            </Label>
                         </graphic>

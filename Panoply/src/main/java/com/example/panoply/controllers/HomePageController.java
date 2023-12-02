@@ -2,12 +2,15 @@ package com.example.panoply.controllers;
 
 import com.example.panoply.User;
 import com.example.panoply.UserHolder;
+import com.example.panoply.handlers.GoogleCloudHandler;
 import com.example.panoply.handlers.MongoDBHandler;
+import com.google.cloud.storage.Blob;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -91,13 +94,15 @@ public class HomePageController extends DefaultController implements Initializab
         UserHolder holder = UserHolder.getINSTANCE();
         User user = holder.getUser();
         lblFirstName.setText(user.getFirstName());
-        System.out.println(new MongoDBHandler().findTeamName(user.getTeamId()));
+        String currentUserTeamName = new MongoDBHandler().findTeamName(user.getTeamId());
 
-        int documents = 3;
-        show(defaultHomePage);
-        for (int i = 0; i < documents; i++) {
-            vbDocuments.getChildren().addAll(new Label("Hello"));
+        List<Blob> listFiles = new GoogleCloudHandler().getFilesInTeamFolder(currentUserTeamName);
+        for (Blob file : listFiles) {
+            Button bt = new Button(file.getName().replace(currentUserTeamName + "/", ""));
+            bt.setMinWidth(500);
+            vbDocuments.getChildren().addAll(bt);
         }
+        show(defaultHomePage);
 
     }
 

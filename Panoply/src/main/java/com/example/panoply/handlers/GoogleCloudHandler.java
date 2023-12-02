@@ -9,6 +9,8 @@ import com.google.cloud.storage.StorageOptions;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GoogleCloudHandler {
     final static String PROJECT_ID = "ayoob-florival-capstone";
@@ -46,23 +48,15 @@ public class GoogleCloudHandler {
         }
     }
 
-    public int getNumFilesInTeamFolder(String teamName) throws NullPointerException {
+    public List<Blob> getFilesInTeamFolder(String teamName) throws NullPointerException {
 
         Iterable<Blob> blobs = storage.list(BUCKET_NAME, Storage.BlobListOption.prefix(teamName + "/")).iterateAll();
 
-        int count = 0;
-        for (Blob blob :
-                blobs) {
-            count++;
+        List<Blob> listOfFiles = new ArrayList<>();
+        for (Blob blob : blobs) {
+            if (!blob.getContentType().equals("application/octet-stream"))
+                listOfFiles.add(blob);
         }
-
-        // -1 because it counts parent dir as one
-        count = count - 1;
-        // a count or -1 means not found or no files
-        if (count == -1) {
-            throw new NullPointerException("Team has no file or does not exist");
-        } else {
-            return count;
-        }
+        return listOfFiles;
     }
 }

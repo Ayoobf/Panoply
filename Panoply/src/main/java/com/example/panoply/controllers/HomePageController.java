@@ -91,6 +91,7 @@ public class HomePageController extends DefaultController implements Initializab
         UserHolder holder = UserHolder.getINSTANCE();
         User user = holder.getUser();
         lblFirstName.setText(user.getFirstName());
+        System.out.println(new MongoDBHandler().findTeamName(user.getTeamId()));
 
         int documents = 3;
         show(defaultHomePage);

@@ -157,6 +157,11 @@ public class MongoDBHandler {
         return null;
     }
 
+    public String findTeamName(String teamId) {
+        return Objects.requireNonNull(teamsCollection.distinct("team_name", Filters.eq("_id", new ObjectId(teamId)), String.class).first());
+
+    }
+
     // finds the size of a team with teamId
     public int findTeamSize(String teamIdStr) {
         ObjectId teamId = new ObjectId(teamIdStr);

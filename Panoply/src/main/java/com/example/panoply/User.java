@@ -11,6 +11,7 @@ public class User {
     private String lastName;
     private String phoneNumber;
     private String teamId;
+    private String teamName;
     private boolean isAdmin;
     private String userName;
     private int teamSize;

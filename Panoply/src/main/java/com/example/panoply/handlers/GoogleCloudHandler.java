@@ -45,4 +45,24 @@ public class GoogleCloudHandler {
         } catch (IOException ignored) {
         }
     }
+
+    public int getNumFilesInTeamFolder(String teamName) throws NullPointerException {
+
+        Iterable<Blob> blobs = storage.list(BUCKET_NAME, Storage.BlobListOption.prefix(teamName + "/")).iterateAll();
+
+        int count = 0;
+        for (Blob blob :
+                blobs) {
+            count++;
+        }
+
+        // -1 because it counts parent dir as one
+        count = count - 1;
+        // a count or -1 means not found or no files
+        if (count == -1) {
+            throw new NullPointerException("Team has no file or does not exist");
+        } else {
+            return count;
+        }
+    }
 }

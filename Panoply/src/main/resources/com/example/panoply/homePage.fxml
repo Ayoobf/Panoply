@@ -121,7 +121,7 @@
                </HBox>
                <ScrollPane fx:id="sbDocuments" minHeight="714.0" prefHeight="714.0" prefWidth="200.0">
                   <content>
-                     <VBox fx:id="vbDocuemtns" prefHeight="200.0" prefWidth="200.0"/>
+                     <VBox fx:id="vbDocuments" prefHeight="200.0" prefWidth="200.0"/>
                   </content>
                </ScrollPane>
             </children>

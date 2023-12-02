@@ -56,7 +56,7 @@ public class HomePageController extends DefaultController implements Initializab
     public TableColumn<User, String> isAdminCol;
     public Button btAddFile;
     public ScrollPane sbDocuments;
-    public VBox vbDocuemtns;
+    public VBox vbDocuments;
 
 
     @Override
@@ -92,9 +92,12 @@ public class HomePageController extends DefaultController implements Initializab
         User user = holder.getUser();
         lblFirstName.setText(user.getFirstName());
 
+        int documents = 3;
         show(defaultHomePage);
+        for (int i = 0; i < documents; i++) {
+            vbDocuments.getChildren().addAll(new Label("Hello"));
+        }
 
-        vbDocuemtns.getChildren().addAll();
     }
 
     @FXML
@@ -140,7 +143,7 @@ public class HomePageController extends DefaultController implements Initializab
 //        }
     }
 
-    private <T, S> void styleCol(TableColumn<User, String> col, Color color) {
+    private void styleCol(TableColumn<User, String> col, Color color) {
         col.setCellFactory(new Callback<>() {
             public TableCell<User, String> call(TableColumn<User, String> param) {
                 return new TableCell<>() {

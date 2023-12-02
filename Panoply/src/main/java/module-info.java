@@ -16,6 +16,7 @@ module com.example.panoply {
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.annotation;
     requires com.fasterxml.jackson.databind;
+    requires gax;
 
     //    exports com.example.panoply.GUI;
 //    opens com.example.panoply.GUI to javafx.fxml;

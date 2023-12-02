@@ -9,10 +9,10 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
@@ -97,6 +97,7 @@ public class CreateAccountController extends DefaultController implements Initia
 
                 } else {
                     // team was not found and user is an admin
+
                     mongoDBHandler.signUpUser(
                             firstName,
                             lastName,
@@ -117,19 +118,25 @@ public class CreateAccountController extends DefaultController implements Initia
                     clearForm();
 
                 }
-
             } else {
-                // team was found and user is not admin
-                mongoDBHandler.signUpUser(
-                        firstName,
-                        lastName,
-                        email,
-                        password,
-                        isAdmin,
-                        teamId,
-                        phoneNumber
-                );
-                clearForm();
+                // team was found and user is admin
+                if (isAdmin) {
+                    showAlert("Cannot Make team with already establish admin present");
+
+                } else {
+
+                    // team was found and user is not admin
+                    mongoDBHandler.signUpUser(
+                            firstName,
+                            lastName,
+                            email,
+                            password,
+                            isAdmin,
+                            teamId,
+                            phoneNumber
+                    );
+                    clearForm();
+                }
 
             }
         }

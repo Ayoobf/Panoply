@@ -102,10 +102,9 @@ public class HomePageController extends DefaultController implements Initializab
         List<Blob> listOfFiles = new GoogleCloudHandler().getFilesInTeamFolder(currentUserTeamName);
 
         for (Blob file : listOfFiles) {
-            Button bt = new Button(file.getName().replace(currentUserTeamName + "/", ""));
-//            Hyperlink hl = new Hyperlink(file.getName().replace(currentUserTeamName + "/", ""));
-            bt.setMinWidth(500);
-            vbDocuments.getChildren().addAll(bt);
+            Hyperlink hl = new Hyperlink(file.getName().replace(currentUserTeamName + "/", ""));
+
+            vbDocuments.getChildren().addAll(hl);
         }
         show(defaultHomePage);
 

@@ -84,27 +84,10 @@ public class HomePageController extends DefaultController implements Initializab
 		makeDraggable(homePage);
 
 		// make buttons more dynamic looking
-		btHoverEffect(
-				Arrays.asList(btHome, btLogout, btUsers, btSettings),
-				"-fx-background-color:#EEEEEE",
-				"-fx-background-color:D0D0D0"
-		);
+		btHoverEffect(Arrays.asList(btHome, btLogout, btUsers, btSettings), "-fx-background-color:#EEEEEE", "-fx-background-color:D0D0D0");
 
 		// requires separate method because its special
-		btHoverEffect(
-				Collections.singletonList(btCollapseSideBar),
-				"-fx-background-color:#eeeeee;" +
-						"-fx-background-radius:100;" +
-						"-fx-border-color: #000000;" +
-						"-fx-border-radius: 100;" +
-						"-fx-rotate: 90"
-				,
-				"-fx-background-color:#D0D0D0;" +
-						"-fx-background-radius:100;" +
-						"-fx-border-color: #000000;" +
-						"-fx-border-radius: 100;" +
-						"-fx-rotate: 90"
-		);
+		btHoverEffect(Collections.singletonList(btCollapseSideBar), "-fx-background-color:#eeeeee;" + "-fx-background-radius:100;" + "-fx-border-color: #000000;" + "-fx-border-radius: 100;" + "-fx-rotate: 90", "-fx-background-color:#D0D0D0;" + "-fx-background-radius:100;" + "-fx-border-color: #000000;" + "-fx-border-radius: 100;" + "-fx-rotate: 90");
 		refreshDocumentsSelection();
 
 		// set User lbl
@@ -134,8 +117,7 @@ public class HomePageController extends DefaultController implements Initializab
 		List<Document> arrDocuments = new ArrayList<>();
 
 		vbFiles.setOnDragOver(dragEvent -> {
-			if (dragEvent.getGestureSource() != vbFiles
-					&& dragEvent.getDragboard().hasFiles()) {
+			if (dragEvent.getGestureSource() != vbFiles && dragEvent.getDragboard().hasFiles()) {
 				dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
 			}
 			dragEvent.consume();
@@ -157,9 +139,7 @@ public class HomePageController extends DefaultController implements Initializab
 			/* let the source know whether the string was successfully
 			 * transferred and used */
 			event.setDropCompleted(success);
-			Document doc = new Document(sysDroppedFile
-					.replaceAll("\\[", "")
-					.replaceAll("]", ""));
+			Document doc = new Document(sysDroppedFile.replaceAll("\\[", "").replaceAll("]", ""));
 			doc.setUploadDate(new BsonDateTime(new Date().getTime()));
 			arrDocuments.add(doc);
 
@@ -281,7 +261,7 @@ public class HomePageController extends DefaultController implements Initializab
 		listOfFiles = new ArrayList<>();
 		List<Blob> arr = gc.getFilesInTeamFolder(currentUserTeamName);
 
-		// Scan list for files not dirs and copy values into listOfFiles array
+		// Spits out list of Files not Dirs
 		arr.forEach(file -> {
 			if (file.getName().contains(".")) {
 				listOfFiles.add(file);
@@ -317,8 +297,7 @@ public class HomePageController extends DefaultController implements Initializab
 			showAlert("File does not exist");
 		} else {
 			// open with os
-			Runtime.getRuntime().exec(new String[]{"rundll32", "url.dll,FileProtocolHandler",
-					file.getAbsolutePath()});
+			Runtime.getRuntime().exec(new String[]{"rundll32", "url.dll,FileProtocolHandler", file.getAbsolutePath()});
 		}
 	}
 
@@ -336,8 +315,7 @@ public class HomePageController extends DefaultController implements Initializab
 							this.setAlignment(Pos.CENTER);
 
 
-							if (item.contains("true"))
-								this.setTextFill(Color.rgb(243, 210, 80));
+							if (item.contains("true")) this.setTextFill(Color.rgb(243, 210, 80));
 							setText(item);
 						}
 					}

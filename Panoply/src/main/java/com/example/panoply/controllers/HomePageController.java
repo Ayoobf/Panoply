@@ -9,6 +9,7 @@ import com.google.cloud.storage.Blob;
 
 import org.bson.BsonDateTime;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -104,7 +105,6 @@ public class HomePageController extends DefaultController implements Initializab
 						"-fx-border-radius: 100;" +
 						"-fx-rotate: 90"
 		);
-
 		refreshDocumentsSelection();
 
 		// set User lbl
@@ -185,8 +185,6 @@ public class HomePageController extends DefaultController implements Initializab
 
 			stage.close();
 		});
-
-
 	}
 
 	@FXML
@@ -277,10 +275,50 @@ public class HomePageController extends DefaultController implements Initializab
 
 	private void refreshDocumentsSelection() {
 		String currentUserTeamName = new MongoDBHandler().findTeamName(user.getTeamId());
-		listOfFiles.addAll(new GoogleCloudHandler().getFilesInTeamFolder(currentUserTeamName));
-		for (Blob file : listOfFiles) {
+//		listOfFiles.addAll(new GoogleCloudHandler().getFilesInTeamFolder(currentUserTeamName));
+
+		GoogleCloudHandler gc = new GoogleCloudHandler();
+		listOfFiles = new ArrayList<>();
+		List<Blob> arr = gc.getFilesInTeamFolder(currentUserTeamName);
+
+		// Scan list for files not dirs and copy values into listOfFiles array
+		arr.forEach(file -> {
+			if (file.getName().contains(".")) {
+				listOfFiles.add(file);
+			}
+		});
+
+		// Make new elements based on copied elements
+		listOfFiles.forEach(file -> {
 			Hyperlink hl = new Hyperlink(file.getName().replace(currentUserTeamName + "/", ""));
+
+			System.out.println(file.getName());
+			hl.setOnAction(event -> {
+				try {
+					// method downloads file and returns its path
+					String destPathOfDownloadedFile = new GoogleCloudHandler().downloadFile(currentUserTeamName, file.getName());
+
+					openFile(destPathOfDownloadedFile);
+
+				} catch (NullPointerException e) {
+					showAlert("Download Failed, Try Again");
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			});
 			vbDocuments.getChildren().addAll(hl);
+
+		});
+	}
+
+	private void openFile(String destPathOfDownloadedFile) throws IOException {
+		File file = new File(destPathOfDownloadedFile);
+		if (!file.exists()) {
+			showAlert("File does not exist");
+		} else {
+			// open with os
+			Runtime.getRuntime().exec(new String[]{"rundll32", "url.dll,FileProtocolHandler",
+					file.getAbsolutePath()});
 		}
 	}
 

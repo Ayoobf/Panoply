@@ -105,7 +105,7 @@ public class HomePageController extends DefaultController implements Initializab
 						"-fx-rotate: 90"
 		);
 
-		refreshDocumentsPane();
+		refreshDocumentsSelection();
 
 		// set User lbl
 		lblFirstName.setText(user.getFirstName());
@@ -120,30 +120,28 @@ public class HomePageController extends DefaultController implements Initializab
 		vbDocuments.getChildren().clear();
 		vbDocuments.getChildren().add(hbPicturesOfTopFiles);
 
-		refreshDocumentsPane();
+		refreshDocumentsSelection();
 	}
 
 	@FXML
 	void btAddFile() {
-
-		VBox dragFile = new VBox();
+		VBox vbFiles = new VBox();
 		Button submit = new Button("Submit");
-		dragFile.getChildren().addAll(new Label("Drag your files Here"), submit);
-		dragFile.setPrefHeight(200);
-		dragFile.setPrefWidth(200);
+		vbFiles.getChildren().addAll(new Label("Drag your files Here"), submit);
+		vbFiles.setPrefHeight(200);
+		vbFiles.setPrefWidth(200);
 
 		List<Document> arrDocuments = new ArrayList<>();
 
-		dragFile.setOnDragOver(dragEvent -> {
-			if (dragEvent.getGestureSource() != dragFile
+		vbFiles.setOnDragOver(dragEvent -> {
+			if (dragEvent.getGestureSource() != vbFiles
 					&& dragEvent.getDragboard().hasFiles()) {
 				dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
 			}
 			dragEvent.consume();
 		});
 
-
-		dragFile.setOnDragDropped(event -> {
+		vbFiles.setOnDragDropped(event -> {
 			Dragboard db = event.getDragboard();
 			boolean success = false;
 			// system facing var
@@ -152,7 +150,7 @@ public class HomePageController extends DefaultController implements Initializab
 				sysDroppedFile = db.getFiles().toString();
 				// user facing var
 				Label lblDroppedFile = new Label(sysDroppedFile);
-				dragFile.getChildren().addAll(lblDroppedFile);
+				vbFiles.getChildren().addAll(lblDroppedFile);
 				success = true;
 			}
 
@@ -169,7 +167,7 @@ public class HomePageController extends DefaultController implements Initializab
 		});
 
 		Stage stage = new Stage();
-		Scene scene = new Scene(dragFile);
+		Scene scene = new Scene(vbFiles);
 		stage.setScene(scene);
 		stage.setTitle("File Handler");
 		stage.show();
@@ -277,10 +275,9 @@ public class HomePageController extends DefaultController implements Initializab
 		}
 	}
 
-	private void refreshDocumentsPane() {
+	private void refreshDocumentsSelection() {
 		String currentUserTeamName = new MongoDBHandler().findTeamName(user.getTeamId());
 		listOfFiles.addAll(new GoogleCloudHandler().getFilesInTeamFolder(currentUserTeamName));
-
 		for (Blob file : listOfFiles) {
 			Hyperlink hl = new Hyperlink(file.getName().replace(currentUserTeamName + "/", ""));
 			vbDocuments.getChildren().addAll(hl);

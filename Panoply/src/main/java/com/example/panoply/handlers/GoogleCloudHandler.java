@@ -3,11 +3,13 @@ package com.example.panoply.handlers;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,9 +56,30 @@ public class GoogleCloudHandler {
 
         List<Blob> listOfFiles = new ArrayList<>();
         for (Blob blob : blobs) {
-            if (!blob.getContentType().equals("application/octet-stream"))
+//            if (!blob.getContentType().equals("application/octet-stream"))
                 listOfFiles.add(blob);
         }
         return listOfFiles;
+    }
+
+    public void uploadFile(String fileName, String filePath, String teamName) throws IOException {
+
+        // Get a reference to the bucket
+        Bucket bucket = storage.get(BUCKET_NAME);
+
+        String appendedFile = teamName + "/" + fileName;
+        // Create a BlobId and BlobInfo to specify the file to be uploaded
+        BlobId blobId = BlobId.of(BUCKET_NAME, appendedFile);
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+
+        // Upload the file
+        try {
+            Blob blob = storage.create(blobInfo, Files.readAllBytes(Paths.get(filePath)));
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 }

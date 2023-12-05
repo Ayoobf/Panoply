@@ -12,8 +12,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="homePage" maxHeight="782.0" maxWidth="1366.0" minHeight="782.0" minWidth="1366.0"
-      prefHeight="782.0" prefWidth="1366.0" style="-fx-background-color: #eeeeee;"
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="homePage" maxHeight="450.0" maxWidth="780.0" minHeight="450.0" minWidth="780.0"
+      prefHeight="450.0" prefWidth="780.0" style="-fx-background-color: #eeeeee;"
       xmlns="http://javafx.com/javafx/21" fx:controller="com.example.panoply.controllers.HomePageController">
    <HBox fx:id="TitleBar" style="-fx-border-color: #000000;">
        <Pane maxHeight="20.0" minHeight="28.0" prefHeight="28.0" prefWidth="200.0"
@@ -26,11 +26,11 @@
          </font>
       </Button>
    </HBox>
-    <SplitPane fx:id="divPane" dividerPositions="0.2001466275659824" maxHeight="768.0" maxWidth="1366.0"
-               minHeight="768.0" minWidth="1366.0" prefHeight="768.0" prefWidth="1366.0"
+    <SplitPane fx:id="divPane" dividerPositions="0.2001466275659824" maxHeight="400.0" maxWidth="499.0"
+               minHeight="400.0" minWidth="769.0" prefHeight="400.0" prefWidth="499.0"
                style="-fx-background-color: #eeeeee;">
-        <VBox fx:id="sideButtons" maxWidth="270.0" minWidth="125.0" prefHeight="766.0" prefWidth="270.0"
-              style="-fx-background-color: #eeeeee;">
+        <VBox fx:id="sideButtons" maxHeight="400.0" maxWidth="270.0" minHeight="400.0" minWidth="125.0"
+              prefHeight="400.0" prefWidth="270.0" style="-fx-background-color: #eeeeee;">
          <HBox>
             <VBox.margin>
                 <Insets left="15.0"/>
@@ -89,7 +89,7 @@
                 <Font name="Segoe UI Bold" size="25.8"/>
             </font>
             <VBox.margin>
-                <Insets bottom="389.0"/>
+                <Insets/>
             </VBox.margin>
          </Button>
          <HBox prefHeight="100.0" prefWidth="200.0">
@@ -105,11 +105,11 @@
             </Button>
          </HBox>
       </VBox>
-      <Pane fx:id="containerPane">
-          <VBox fx:id="defaultHomePage" maxHeight="766.0" minHeight="766.0" minWidth="1092.0" prefHeight="766.0"
-                prefWidth="1092.0" style="-fx-border-radius: 15; -fx-background-color: #eeeeee;">
+        <Pane fx:id="containerPane" maxWidth="499.0" minWidth="600.0" prefWidth="600.0">
+            <VBox fx:id="defaultHomePage" maxHeight="400.0" maxWidth="640.0" minHeight="400.0" minWidth="640.0"
+                  prefHeight="400.0" prefWidth="640.0" style="-fx-border-radius: 15; -fx-background-color: #eeeeee;">
             <children>
-               <HBox>
+                <HBox maxWidth="499.0" minWidth="600.0">
                   <children>
                      <Label text="Documents">
                         <font>
@@ -123,22 +123,23 @@
                       <Button fx:id="btAddFile" mnemonicParsing="false" onAction="#btAddFile" text="Add File"/>
                   </children>
                </HBox>
-                <ScrollPane fx:id="sbDocuments" minHeight="714.0" pannable="true" prefHeight="714.0" prefWidth="200.0">
+                <ScrollPane fx:id="sbDocuments" maxWidth="499.0" minHeight="714.0" minWidth="640.0" pannable="true"
+                            prefHeight="499.0" prefWidth="200.0">
                   <content>
-                      <VBox fx:id="vbDocuments" maxHeight="1.7976931348623157E308" minHeight="714.0" minWidth="1092.0"
-                            prefWidth="1092.0">
+                      <VBox fx:id="vbDocuments" maxHeight="1.7976931348623157E308" maxWidth="640.0" minHeight="400.0"
+                            minWidth="640.0" prefHeight="400.0" prefWidth="640.0">
                         <children>
-                            <HBox fx:id="hbPicturesOfTopFiles" maxHeight="500.0" minHeight="200.0" minWidth="1092.0"
-                                  prefHeight="200.0" prefWidth="1092.0"/>
+                            <HBox fx:id="hbPicturesOfTopFiles" maxHeight="500.0" maxWidth="499.0" minHeight="200.0"
+                                  minWidth="499.0" prefHeight="200.0"/>
                         </children>
                      </VBox>
                   </content>
                </ScrollPane>
             </children>
          </VBox>
-          <VBox fx:id="users" disable="true" maxHeight="766.0" maxWidth="1358.0" minHeight="766.0" minWidth="1358.0"
-                prefHeight="766.0" prefWidth="1358.0" style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;"
-                visible="false">
+            <VBox fx:id="users" disable="true" maxHeight="400.0" maxWidth="640.0" minHeight="400.0" minWidth="640.0"
+                  prefHeight="400.0" prefWidth="640.0" style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;"
+                  visible="false">
             <children>
                <Label fx:id="lblUsers" text="{Users}">
                   <font>
@@ -194,9 +195,9 @@
                </TableView>
             </children>
          </VBox>
-          <VBox fx:id="settings" disable="true" maxHeight="766.0" maxWidth="1358.0" minHeight="766.0" minWidth="1358.0"
-                prefHeight="766.0" prefWidth="1358.0" style="-fx-border-radius: 15; -fx-background-color: #0000FF;"
-                visible="false"/>
+            <VBox fx:id="settings" disable="true" maxHeight="766.0" maxWidth="640.0" minHeight="766.0" minWidth="640.0"
+                  prefHeight="766.0" prefWidth="640.0" style="-fx-border-radius: 15; -fx-background-color: #0000FF;"
+                  visible="false"/>
       </Pane>
    </SplitPane>
 </VBox>

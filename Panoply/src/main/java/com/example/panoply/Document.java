@@ -1,12 +1,13 @@
 package com.example.panoply;
 
+import com.example.panoply.handlers.GoogleCloudHandler;
 import com.example.panoply.handlers.MongoDBHandler;
 
 import org.bson.BsonDateTime;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.Date;
 
 public class Document {
 	private String documentId;
@@ -46,6 +47,19 @@ public class Document {
 		this.lastEditor = lastEditor;
 		this.isCheckOut = isCheckOut;
 	}
+
+
+	// TODO: uplaod method where it uploads the doc in two places [Mongo and Google]
+	public void uploadDocument(String documentPath, String currentUserTeamName, String userName) throws IOException {
+
+		String fileName = Paths.get(documentPath).getFileName().toString();
+		new MongoDBHandler().uploadFile(fileName, documentPath, currentUserTeamName, documentSize, userName);
+		new GoogleCloudHandler().uploadFile(fileName, documentPath, currentUserTeamName);
+
+	}
+
+
+
 
 	public String getDocumentPath() {
 		return documentPath;

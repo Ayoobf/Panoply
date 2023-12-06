@@ -12,7 +12,6 @@ import org.bson.BsonDateTime;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -50,8 +49,7 @@ import javafx.util.Callback;
 public class HomePageController extends DefaultController implements Initializable {
 
 	public static List<Blob> listOfFiles = new ArrayList<>();
-	public static UserHolder holder = UserHolder.getINSTANCE();
-	public static User user = holder.getUser();
+
 	//    public Pane imageArea;
 	public HBox TitleBar;
 	public VBox homePage;
@@ -77,10 +75,14 @@ public class HomePageController extends DefaultController implements Initializab
 	public VBox vbDocuments;
 	public HBox hbPicturesOfTopFiles;
 	public Label lblUsers;
+	UserHolder holder = UserHolder.getINSTANCE();
+	User user;
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		changeWindowSize(1366, 782);
+		user = holder.getUser();
+
+		changeWindowSize(800, 400);
 		makeDraggable(homePage);
 
 		// make buttons more dynamic looking
@@ -92,8 +94,17 @@ public class HomePageController extends DefaultController implements Initializab
 
 		// set User lbl
 		lblFirstName.setText(user.getFirstName());
-		show(defaultHomePage);
 
+//		show(defaultHomePage);
+		if (!user.isAdmin()) {
+			show(defaultHomePage);
+		} else {
+			// you'd assume this should be show() method
+			// you'd be wrong
+			// I coded my defaultHomePage and Show() -->
+			// objects in such a way that it breaks if you use show() in this block
+			btUsers();
+		}
 	}
 
 	@FXML
@@ -110,7 +121,7 @@ public class HomePageController extends DefaultController implements Initializab
 	void btAddFile() {
 		VBox vbFiles = new VBox();
 		Button submit = new Button("Submit");
-		vbFiles.getChildren().addAll(new Label("Drag your files Here"), submit);
+		vbFiles.getChildren().addAll(new Label("Drag your files Here"));
 		vbFiles.setPrefHeight(200);
 		vbFiles.setPrefWidth(200);
 
@@ -155,16 +166,19 @@ public class HomePageController extends DefaultController implements Initializab
 		submit.setOnAction(actionEvent -> {
 			arrDocuments.forEach(document -> {
 				try {
-					String currentUserTeamName = new MongoDBHandler().findTeamName(user.getTeamId());
-					String fileName = Paths.get(document.getDocumentPath()).getFileName().toString();
-					new GoogleCloudHandler().uploadFile(fileName, document.getDocumentPath(), currentUserTeamName);
+					String currentUserTeamName = new MongoDBHandler().findTeamName(holder.getUser().getTeamId());
+
+					new Document().uploadDocument(document.getDocumentPath(), currentUserTeamName, holder.getUser().getUserName());
+
 				} catch (IOException e) {
 					throw new RuntimeException(e);
 				}
 			});
-
+			btHome();
 			stage.close();
 		});
+
+		vbFiles.getChildren().add(submit);
 	}
 
 	@FXML
@@ -215,6 +229,7 @@ public class HomePageController extends DefaultController implements Initializab
 	@FXML
 	void btLogout() {
 		switchScene("login.fxml");
+		holder.setUser(null);
 		changeWindowSize(1024, 600);
 	}
 
@@ -254,7 +269,7 @@ public class HomePageController extends DefaultController implements Initializab
 	}
 
 	private void refreshDocumentsSelection() {
-		String currentUserTeamName = new MongoDBHandler().findTeamName(user.getTeamId());
+		String currentUserTeamName = new MongoDBHandler().findTeamName(holder.getUser().getTeamId());
 //		listOfFiles.addAll(new GoogleCloudHandler().getFilesInTeamFolder(currentUserTeamName));
 
 		GoogleCloudHandler gc = new GoogleCloudHandler();
@@ -272,7 +287,6 @@ public class HomePageController extends DefaultController implements Initializab
 		listOfFiles.forEach(file -> {
 			Hyperlink hl = new Hyperlink(file.getName().replace(currentUserTeamName + "/", ""));
 
-			System.out.println(file.getName());
 			hl.setOnAction(event -> {
 				try {
 					// method downloads file and returns its path

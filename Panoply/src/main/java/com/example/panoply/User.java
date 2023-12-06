@@ -6,103 +6,114 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class User {
-
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private String teamId;
-    private String teamName;
-    private boolean isAdmin;
-    private String userName;
-    private int teamSize;
-
-
-    //---------------------------------------------------------------------------------------------------------//
-    //Properties for the Table View
-    private StringProperty firstNameSP;
+	private String firstName;
+	private String lastName;
+	private String phoneNumber;
+	private String teamId;
+	private String teamName;
+	private boolean isAdmin;
+	private String userName;
+	private int teamSize;
 
 
-    public String getFirstName() {
-        return firstName;
-    }
+	//---------------------------------------------------------------------------------------------------------//
+	//Properties for the Table View
+	private StringProperty firstNameSP;
+	private StringProperty lastNameSP;
+	private StringProperty emailSP;
+	private StringProperty adminSP;
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public User(String firstName, String lastName, String phoneNumber, boolean isAdmin, String userName) {
 
-    public String getLastName() {
-        return lastName;
-    }
+		MongoDBHandler md = new MongoDBHandler();
 
-    public int getTeamSize() {
-        return teamSize;
-    }
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+		this.teamId = md.findUserTeamId(userName);
+		this.teamName = md.findTeamName(teamId);
+		this.isAdmin = isAdmin;
+		this.userName = userName;
 
-    public String getTeamId() {
-        return teamId;
-    }
-    private StringProperty lastNameSP;
-    private StringProperty emailSP;
-    private StringProperty adminSP;
+		setFirstNameSP(firstName);
+		setLastNameSP(lastName);
+		setEmailSP(userName);
+		setAdminSP(String.valueOf(isAdmin));
 
-    public User(String firstName, String lastName, String phoneNumber, boolean isAdmin, String userName) {
+		teamSize = md.findTeamSize(teamId);
 
-        MongoDBHandler md = new MongoDBHandler();
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.teamId = md.findUserTeamId(userName);
-        this.isAdmin = isAdmin;
-        this.userName = userName;
+	}
 
-        setFirstNameSP(firstName);
-        setLastNameSP(lastName);
-        setEmailSP(userName);
-        setAdminSP(String.valueOf(isAdmin));
+	public boolean isAdmin() {
+		return isAdmin;
+	}
 
-        teamSize = md.findTeamSize(teamId);
+	public String getFirstName() {
+		return firstName;
+	}
 
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public void setFirstNameSP(String value) {
-        firstNameProperty().set(value);
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public StringProperty firstNameProperty() {
-        if (firstNameSP == null) firstNameSP = new SimpleStringProperty(this, "firstName");
-        return firstNameSP;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public void setLastNameSP(String value) {
-        lastNameProperty().set(value);
-    }
+	public int getTeamSize() {
+		return teamSize;
+	}
 
-    public StringProperty lastNameProperty() {
-        if (lastNameSP == null) lastNameSP = new SimpleStringProperty(this, "lastName");
-        return lastNameSP;
-    }
+	public String getTeamId() {
+		return teamId;
+	}
 
-    public void setEmailSP(String value) {
-        emailProperty().set(value);
-    }
+	public void setFirstNameSP(String value) {
+		firstNameProperty().set(value);
+	}
 
-    public StringProperty emailProperty() {
-        if (emailSP == null) emailSP = new SimpleStringProperty(this, "email");
-        return emailSP;
-    }
+	public StringProperty firstNameProperty() {
+		if (firstNameSP == null) firstNameSP = new SimpleStringProperty(this, "firstName");
+		return firstNameSP;
+	}
 
-    public void setAdminSP(String value) {
-        adminProperty().set(value);
-    }
+	public void setLastNameSP(String value) {
+		lastNameProperty().set(value);
+	}
 
-    public StringProperty adminProperty() {
-        if (adminSP == null) adminSP = new SimpleStringProperty(this, "admin");
-        return adminSP;
-    }
+	public StringProperty lastNameProperty() {
+		if (lastNameSP == null) lastNameSP = new SimpleStringProperty(this, "lastName");
+		return lastNameSP;
+	}
 
+	public void setEmailSP(String value) {
+		emailProperty().set(value);
+	}
 
-    @Override
-    public String toString() {
-        return firstName + " " + lastName + " " + phoneNumber + " " + isAdmin + " " + userName;
-    }
+	public StringProperty emailProperty() {
+		if (emailSP == null) emailSP = new SimpleStringProperty(this, "email");
+		return emailSP;
+	}
+
+	public void setAdminSP(String value) {
+		adminProperty().set(value);
+	}
+
+	public StringProperty adminProperty() {
+		if (adminSP == null) adminSP = new SimpleStringProperty(this, "admin");
+		return adminSP;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	@Override
+	public String toString() {
+		return firstName + " " + lastName + " " + phoneNumber + " " + isAdmin + " " + userName;
+	}
 }

@@ -65,6 +65,7 @@ public class GoogleCloudHandler {
 		return listOfFiles;
 	}
 
+	// TODO return path to file on server?
 	public void uploadFile(String fileName, String filePath, String teamName) throws IOException {
 
 		// Get a reference to the bucket

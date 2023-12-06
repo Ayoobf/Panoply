@@ -75,8 +75,8 @@ public class HomePageController extends DefaultController implements Initializab
 	public VBox vbDocuments;
 	public HBox hbPicturesOfTopFiles;
 	public Label lblUsers;
-	UserHolder holder = UserHolder.getINSTANCE();
-	User user;
+	public static UserHolder holder = UserHolder.getINSTANCE();
+	public static User user;
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {

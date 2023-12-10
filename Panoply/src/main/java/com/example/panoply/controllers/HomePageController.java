@@ -17,24 +17,18 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -53,6 +47,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -284,7 +279,8 @@ public class HomePageController extends DefaultController implements Initializab
 	}
 
 	private void refreshDocumentsSelection() {
-		String currentUserTeamName = new MongoDBHandler().findTeamName(holder.getUser().getTeamId());
+		MongoDBHandler md = new MongoDBHandler();
+		String currentUserTeamName = md.findTeamName(holder.getUser().getTeamId());
 //		listOfFiles.addAll(new GoogleCloudHandler().getFilesInTeamFolder(currentUserTeamName));
 
 		GoogleCloudHandler gc = new GoogleCloudHandler();
@@ -316,24 +312,76 @@ public class HomePageController extends DefaultController implements Initializab
 //			});
 //			vbDocuments.getChildren().addAll(hl);
 //
-//			// TODO
+//
 			HBox hbDocumentAsset = new HBox();
 
 			// TODO when Button is clicked, it retrieves doc stats
 			Button btDoc = new Button();
 			btDoc.setText(file.getName().replace(currentUserTeamName + "/", ""));
 
+			// TODO checked In status
+			boolean checkedIn = md.findCheckedStatus(file.getName(), currentUserTeamName);
+			Label status = new Label("Checked-In Status: " + checkedIn);
 
-			// TODO file handers
+
+			// TODO file handlers
 			MenuButton mbButtonDoc = new MenuButton(":");
 			MenuItem checkOutFile = new MenuItem("Check Out File");
 			MenuItem checkInFile = new MenuItem("Check In File");
+
+			// when checked out, open
+			checkOutFile.setOnAction(action -> {
+				md.updateCheckedStatus(file.getName(), currentUserTeamName, false);
+
+				if (!checkedIn) {
+					showAlert("Cannot Check Out");
+				} else {
+					try {
+						String destPathOfDownloadedFile = new GoogleCloudHandler().downloadFile(currentUserTeamName, file.getName());
+						openFile(destPathOfDownloadedFile);
+					} catch (NullPointerException e) {
+						showAlert("Download Failed, Try Again");
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+					btHome();
+				}
+			});
+
+			// TODO
+			// when check in, popup shows, user drags new file to upload, upload replaces, prev file
+			checkInFile.setOnAction(action -> {
+
+				if (checkedIn) {
+					showAlert("Cannot Check In");
+				} else {
+					FileChooser fcCheckIn = new FileChooser();
+					fcCheckIn.setTitle("Choose CheckIn File");
+					fcCheckIn.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"));
+					File selectedFile = fcCheckIn.showOpenDialog(new Stage());
+
+					// keeping file name, changing file contents
+					if (selectedFile != null) {
+						try {
+							new GoogleCloudHandler().updateFile(file.getName(), selectedFile);
+							new MongoDBHandler().updateFile(file.getName(), selectedFile, currentUserTeamName, user.getUserName());
+							md.updateCheckedStatus(file.getName(), currentUserTeamName, true);
+							btHome();
+
+						} catch (IOException e) {
+							throw new RuntimeException(e);
+						}
+					}
+
+
+				}
+			});
 			mbButtonDoc.getItems().addAll(checkOutFile, checkInFile);
 
 			// TODO Styling
 			hbDocumentAsset.setMinWidth(vbDocuments.getMinWidth());
 			hbDocumentAsset.setStyle("-fx-border-color: #000000");
-			hbDocumentAsset.getChildren().addAll(btDoc, mbButtonDoc);
+			hbDocumentAsset.getChildren().addAll(btDoc, status, mbButtonDoc);
 			vbDocuments.getChildren().add(hbDocumentAsset);
 
 		});

@@ -13,6 +13,8 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -219,7 +221,47 @@ public class MongoDBHandler {
 
 	}
 
+	public void updateFile(String oldFilePlusTeamName, File selectedFile, String teamName, String userName) {
+		String oldFile = Paths.get(oldFilePlusTeamName).getFileName().toString();
+		Document updateFields = new Document();
+		updateFields.append("document_path", selectedFile.getAbsolutePath());
+		updateFields.append("last_editor", userName);
+		Document update = new Document("$set", updateFields);
+
+		documentCollection.updateOne(
+				Filters.and(
+						Filters.eq("team", teamName),
+						Filters.eq("file_name", oldFile)
+				),
+				update
+		);
+	}
+
+	// finds if ile checked in
+	public boolean findCheckedStatus(String filePath, String teamName) {
+		String fileName = Paths.get(filePath).getFileName().toString();
+
+		return Boolean.TRUE.equals(documentCollection.distinct("is_checked_in", Filters.and(Filters.eq("file_name", fileName), Filters.eq("team", teamName)), Boolean.class).first());
+
+	}
+
+	public void updateCheckedStatus(String filePath, String teamName, boolean b) {
+		String fileName = Paths.get(filePath).getFileName().toString();
+
+		try {
+			documentCollection.updateOne(
+					Filters.and(Filters.eq("file_name", fileName), Filters.eq("team", teamName)),
+					Updates.set("is_checked_in", b));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	public void removeUser(User user) {
 		userCollection.deleteOne(Filters.eq("username", user.getUserName()));
 	}
+
+
 }

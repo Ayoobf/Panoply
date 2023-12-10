@@ -49,7 +49,6 @@ public class Document {
 	}
 
 
-	// TODO: uplaod method where it uploads the doc in two places [Mongo and Google]
 	public void uploadDocument(String documentPath, String currentUserTeamName, String userName) throws IOException {
 
 		String fileName = Paths.get(documentPath).getFileName().toString();

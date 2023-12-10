@@ -7,6 +7,7 @@ import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -86,4 +87,26 @@ public class GoogleCloudHandler {
 
 
 	}
+
+	public void updateFile(String oldFileName, File newFile) throws IOException {
+
+		// Get a reference to the bucket
+		Bucket bucket = storage.get(BUCKET_NAME);
+
+
+		// Create a BlobId and BlobInfo to specify the file to be uploaded
+		BlobId blobId = BlobId.of(BUCKET_NAME, oldFileName);
+		BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+
+		// Upload the file
+		try {
+			Blob blob = storage.create(blobInfo, Files.readAllBytes(Paths.get(newFile.getAbsolutePath())));
+
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+
+	}
+
 }

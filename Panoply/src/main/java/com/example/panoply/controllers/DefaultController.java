@@ -32,7 +32,8 @@ public abstract class DefaultController {
         });
     }
 
-    // abstraction for the alert messages
+
+	// abstraction for the alert messages
     public void showAlert(String alertMessage) {
         Alert alert = new Alert(Alert.AlertType.WARNING, alertMessage, ButtonType.OK);
         alert.setHeaderText("Warning!");

@@ -17,20 +17,27 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
@@ -170,10 +177,14 @@ public class HomePageController extends DefaultController implements Initializab
 		submit.setOnAction(actionEvent -> {
 			arrDocuments.forEach(document -> {
 				try {
-					String currentUserTeamName = new MongoDBHandler().findTeamName(holder.getUser().getTeamId());
-
-					new Document().uploadDocument(document.getDocumentPath(), currentUserTeamName, holder.getUser().getUserName());
-
+					User currentUser = holder.getUser();
+					if (currentUser != null) {
+						String currentUserTeamName = new MongoDBHandler().findTeamName(currentUser.getTeamId());
+						new Document().uploadDocument(document.getDocumentPath(), currentUserTeamName, currentUser.getUserName());
+					} else {
+						// Handle the case where currentUser is null
+						System.out.println("Current user is null");
+					}
 				} catch (IOException e) {
 					throw new RuntimeException(e);
 				}
@@ -289,22 +300,41 @@ public class HomePageController extends DefaultController implements Initializab
 
 		// Make new elements based on copied elements
 		listOfFiles.forEach(file -> {
-			Hyperlink hl = new Hyperlink(file.getName().replace(currentUserTeamName + "/", ""));
+//			Hyperlink hl = new Hyperlink(file.getName().replace(currentUserTeamName + "/", ""));
+//
+//			hl.setOnAction(event -> {
+//				try {
+//					// method downloads file and returns its path
+//					String destPathOfDownloadedFile = new GoogleCloudHandler().downloadFile(currentUserTeamName, file.getName());
+//					openFile(destPathOfDownloadedFile);
+//
+//				} catch (NullPointerException e) {
+//					showAlert("Download Failed, Try Again");
+//				} catch (IOException e) {
+//					throw new RuntimeException(e);
+//				}
+//			});
+//			vbDocuments.getChildren().addAll(hl);
+//
+//			// TODO
+			HBox hbDocumentAsset = new HBox();
 
-			hl.setOnAction(event -> {
-				try {
-					// method downloads file and returns its path
-					String destPathOfDownloadedFile = new GoogleCloudHandler().downloadFile(currentUserTeamName, file.getName());
+			// TODO when Button is clicked, it retrieves doc stats
+			Button btDoc = new Button();
+			btDoc.setText(file.getName().replace(currentUserTeamName + "/", ""));
 
-					openFile(destPathOfDownloadedFile);
 
-				} catch (NullPointerException e) {
-					showAlert("Download Failed, Try Again");
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
-			});
-			vbDocuments.getChildren().addAll(hl);
+			// TODO file handers
+			MenuButton mbButtonDoc = new MenuButton(":");
+			MenuItem checkOutFile = new MenuItem("Check Out File");
+			MenuItem checkInFile = new MenuItem("Check In File");
+			mbButtonDoc.getItems().addAll(checkOutFile, checkInFile);
+
+			// TODO Styling
+			hbDocumentAsset.setMinWidth(vbDocuments.getMinWidth());
+			hbDocumentAsset.setStyle("-fx-border-color: #000000");
+			hbDocumentAsset.getChildren().addAll(btDoc, mbButtonDoc);
+			vbDocuments.getChildren().add(hbDocumentAsset);
 
 		});
 	}
@@ -346,7 +376,7 @@ public class HomePageController extends DefaultController implements Initializab
 	public void btRemoveUser() {
 		VBox usersToRemove = new VBox();
 
-		usersToRemove.setPrefHeight(400);
+		usersToRemove.setPrefHeight(200);
 		usersToRemove.setPrefWidth(200);
 		usersToRemove.setStyle("-fx-background-color: #EEEEEE");
 
@@ -380,9 +410,11 @@ public class HomePageController extends DefaultController implements Initializab
 			usersToRemove.getChildren().add(cbUser);
 		});
 
-		Stage stage = new Stage();
 		Scene scene = new Scene(usersToRemove);
+		usersToRemove.setPadding(new Insets(15));
+		Stage stage = new Stage();
 		stage.setScene(scene);
+		stage.setTitle("Remove User");
 		stage.show();
 
 		// remove users button action

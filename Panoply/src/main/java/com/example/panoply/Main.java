@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -38,18 +39,6 @@ public class Main extends Application {
         psg.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
 
-
-        // TODO: THIS IS REFERENCE CODE FOR LATER
-        // LOAD HOME-SCREEN ELEMENT --> LOAD ASSET PANE/BUTTON/SCENE --> ADD CHILDREN TO HOMSCREEN
-//        VBox homeScreenPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("test1.fxml")));
-//
-//
-//        for (int i = 0; i <50; i++) {
-//            Button element1Pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("test2.fxml")));
-//
-//            element1Pane.setText(String.valueOf(i));
-//            homeScreenPane.getChildren().add(element1Pane);
-//        }
 
 
     }

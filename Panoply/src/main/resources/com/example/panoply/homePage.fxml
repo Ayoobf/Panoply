@@ -21,177 +21,191 @@
         <Button maxHeight="28.0" maxWidth="28.0" minHeight="28.0" minWidth="28.0" mnemonicParsing="false"
                 onAction="#btExit" opacity="0.71" prefHeight="28.0" prefWidth="28.0"
                 style="-fx-background-color: #eeeeee;" text="X">
-         <font>
-             <Font name="Segoe UI Bold Italic" size="14.0"/>
-         </font>
-      </Button>
-   </HBox>
+            <font>
+                <Font name="Segoe UI Bold Italic" size="14.0"/>
+            </font>
+        </Button>
+    </HBox>
     <SplitPane fx:id="divPane" dividerPositions="0.2001466275659824" maxHeight="400.0" maxWidth="499.0"
                minHeight="400.0" minWidth="769.0" prefHeight="400.0" prefWidth="499.0"
                style="-fx-background-color: #eeeeee;">
         <VBox fx:id="sideButtons" maxHeight="400.0" maxWidth="270.0" minHeight="400.0" minWidth="125.0"
               prefHeight="400.0" prefWidth="270.0" style="-fx-background-color: #eeeeee;">
-         <HBox>
-            <VBox.margin>
-                <Insets left="15.0"/>
-            </VBox.margin>
-             <Button fx:id="btCollapseSideBar" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="0.0"
-                     mnemonicParsing="false" onAction="#btCollapseSideBar" prefHeight="40.0" prefWidth="40.0"
-                     style="-fx-background-radius: 100; -fx-background-color: #eeeeee; -fx-border-color: #000000; -fx-border-radius: 100; -fx-rotate: 90;"
-                     text="|||">
-               <font>
-                   <Font name="Segoe UI Bold" size="14.0"/>
-               </font>
-               <HBox.margin>
-                   <Insets top="10.0"/>
-               </HBox.margin>
-            </Button>
-             <Label alignment="BOTTOM_CENTER" disable="true" maxHeight="40.0" minHeight="40.0" minWidth="71.0"
-                    prefHeight="40.0" text="Welcome" textOverrun="CLIP" visible="false">
-               <font>
-                   <Font name="Segoe UI Bold" size="16.0"/>
-               </font>
-               <HBox.margin>
-                   <Insets left="5.0" top="10.0"/>
-               </HBox.margin>
-            </Label>
+            <HBox>
+                <VBox.margin>
+                    <Insets left="15.0"/>
+                </VBox.margin>
+                <Button fx:id="btCollapseSideBar" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="0.0"
+                        mnemonicParsing="false" onAction="#btCollapseSideBar" prefHeight="40.0" prefWidth="40.0"
+                        style="-fx-background-radius: 100; -fx-background-color: #eeeeee; -fx-border-color: #000000; -fx-border-radius: 100; -fx-rotate: 90;"
+                        text="|||">
+                    <font>
+                        <Font name="Segoe UI Bold" size="14.0"/>
+                    </font>
+                    <HBox.margin>
+                        <Insets top="10.0"/>
+                    </HBox.margin>
+                </Button>
+                <Label alignment="BOTTOM_CENTER" disable="true" maxHeight="40.0" minHeight="40.0" minWidth="71.0"
+                       prefHeight="40.0" text="Welcome" textOverrun="CLIP" visible="false">
+                    <font>
+                        <Font name="Segoe UI Bold" size="16.0"/>
+                    </font>
+                    <HBox.margin>
+                        <Insets left="5.0" top="10.0"/>
+                    </HBox.margin>
+                </Label>
          </HBox>
             <Label fx:id="lblFirstName" maxHeight="50.0" maxWidth="270.0" minHeight="50.0" minWidth="0.0"
                    prefHeight="50.0" prefWidth="270.0" text="{username}" textFill="#90ccf4" textOverrun="CLIP">
-            <font>
-                <Font name="Segoe UI Bold" size="41.89"/>
-            </font>
-            <VBox.margin>
-                <Insets bottom="50.0" left="55.0" top="10.0"/>
-            </VBox.margin>
-         </Label>
+                <font>
+                    <Font name="Segoe UI Bold" size="41.89"/>
+                </font>
+                <VBox.margin>
+                    <Insets bottom="50.0" left="55.0" top="10.0"/>
+                </VBox.margin>
+            </Label>
             <Button fx:id="btHome" alignment="CENTER" ellipsisString="" maxHeight="50.0" maxWidth="270.0"
                     minHeight="50.0" minWidth="108.0" mnemonicParsing="false" onAction="#btHome" prefHeight="50.0"
                     prefWidth="270.0" style="-fx-background-color: #eeeeee;" text="Home" textOverrun="CLIP">
-            <font>
-                <Font name="Segoe UI Bold" size="25.8"/>
-            </font>
-            <opaqueInsets>
-                <Insets/>
-            </opaqueInsets>
-         </Button>
+                <font>
+                    <Font name="Segoe UI Bold" size="25.8"/>
+                </font>
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+            </Button>
             <Button fx:id="btUsers" layoutX="10.0" layoutY="110.0" maxHeight="50.0" maxWidth="270.0" minHeight="50.0"
                     minWidth="93.0" mnemonicParsing="false" onAction="#btUsers" prefHeight="50.0" prefWidth="270.0"
                     style="-fx-background-color: #eeeeee;" text="Users" textOverrun="CLIP">
-            <font>
-                <Font name="Segoe UI Bold" size="25.8"/>
-            </font>
-         </Button>
+                <font>
+                    <Font name="Segoe UI Bold" size="25.8"/>
+                </font>
+            </Button>
             <Button fx:id="btSettings" layoutX="10.0" layoutY="185.0" maxHeight="50.0" maxWidth="270.0" minHeight="50.0"
                     minWidth="136.0" mnemonicParsing="false" onAction="#btSettings" prefHeight="50.0" prefWidth="270.0"
                     style="-fx-background-color: #eeeeee;" text="Settings" textOverrun="CLIP">
-            <font>
-                <Font name="Segoe UI Bold" size="25.8"/>
-            </font>
-            <VBox.margin>
-                <Insets/>
-            </VBox.margin>
-         </Button>
+                <font>
+                    <Font name="Segoe UI Bold" size="25.8"/>
+                </font>
+                <VBox.margin>
+                    <Insets/>
+                </VBox.margin>
+            </Button>
          <HBox prefHeight="100.0" prefWidth="200.0">
              <Button fx:id="btLogout" maxHeight="50.0" maxWidth="270.0" minHeight="50.0" minWidth="133.0"
                      mnemonicParsing="false" onAction="#btLogout" prefHeight="50.0" prefWidth="270.0"
                      style="-fx-background-color: #eeeeee;" text="Log Out" textFill="#f78888">
-               <font>
-                   <Font name="Segoe UI Bold" size="25.8"/>
-               </font>
-               <HBox.margin>
-                   <Insets top="8.0"/>
-               </HBox.margin>
-            </Button>
+                 <font>
+                     <Font name="Segoe UI Bold" size="25.8"/>
+                 </font>
+                 <HBox.margin>
+                     <Insets top="8.0"/>
+                 </HBox.margin>
+             </Button>
          </HBox>
       </VBox>
         <Pane fx:id="containerPane" maxWidth="499.0" minWidth="600.0" prefWidth="600.0">
             <VBox fx:id="defaultHomePage" maxHeight="400.0" maxWidth="610.0" minHeight="400.0" minWidth="610.0"
                   prefHeight="400.0" prefWidth="610.0" style="-fx-border-radius: 15; -fx-background-color: #eeeeee;">
-            <children>
-                <HBox maxHeight="83.0" maxWidth="600.0" minHeight="83.0" minWidth="600.0" prefHeight="83.0"
-                      prefWidth="600.0">
-                  <children>
-                     <Label text="Documents">
-                        <font>
-                            <Font name="Segoe UI Bold" size="42.0"/>
-                        </font>
-                        <HBox.margin>
-                            <Insets bottom="15.0" left="15.0" top="15.0"/>
-                        </HBox.margin>
-                     </Label>
-                      <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
-                      <Button fx:id="btAddFile" mnemonicParsing="false" onAction="#btAddFile" text="Add File"/>
-                  </children>
-               </HBox>
-                <ScrollPane fx:id="sbDocuments" maxHeight="420.0" maxWidth="610.0" minHeight="260.0" minWidth="610.0"
-                            pannable="true" prefHeight="420.0" prefWidth="610.0">
-                  <content>
-                      <VBox fx:id="vbDocuments" maxHeight="1000.0" maxWidth="610.0" minHeight="310.0" minWidth="610.0"
-                            prefHeight="1000.0" prefWidth="610.0">
+                <children>
+                    <HBox maxHeight="83.0" maxWidth="600.0" minHeight="83.0" minWidth="600.0" prefHeight="83.0"
+                          prefWidth="600.0">
                         <children>
-                            <HBox fx:id="hbPicturesOfTopFiles" maxHeight="500.0" maxWidth="499.0" minHeight="200.0"
-                                  minWidth="499.0" prefHeight="200.0"/>
+                            <Label text="Documents">
+                                <font>
+                                    <Font name="Segoe UI Bold" size="42.0"/>
+                                </font>
+                                <HBox.margin>
+                                    <Insets bottom="15.0" left="15.0" top="15.0"/>
+                                </HBox.margin>
+                            </Label>
+                            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="btAddFile" mnemonicParsing="false" onAction="#btAddFile" text="Add File"/>
                         </children>
-                     </VBox>
-                  </content>
-               </ScrollPane>
+               </HBox>
+                    <ScrollPane fx:id="sbDocuments" maxHeight="420.0" maxWidth="610.0" minHeight="260.0"
+                                minWidth="610.0" pannable="true" prefHeight="420.0" prefWidth="610.0">
+                        <content>
+                            <VBox fx:id="vbDocuments" maxHeight="1000.0" maxWidth="610.0" minHeight="310.0"
+                                  minWidth="610.0" prefHeight="1000.0" prefWidth="610.0">
+                                <children>
+                                    <HBox fx:id="hbPicturesOfTopFiles" maxHeight="500.0" maxWidth="499.0"
+                                          minHeight="200.0" minWidth="499.0" prefHeight="200.0"/>
+                                </children>
+                            </VBox>
+                        </content>
+                    </ScrollPane>
             </children>
          </VBox>
-            <VBox fx:id="users" disable="true" maxHeight="400.0" maxWidth="640.0" minHeight="400.0" minWidth="640.0"
-                  prefHeight="400.0" prefWidth="640.0" style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;"
-                  visible="false">
-            <children>
-               <Label fx:id="lblUsers" text="{Users}">
-                  <font>
-                      <Font name="Segoe UI Bold" size="42.0"/>
-                  </font>
-                  <VBox.margin>
-                      <Insets bottom="15.0" left="15.0" top="15.0"/>
-                  </VBox.margin>
-               </Label>
+            <VBox fx:id="users" maxHeight="400.0" maxWidth="640.0" minHeight="400.0" minWidth="640.0" prefHeight="400.0"
+                  prefWidth="640.0" style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;">
+                <children>
+                    <HBox fx:id="hbTopBar" maxWidth="585.0" prefHeight="52.0" prefWidth="200.0">
+                        <VBox.margin>
+                            <Insets bottom="15.0" left="15.0" top="15.0"/>
+                        </VBox.margin>
+                        <children>
+                            <Label fx:id="lblUsers" ellipsisString="" text="{Users}" textOverrun="CLIP">
+                                <font>
+                                    <Font name="Segoe UI Bold" size="42.0"/>
+                                </font>
+                            </Label>
+                            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="btRemoveUser" onAction="#btRemoveUser" ellipsisString=""
+                                    mnemonicParsing="false" style="-fx-background-color: #f78888;" text="Remove User"
+                                    textFill="WHITE" textOverrun="CLIP" visible="false">
+                                <font>
+                                    <Font name="Segoe UI Bold" size="12.0"/>
+                                </font>
+                                <HBox.margin>
+                                    <Insets top="25.0"/>
+                                </HBox.margin>
+                            </Button>
+                        </children>
+                    </HBox>
                <TableView fx:id="usersTB" prefHeight="766.0" prefWidth="200.0" style="-fx-background-color: #eeeeee;">
                   <columns>
                       <TableColumn fx:id="firstNameCol" maxWidth="500.0" minWidth="275.0" prefWidth="275.0"
                                    style="-fx-background-color: #eeeeee;">
-                        <graphic>
-                           <Label text="First Name">
-                              <font>
-                                  <Font name="Segoe UI Bold Italic" size="25.8"/>
-                              </font>
-                           </Label>
-                        </graphic>
-                     </TableColumn>
+                          <graphic>
+                              <Label text="First Name">
+                                  <font>
+                                      <Font name="Segoe UI Bold Italic" size="25.8"/>
+                                  </font>
+                              </Label>
+                          </graphic>
+                      </TableColumn>
                       <TableColumn fx:id="lastNameCol" maxWidth="500.0" minWidth="275.0" prefWidth="275.0"
                                    style="-fx-background-color: #eeeeee;">
-                        <graphic>
-                           <Label text="Last Name">
-                              <font>
-                                  <Font name="Segoe UI Bold Italic" size="25.8"/>
-                              </font>
-                           </Label>
-                        </graphic>
-                     </TableColumn>
+                          <graphic>
+                              <Label text="Last Name">
+                                  <font>
+                                      <Font name="Segoe UI Bold Italic" size="25.8"/>
+                                  </font>
+                              </Label>
+                          </graphic>
+                      </TableColumn>
                       <TableColumn fx:id="emailCol" maxWidth="500.0" minWidth="275.0" prefWidth="275.0"
                                    style="-fx-background-color: #eeeeee;">
-                        <graphic>
-                           <Label text="Email">
-                              <font>
-                                  <Font name="Segoe UI Bold Italic" size="25.8"/>
-                              </font>
-                           </Label>
-                        </graphic>
-                     </TableColumn>
+                          <graphic>
+                              <Label text="Email">
+                                  <font>
+                                      <Font name="Segoe UI Bold Italic" size="25.8"/>
+                                  </font>
+                              </Label>
+                          </graphic>
+                      </TableColumn>
                       <TableColumn fx:id="isAdminCol" maxWidth="500.0" minWidth="275.0" prefWidth="275.0"
                                    style="-fx-background-color: #eeeeee;">
-                        <graphic>
-                           <Label text="Admin Status">
-                              <font>
-                                  <Font name="Segoe UI Bold Italic" size="25.8"/>
-                              </font>
-                           </Label>
-                        </graphic>
-                     </TableColumn>
+                          <graphic>
+                              <Label text="Admin Status">
+                                  <font>
+                                      <Font name="Segoe UI Bold Italic" size="25.8"/>
+                                  </font>
+                              </Label>
+                          </graphic>
+                      </TableColumn>
                   </columns>
                </TableView>
             </children>

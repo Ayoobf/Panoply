@@ -24,11 +24,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableCell;
@@ -49,8 +52,8 @@ import javafx.util.Callback;
 public class HomePageController extends DefaultController implements Initializable {
 
 	public static List<Blob> listOfFiles = new ArrayList<>();
-
-	//    public Pane imageArea;
+	public static UserHolder holder = UserHolder.getINSTANCE();
+	public static User user;
 	public HBox TitleBar;
 	public VBox homePage;
 	public SplitPane divPane;
@@ -75,8 +78,8 @@ public class HomePageController extends DefaultController implements Initializab
 	public VBox vbDocuments;
 	public HBox hbPicturesOfTopFiles;
 	public Label lblUsers;
-	public static UserHolder holder = UserHolder.getINSTANCE();
-	public static User user;
+	public HBox hbTopBar;
+	public Button btRemoveUser;
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -104,11 +107,12 @@ public class HomePageController extends DefaultController implements Initializab
 			// I coded my defaultHomePage and Show() -->
 			// objects in such a way that it breaks if you use show() in this block
 			btUsers();
+			btRemoveUser.setVisible(true);
 		}
 	}
 
 	@FXML
-	void btHome() {
+	public void btHome() {
 		show(defaultHomePage);
 		listOfFiles.clear();
 		vbDocuments.getChildren().clear();
@@ -118,7 +122,7 @@ public class HomePageController extends DefaultController implements Initializab
 	}
 
 	@FXML
-	void btAddFile() {
+	public void btAddFile() {
 		VBox vbFiles = new VBox();
 		Button submit = new Button("Submit");
 		vbFiles.getChildren().addAll(new Label("Drag your files Here"));
@@ -182,12 +186,12 @@ public class HomePageController extends DefaultController implements Initializab
 	}
 
 	@FXML
-	void btSettings() {
+	public void btSettings() {
 		show(settings);
 	}
 
 	@FXML
-	void btUsers() {
+	public void btUsers() {
 		show(users);
 		lblUsers.setText(new MongoDBHandler().findTeamName(user.getTeamId()) + "'s Users");
 
@@ -220,14 +224,14 @@ public class HomePageController extends DefaultController implements Initializab
 	}
 
 	@FXML
-	void btCollapseSideBar() {
+	public void btCollapseSideBar() {
 		sideButtons.setMinWidth(0);
 		divPane.setDividerPosition(0, 0);
 
 	}
 
 	@FXML
-	void btLogout() {
+	public void btLogout() {
 		switchScene("login.fxml");
 		holder.setUser(null);
 		changeWindowSize(1024, 600);
@@ -328,7 +332,6 @@ public class HomePageController extends DefaultController implements Initializab
 							this.setFont(Font.font("Segoue UI", FontWeight.BOLD, 16));
 							this.setAlignment(Pos.CENTER);
 
-
 							if (item.contains("true")) this.setTextFill(Color.rgb(243, 210, 80));
 							setText(item);
 						}
@@ -340,4 +343,58 @@ public class HomePageController extends DefaultController implements Initializab
 	}
 
 
+	public void btRemoveUser() {
+		VBox usersToRemove = new VBox();
+
+		usersToRemove.setPrefHeight(400);
+		usersToRemove.setPrefWidth(200);
+		usersToRemove.setStyle("-fx-background-color: #EEEEEE");
+
+		// Add button
+		Button rm = new Button("Remove Selected");
+		rm.setStyle("-fx-background-color: #f78888; -fx-text-fill: #FFFFFF");
+		usersToRemove.getChildren().add(rm);
+		VBox.setMargin(rm, new Insets(15));
+
+		// output team members' username
+		ArrayList<User> listOfTeamMembers = new MongoDBHandler().listTeamMembers(user.getTeamId());
+		List<User> selectedUser = new ArrayList<>();
+
+		listOfTeamMembers.forEach(user -> {
+			CheckBox cbUser = new CheckBox(user.getUserName());
+
+			cbUser.setTextOverrun(OverrunStyle.CLIP);
+			cbUser.setStyle("");
+			cbUser.setMinWidth(usersToRemove.getWidth());
+			cbUser.setOnAction(event -> {
+				// if selected, add to arr
+				if (cbUser.isSelected()) {
+					selectedUser.add(user);
+					// not selected but is in
+				} else if (!cbUser.isSelected()) {
+					selectedUser.remove(user);
+				}
+
+			});
+			// show to user
+			usersToRemove.getChildren().add(cbUser);
+		});
+
+		Stage stage = new Stage();
+		Scene scene = new Scene(usersToRemove);
+		stage.setScene(scene);
+		stage.show();
+
+		// remove users button action
+		rm.setOnAction(event -> {
+			// for each person in the arr, delete them
+			selectedUser.forEach(user -> {
+				new MongoDBHandler().removeUser(user);
+			});
+			btUsers();
+			stage.close();
+		});
+
+
+	}
 }

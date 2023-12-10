@@ -218,4 +218,8 @@ public class MongoDBHandler {
 		);
 
 	}
+
+	public void removeUser(User user) {
+		userCollection.deleteOne(Filters.eq("username", user.getUserName()));
+	}
 }

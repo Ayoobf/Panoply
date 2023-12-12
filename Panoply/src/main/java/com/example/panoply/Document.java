@@ -29,25 +29,6 @@ public class Document {
 
 	}
 
-	public Document(String documentId,
-					String documentName,
-					String documentPath,
-					double documentSize,
-					Object uploadDate,
-					Object lastModified,
-					Object lastEditor,
-					boolean isCheckOut) {
-
-		this.documentId = documentId;
-		this.documentName = documentName;
-		this.documentPath = documentPath;
-		this.documentSize = documentSize;
-		this.uploadDate = uploadDate;
-		this.lastModified = lastModified;
-		this.lastEditor = lastEditor;
-		this.isCheckOut = isCheckOut;
-	}
-
 
 	public void uploadDocument(String documentPath, String currentUserTeamName, String userName) throws IOException {
 
@@ -57,19 +38,8 @@ public class Document {
 
 	}
 
-
-
-
 	public String getDocumentPath() {
 		return documentPath;
-	}
-
-	public String getDocumentName() {
-		return documentName;
-	}
-
-	public Object getUploadDate() {
-		return uploadDate;
 	}
 
 	public void setUploadDate(BsonDateTime uploadDate) {

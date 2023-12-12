@@ -12,6 +12,7 @@ import org.bson.BsonDateTime;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -223,9 +224,6 @@ public class HomePageController extends DefaultController implements Initializab
 		// Add Table
 		usersTB.getColumns().setAll(firstNameCol, lastNameCol, emailCol, isAdminCol);
 
-//        if(sidebar is col;lapsed){
-//            firstNameCol.setMinWidth(500);
-//        }
 
 	}
 
@@ -296,23 +294,6 @@ public class HomePageController extends DefaultController implements Initializab
 
 		// Make new elements based on copied elements
 		listOfFiles.forEach(file -> {
-//			Hyperlink hl = new Hyperlink(file.getName().replace(currentUserTeamName + "/", ""));
-//
-//			hl.setOnAction(event -> {
-//				try {
-//					// method downloads file and returns its path
-//					String destPathOfDownloadedFile = new GoogleCloudHandler().downloadFile(currentUserTeamName, file.getName());
-//					openFile(destPathOfDownloadedFile);
-//
-//				} catch (NullPointerException e) {
-//					showAlert("Download Failed, Try Again");
-//				} catch (IOException e) {
-//					throw new RuntimeException(e);
-//				}
-//			});
-//			vbDocuments.getChildren().addAll(hl);
-//
-//
 			HBox hbDocumentAsset = new HBox();
 
 			// TODO when Button is clicked, it retrieves doc stats
@@ -337,7 +318,8 @@ public class HomePageController extends DefaultController implements Initializab
 					showAlert("Cannot Check Out");
 				} else {
 					try {
-						String destPathOfDownloadedFile = new GoogleCloudHandler().downloadFile(currentUserTeamName, file.getName());
+						String destPathOfDownloadedFile = new GoogleCloudHandler()
+								.downloadFile(currentUserTeamName, file.getName());
 						openFile(destPathOfDownloadedFile);
 					} catch (NullPointerException e) {
 						showAlert("Download Failed, Try Again");
@@ -348,29 +330,37 @@ public class HomePageController extends DefaultController implements Initializab
 				}
 			});
 
+
 			// TODO
 			// when check in, popup shows, user drags new file to upload, upload replaces, prev file
 			checkInFile.setOnAction(action -> {
 
 				if (checkedIn) {
 					showAlert("Cannot Check In");
+				} else if (!user.getUserName().equalsIgnoreCase(md.findFileLastEditor(file.getName(), currentUserTeamName))) {
+					System.out.println(md.findFileLastEditor(file.getName(), currentUserTeamName));
+					showAlert("You are not the onw who checked out this document");
 				} else {
 					FileChooser fcCheckIn = new FileChooser();
 					fcCheckIn.setTitle("Choose CheckIn File");
 					fcCheckIn.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"));
 					File selectedFile = fcCheckIn.showOpenDialog(new Stage());
 
+					String trunFileName = Paths.get(file.getName()).getFileName().toString();
 					// keeping file name, changing file contents
-					if (selectedFile != null) {
+					if (selectedFile != null && trunFileName.equalsIgnoreCase(selectedFile.getName())) {
+
 						try {
 							new GoogleCloudHandler().updateFile(file.getName(), selectedFile);
-							new MongoDBHandler().updateFile(file.getName(), selectedFile, currentUserTeamName, user.getUserName());
+							md.updateFile(file.getName(), selectedFile, currentUserTeamName, user.getUserName());
 							md.updateCheckedStatus(file.getName(), currentUserTeamName, true);
 							btHome();
 
 						} catch (IOException e) {
 							throw new RuntimeException(e);
 						}
+					} else {
+						showAlert("Selected wrong file");
 					}
 
 

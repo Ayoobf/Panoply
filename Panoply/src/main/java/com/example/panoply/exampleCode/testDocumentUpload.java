@@ -3,6 +3,7 @@ package com.example.panoply.exampleCode;
 import com.example.panoply.Document;
 import com.example.panoply.User;
 import com.example.panoply.handlers.GoogleCloudHandler;
+import com.example.panoply.handlers.MongoDBHandler;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
@@ -20,7 +21,7 @@ public class testDocumentUpload {
 	final static String BUCKETNAME = "dms-get-files";
 
 	public static void main(String[] args) throws IOException {
-		String path = "C:\\Users\\rfloo\\Desktop\\Test2.txt";
-		new Document().uploadDocument(path, "RED", "1");
+		String md = new MongoDBHandler().findFileLastEditor("Obsidian.lnk", "Florival");
+		System.out.println(md);
 	}
 }

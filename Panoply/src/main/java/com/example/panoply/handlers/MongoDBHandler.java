@@ -185,6 +185,7 @@ public class MongoDBHandler {
 				));
 	}
 
+
 	// returns a list of user Objects
 	public ArrayList<User> listTeamMembers(String teamId) {
 		List<Document> resultList = new ArrayList<>();
@@ -236,6 +237,13 @@ public class MongoDBHandler {
 				update
 		);
 	}
+
+	public String findFileLastEditor(String filePath, String teamName) {
+		String file = Paths.get(filePath).getFileName().toString();
+
+		return documentCollection.distinct("last_editor", Filters.and(Filters.eq("file_name", file), Filters.eq("team", teamName)), String.class).first();
+	}
+
 
 	// finds if ile checked in
 	public boolean findCheckedStatus(String filePath, String teamName) {

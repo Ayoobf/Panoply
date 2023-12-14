@@ -1,8 +1,8 @@
 package com.example.panoply.controllers;
 
-import com.example.panoply.Document;
-import com.example.panoply.User;
-import com.example.panoply.UserHolder;
+import com.example.panoply.classes.Document;
+import com.example.panoply.classes.User;
+import com.example.panoply.classes.UserHolder;
 import com.example.panoply.handlers.GoogleCloudHandler;
 import com.example.panoply.handlers.MongoDBHandler;
 import com.google.cloud.storage.Blob;

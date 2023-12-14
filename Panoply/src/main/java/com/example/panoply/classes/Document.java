@@ -1,4 +1,4 @@
-package com.example.panoply;
+package com.example.panoply.classes;
 
 import com.example.panoply.handlers.GoogleCloudHandler;
 import com.example.panoply.handlers.MongoDBHandler;

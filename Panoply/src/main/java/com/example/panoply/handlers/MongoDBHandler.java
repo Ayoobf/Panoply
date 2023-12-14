@@ -1,6 +1,6 @@
 package com.example.panoply.handlers;
 
-import com.example.panoply.User;
+import com.example.panoply.classes.User;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;

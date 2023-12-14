@@ -1,7 +1,7 @@
 package com.example.panoply.controllers;
 
-import com.example.panoply.User;
-import com.example.panoply.UserHolder;
+import com.example.panoply.classes.User;
+import com.example.panoply.classes.UserHolder;
 import com.example.panoply.handlers.MongoDBHandler;
 
 import java.net.URL;

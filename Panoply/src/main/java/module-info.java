@@ -26,5 +26,7 @@ module com.example.panoply {
     opens com.example.panoply.controllers to javafx.fxml;
     exports com.example.panoply;
     opens com.example.panoply to javafx.fxml;
+	exports com.example.panoply.classes;
+	opens com.example.panoply.classes to javafx.fxml;
 
 }

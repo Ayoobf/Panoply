@@ -1,4 +1,4 @@
-package com.example.panoply;
+package com.example.panoply.classes;
 
 public final class UserHolder {
 

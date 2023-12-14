@@ -91,24 +91,20 @@
                     <Insets/>
                 </VBox.margin>
             </Button>
-         <HBox prefHeight="100.0" prefWidth="200.0">
-             <Button fx:id="btLogout" maxHeight="50.0" maxWidth="270.0" minHeight="50.0" minWidth="133.0"
-                     mnemonicParsing="false" onAction="#btLogout" prefHeight="50.0" prefWidth="270.0"
-                     style="-fx-background-color: #eeeeee;" text="Log Out" textFill="#f78888">
-                 <font>
-                     <Font name="Segoe UI Bold" size="25.8"/>
-                 </font>
-                 <HBox.margin>
-                     <Insets top="8.0"/>
-                 </HBox.margin>
-             </Button>
-         </HBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS"/>
+            <Button fx:id="btLogout" maxHeight="50.0" maxWidth="270.0" minHeight="50.0" minWidth="133.0"
+                    mnemonicParsing="false" onAction="#btLogout" prefHeight="50.0" prefWidth="270.0"
+                    style="-fx-background-color: #eeeeee;" text="Log Out" textFill="#f78888">
+                <font>
+                    <Font name="Segoe UI Bold" size="25.8"/>
+                </font>
+            </Button>
       </VBox>
         <Pane fx:id="containerPane" minWidth="600.0">
             <VBox fx:id="defaultHomePage" disable="true" minHeight="780.0" minWidth="1189.0"
                   style="-fx-border-radius: 15; -fx-background-color: #eeeeee;" visible="false">
                 <children>
-                    <HBox maxHeight="83.0" minHeight="83.0" prefHeight="83.0">
+                    <HBox maxHeight="83.0" maxWidth="1200.0" minHeight="83.0" prefHeight="83.0">
                         <children>
                             <Label text="Documents">
                                 <font>
@@ -119,10 +115,14 @@
                                 </HBox.margin>
                             </Label>
                             <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
-                            <Button fx:id="btAddFile" mnemonicParsing="false" onAction="#btAddFile" text="Add File">
+                            <Button fx:id="btAddFile" minHeight="50.0" minWidth="90.0" mnemonicParsing="false"
+                                    onAction="#btAddFile" text="Add File">
                                 <HBox.margin>
-                                    <Insets right="130.0" top="30.0"/>
+                                    <Insets right="130.0" top="15.0"/>
                                 </HBox.margin>
+                                <font>
+                                    <Font name="Segoe UI" size="12.0"/>
+                                </font>
                             </Button>
                         </children>
                </HBox>
@@ -140,8 +140,8 @@
                     </ScrollPane>
             </children>
          </VBox>
-            <VBox fx:id="users" disable="true" minWidth="1216.0" prefWidth="632.0"
-                  style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;" visible="false">
+            <VBox fx:id="users" minWidth="1216.0" prefWidth="632.0"
+                  style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;">
                 <children>
                     <HBox fx:id="hbTopBar" maxWidth="1100.0" prefHeight="52.0">
                         <VBox.margin>
@@ -154,14 +154,14 @@
                                 </font>
                             </Label>
                             <Pane HBox.hgrow="ALWAYS"/>
-                            <Button fx:id="btRemoveUser" ellipsisString="" mnemonicParsing="false"
+                            <Button fx:id="btRemoveUser" ellipsisString="" minHeight="50.0" mnemonicParsing="false"
                                     onAction="#btRemoveUser" style="-fx-background-color: #f78888;" text="Remove User"
                                     textFill="WHITE" textOverrun="CLIP" visible="false">
                                 <font>
                                     <Font name="Segoe UI Bold" size="12.0"/>
                                 </font>
                                 <HBox.margin>
-                                    <Insets right="30.0" top="25.0"/>
+                                    <Insets right="30.0"/>
                                 </HBox.margin>
                             </Button>
                         </children>
@@ -216,9 +216,9 @@
                </TableView>
             </children>
          </VBox>
-            <VBox fx:id="settings" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            <VBox fx:id="settings" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                   minHeight="782.0" minWidth="600.0" prefHeight="782.0" prefWidth="1100.0"
-                  style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;">
+                  style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;" visible="false">
                 <children>
                     <Label contentDisplay="RIGHT" ellipsisString="" prefHeight="147.0" prefWidth="402.0"
                            text="LEAVE YOUR CURRENT TEAM: This action is permanent and cannot be undone. If you want to continue, Press the button."
@@ -234,6 +234,9 @@
                         <font>
                             <Font name="Segoe UI Bold" size="18.0"/>
                         </font>
+                        <VBox.margin>
+                            <Insets left="30.0" top="30.0"/>
+                        </VBox.margin>
                     </Label>
                 </children>
             </VBox>

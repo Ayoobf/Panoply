@@ -88,31 +88,8 @@
                 </PasswordField>
                 <HBox prefHeight="100.0" prefWidth="200.0">
                     <children>
-                        <Label disable="true" opacity="0.5" text="Forgot password?" visible="false">
-                            <font>
-                                <Font name="Segoe UI Bold" size="16.0"/>
-                            </font>
-                            <HBox.margin>
-                                <Insets top="20.0"/>
-                            </HBox.margin>
-                        </Label>
-                        <Hyperlink fx:id="lReset" alignment="TOP_LEFT" maxHeight="25.0" minHeight="25.0"
-                                   onAction="#lReset" prefHeight="25.0" text="Reset" visible="false" wrapText="true">
-                            <font>
-                                <Font name="Segoe UI Bold" size="16.0"/>
-                            </font>
-                            <opaqueInsets>
-                                <Insets/>
-                            </opaqueInsets>
-                            <padding>
-                                <Insets bottom="4.0"/>
-                            </padding>
-                            <HBox.margin>
-                                <Insets left="1.0" top="20.0"/>
-                            </HBox.margin>
-                        </Hyperlink>
                         <Button fx:id="btLogin" cancelButton="true" contentDisplay="CENTER" defaultButton="true"
-                                maxHeight="58.0" maxWidth="218.0" minHeight="58.0" minWidth="218.0"
+                                maxHeight="58.0" maxWidth="218.0" minHeight="58.0" minWidth="306.0"
                                 mnemonicParsing="false" onAction="#btLogin" prefHeight="58.0" prefWidth="218.0"
                                 style="-fx-background-color: F78888; -fx-background-radius: 10;" text="Login"
                                 textFill="#eeeeee">
@@ -126,7 +103,7 @@
                                 <Insets/>
                             </opaqueInsets>
                             <HBox.margin>
-                                <Insets left="63.0"/>
+                                <Insets left="77.0"/>
                             </HBox.margin>
                         </Button>
                     </children>

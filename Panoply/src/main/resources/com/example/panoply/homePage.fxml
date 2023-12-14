@@ -12,10 +12,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="homePage" maxHeight="450.0" maxWidth="780.0" minHeight="450.0" minWidth="780.0"
-      prefHeight="450.0" prefWidth="780.0" style="-fx-background-color: #eeeeee;"
-      xmlns="http://javafx.com/javafx/21" fx:controller="com.example.panoply.controllers.HomePageController">
-    <HBox fx:id="TitleBar" maxWidth="780.0" minWidth="780.0" prefWidth="780.0" style="-fx-border-color: #000000;">
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="homePage" minHeight="782.0" minWidth="1366.0" prefHeight="782.0"
+      prefWidth="1366.0" style="-fx-background-color: #eeeeee;" xmlns="http://javafx.com/javafx/21"
+      fx:controller="com.example.panoply.controllers.HomePageController">
+    <HBox fx:id="TitleBar" minWidth="1366.0" prefWidth="780.0" style="-fx-border-color: #000000;">
         <Pane maxHeight="20.0" minHeight="28.0" prefHeight="28.0" prefWidth="200.0"
               style="-fx-background-color: #eeeeee;" HBox.hgrow="ALWAYS"/>
         <Button maxHeight="28.0" maxWidth="28.0" minHeight="28.0" minWidth="28.0" mnemonicParsing="false"
@@ -26,11 +26,10 @@
             </font>
         </Button>
     </HBox>
-    <SplitPane fx:id="divPane" dividerPositions="0.2001466275659824" maxHeight="400.0" maxWidth="499.0"
-               minHeight="400.0" minWidth="769.0" prefHeight="400.0" prefWidth="499.0"
-               style="-fx-background-color: #eeeeee;">
-        <VBox fx:id="sideButtons" maxHeight="400.0" maxWidth="270.0" minHeight="400.0" minWidth="125.0"
-              prefHeight="400.0" prefWidth="270.0" style="-fx-background-color: #eeeeee;">
+    <SplitPane fx:id="divPane" dividerPositions="0.2001466275659824" minHeight="782.0" minWidth="1366.0"
+               prefHeight="782.0" prefWidth="1366.0" style="-fx-background-color: #eeeeee;">
+        <VBox fx:id="sideButtons" maxWidth="270.0" minWidth="270.0" prefWidth="632.0"
+              style="-fx-background-color: #eeeeee;">
             <HBox>
                 <VBox.margin>
                     <Insets left="15.0"/>
@@ -105,12 +104,11 @@
              </Button>
          </HBox>
       </VBox>
-        <Pane fx:id="containerPane" maxWidth="499.0" minWidth="600.0" prefWidth="600.0">
-            <VBox fx:id="defaultHomePage" maxHeight="400.0" maxWidth="610.0" minHeight="400.0" minWidth="610.0"
-                  prefHeight="400.0" prefWidth="610.0" style="-fx-border-radius: 15; -fx-background-color: #eeeeee;">
+        <Pane fx:id="containerPane" minWidth="600.0">
+            <VBox fx:id="defaultHomePage" disable="true" minHeight="780.0" minWidth="1189.0"
+                  style="-fx-border-radius: 15; -fx-background-color: #eeeeee;" visible="false">
                 <children>
-                    <HBox maxHeight="83.0" maxWidth="600.0" minHeight="83.0" minWidth="600.0" prefHeight="83.0"
-                          prefWidth="600.0">
+                    <HBox maxHeight="83.0" minHeight="83.0" prefHeight="83.0">
                         <children>
                             <Label text="Documents">
                                 <font>
@@ -121,16 +119,20 @@
                                 </HBox.margin>
                             </Label>
                             <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
-                            <Button fx:id="btAddFile" mnemonicParsing="false" onAction="#btAddFile" text="Add File"/>
+                            <Button fx:id="btAddFile" mnemonicParsing="false" onAction="#btAddFile" text="Add File">
+                                <HBox.margin>
+                                    <Insets right="130.0" top="30.0"/>
+                                </HBox.margin>
+                            </Button>
                         </children>
                </HBox>
-                    <ScrollPane fx:id="sbDocuments" maxHeight="420.0" maxWidth="610.0" minHeight="260.0"
-                                minWidth="610.0" pannable="true" prefHeight="420.0" prefWidth="610.0">
+                    <ScrollPane fx:id="sbDocuments" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                minHeight="260.0" minWidth="610.0" pannable="true">
                         <content>
-                            <VBox fx:id="vbDocuments" maxHeight="1000.0" maxWidth="610.0" minHeight="310.0"
-                                  minWidth="610.0" prefHeight="1000.0" prefWidth="610.0">
+                            <VBox fx:id="vbDocuments" maxHeight="1000.0" maxWidth="1.7976931348623157E308"
+                                  minHeight="310.0" prefHeight="1000.0" prefWidth="1370.0">
                                 <children>
-                                    <HBox fx:id="hbPicturesOfTopFiles" maxHeight="500.0" maxWidth="499.0"
+                                    <HBox fx:id="hbPicturesOfTopFiles" maxWidth="1.7976931348623157E308"
                                           minHeight="200.0" minWidth="499.0" prefHeight="200.0"/>
                                 </children>
                             </VBox>
@@ -138,10 +140,10 @@
                     </ScrollPane>
             </children>
          </VBox>
-            <VBox fx:id="users" maxHeight="400.0" maxWidth="640.0" minHeight="400.0" minWidth="640.0" prefHeight="400.0"
-                  prefWidth="640.0" style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;">
+            <VBox fx:id="users" disable="true" minWidth="1216.0" prefWidth="632.0"
+                  style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;" visible="false">
                 <children>
-                    <HBox fx:id="hbTopBar" maxWidth="585.0" prefHeight="52.0" prefWidth="200.0">
+                    <HBox fx:id="hbTopBar" maxWidth="1100.0" prefHeight="52.0">
                         <VBox.margin>
                             <Insets bottom="15.0" left="15.0" top="15.0"/>
                         </VBox.margin>
@@ -151,23 +153,24 @@
                                     <Font name="Segoe UI Bold" size="42.0"/>
                                 </font>
                             </Label>
-                            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
-                            <Button fx:id="btRemoveUser" onAction="#btRemoveUser" ellipsisString=""
-                                    mnemonicParsing="false" style="-fx-background-color: #f78888;" text="Remove User"
+                            <Pane HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="btRemoveUser" ellipsisString="" mnemonicParsing="false"
+                                    onAction="#btRemoveUser" style="-fx-background-color: #f78888;" text="Remove User"
                                     textFill="WHITE" textOverrun="CLIP" visible="false">
                                 <font>
                                     <Font name="Segoe UI Bold" size="12.0"/>
                                 </font>
                                 <HBox.margin>
-                                    <Insets top="25.0"/>
+                                    <Insets right="30.0" top="25.0"/>
                                 </HBox.margin>
                             </Button>
                         </children>
                     </HBox>
-               <TableView fx:id="usersTB" prefHeight="766.0" prefWidth="200.0" style="-fx-background-color: #eeeeee;">
+                    <TableView fx:id="usersTB" maxWidth="1100.0" prefHeight="766.0" prefWidth="200.0"
+                               style="-fx-background-color: #eeeeee;">
                   <columns>
-                      <TableColumn fx:id="firstNameCol" maxWidth="500.0" minWidth="275.0" prefWidth="275.0"
-                                   style="-fx-background-color: #eeeeee;">
+                      <TableColumn fx:id="firstNameCol" maxWidth="275.0" minWidth="275.0" prefWidth="275.0"
+                                   sortable="false" style="-fx-background-color: #eeeeee;">
                           <graphic>
                               <Label text="First Name">
                                   <font>
@@ -176,8 +179,8 @@
                               </Label>
                           </graphic>
                       </TableColumn>
-                      <TableColumn fx:id="lastNameCol" maxWidth="500.0" minWidth="275.0" prefWidth="275.0"
-                                   style="-fx-background-color: #eeeeee;">
+                      <TableColumn fx:id="lastNameCol" maxWidth="275.0" minWidth="275.0" prefWidth="275.0"
+                                   sortable="false" style="-fx-background-color: #eeeeee;">
                           <graphic>
                               <Label text="Last Name">
                                   <font>
@@ -186,7 +189,7 @@
                               </Label>
                           </graphic>
                       </TableColumn>
-                      <TableColumn fx:id="emailCol" maxWidth="500.0" minWidth="275.0" prefWidth="275.0"
+                      <TableColumn fx:id="emailCol" maxWidth="275.0" minWidth="275.0" prefWidth="275.0" sortable="false"
                                    style="-fx-background-color: #eeeeee;">
                           <graphic>
                               <Label text="Email">
@@ -196,8 +199,8 @@
                               </Label>
                           </graphic>
                       </TableColumn>
-                      <TableColumn fx:id="isAdminCol" maxWidth="500.0" minWidth="275.0" prefWidth="275.0"
-                                   style="-fx-background-color: #eeeeee;">
+                      <TableColumn fx:id="isAdminCol" maxWidth="275.0" minWidth="275.0" prefWidth="275.0"
+                                   sortable="false" style="-fx-background-color: #eeeeee;">
                           <graphic>
                               <Label text="Admin Status">
                                   <font>
@@ -207,12 +210,33 @@
                           </graphic>
                       </TableColumn>
                   </columns>
+                        <columnResizePolicy>
+                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                        </columnResizePolicy>
                </TableView>
             </children>
          </VBox>
-            <VBox fx:id="settings" disable="true" maxHeight="310.0" maxWidth="610.0" minHeight="310.0" minWidth="610.0"
-                  prefHeight="310.0" prefWidth="610.0" style="-fx-border-radius: 15; -fx-background-color: #0000FF;"
-                  visible="false"/>
+            <VBox fx:id="settings" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                  minHeight="782.0" minWidth="600.0" prefHeight="782.0" prefWidth="1100.0"
+                  style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;">
+                <children>
+                    <Label contentDisplay="RIGHT" ellipsisString="" prefHeight="147.0" prefWidth="402.0"
+                           text="LEAVE YOUR CURRENT TEAM: This action is permanent and cannot be undone. If you want to continue, Press the button."
+                           textOverrun="CLIP" wrapText="true">
+                        <graphic>
+                            <Button mnemonicParsing="false" onAction="#btLeaveTeam"
+                                    style="-fx-background-color: #f78888;" text="Leave Team" textFill="WHITE">
+                                <font>
+                                    <Font name="Segoe UI Bold" size="18.0"/>
+                                </font>
+                            </Button>
+                        </graphic>
+                        <font>
+                            <Font name="Segoe UI Bold" size="18.0"/>
+                        </font>
+                    </Label>
+                </children>
+            </VBox>
       </Pane>
    </SplitPane>
 </VBox>

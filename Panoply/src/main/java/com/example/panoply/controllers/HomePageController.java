@@ -23,6 +23,7 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -88,7 +89,7 @@ public class HomePageController extends DefaultController implements Initializab
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		user = holder.getUser();
 
-		changeWindowSize(800, 400);
+		changeWindowSize(1366, 782);
 		makeDraggable(homePage);
 
 		// make buttons more dynamic looking
@@ -192,10 +193,6 @@ public class HomePageController extends DefaultController implements Initializab
 		vbFiles.getChildren().add(submit);
 	}
 
-	@FXML
-	public void btSettings() {
-		show(settings);
-	}
 
 	@FXML
 	public void btUsers() {
@@ -226,6 +223,14 @@ public class HomePageController extends DefaultController implements Initializab
 
 
 	}
+
+	@FXML
+	public void btSettings() {
+		show(settings);
+
+	}
+
+
 
 	@FXML
 	public void btCollapseSideBar() {
@@ -279,7 +284,6 @@ public class HomePageController extends DefaultController implements Initializab
 	private void refreshDocumentsSelection() {
 		MongoDBHandler md = new MongoDBHandler();
 		String currentUserTeamName = md.findTeamName(holder.getUser().getTeamId());
-//		listOfFiles.addAll(new GoogleCloudHandler().getFilesInTeamFolder(currentUserTeamName));
 
 		GoogleCloudHandler gc = new GoogleCloudHandler();
 		listOfFiles = new ArrayList<>();
@@ -300,12 +304,11 @@ public class HomePageController extends DefaultController implements Initializab
 			Button btDoc = new Button();
 			btDoc.setText(file.getName().replace(currentUserTeamName + "/", ""));
 
-			// TODO checked In status
+
 			boolean checkedIn = md.findCheckedStatus(file.getName(), currentUserTeamName);
-			Label status = new Label("Checked-In Status: " + checkedIn);
+			Label status = new Label("Checked-In Status: " + checkedIn + " by: " + md.findFileLastEditor(file.getName(), currentUserTeamName));
 
 
-			// TODO file handlers
 			MenuButton mbButtonDoc = new MenuButton(":");
 			MenuItem checkOutFile = new MenuItem("Check Out File");
 			MenuItem checkInFile = new MenuItem("Check In File");
@@ -331,8 +334,6 @@ public class HomePageController extends DefaultController implements Initializab
 			});
 
 
-			// TODO
-			// when check in, popup shows, user drags new file to upload, upload replaces, prev file
 			checkInFile.setOnAction(action -> {
 
 				if (checkedIn) {
@@ -346,9 +347,9 @@ public class HomePageController extends DefaultController implements Initializab
 					fcCheckIn.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"));
 					File selectedFile = fcCheckIn.showOpenDialog(new Stage());
 
-					String trunFileName = Paths.get(file.getName()).getFileName().toString();
-					// keeping file name, changing file contents
-					if (selectedFile != null && trunFileName.equalsIgnoreCase(selectedFile.getName())) {
+					String fileNameWithoutPath = Paths.get(file.getName()).getFileName().toString();
+
+					if (selectedFile != null && fileNameWithoutPath.equalsIgnoreCase(selectedFile.getName())) {
 
 						try {
 							new GoogleCloudHandler().updateFile(file.getName(), selectedFile);
@@ -465,6 +466,12 @@ public class HomePageController extends DefaultController implements Initializab
 			stage.close();
 		});
 
+
+	}
+
+	public void btLeaveTeam() {
+		btLogout();
+		new MongoDBHandler().removeUser(user);
 
 	}
 }

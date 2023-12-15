@@ -101,7 +101,6 @@ public class HomePageController extends DefaultController implements Initializab
 		// set User lbl
 		lblFirstName.setText(user.getFirstName());
 
-//		show(defaultHomePage);
 		if (!user.isAdmin()) {
 			show(defaultHomePage);
 		} else {
@@ -127,13 +126,48 @@ public class HomePageController extends DefaultController implements Initializab
 	@FXML
 	public void btAddFile() {
 		VBox vbFiles = new VBox();
-		Button submit = new Button("Submit");
+		Button btSubmit = new Button("Submit");
 		vbFiles.getChildren().addAll(new Label("Drag your files Here"));
 		vbFiles.setPrefHeight(200);
 		vbFiles.setPrefWidth(200);
 
-		List<Document> arrDocuments = new ArrayList<>();
+		List<Document> arrayOfDocuments = new ArrayList<>();
 
+		implementDragDropBehavior(vbFiles, arrayOfDocuments);
+
+		Stage stage = new Stage();
+		Scene scene = new Scene(vbFiles);
+		stage.setScene(scene);
+		stage.setTitle("File Handler");
+		stage.show();
+
+		btSubmitOnActionBehavior(btSubmit, arrayOfDocuments, stage);
+
+		vbFiles.getChildren().add(btSubmit);
+	}
+
+	private void btSubmitOnActionBehavior(Button submit, List<Document> arrDocuments, Stage stage) {
+		submit.setOnAction(actionEvent -> {
+			arrDocuments.forEach(document -> {
+				try {
+					User currentUser = holder.getUser();
+					if (currentUser != null) {
+						String currentUserTeamName = new MongoDBHandler().findTeamName(currentUser.getTeamId());
+						new Document().uploadDocument(document.getDocumentPath(), currentUserTeamName, currentUser.getUserName());
+					} else {
+						// Handle the case where currentUser is null
+						System.out.println("Current user is null");
+					}
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			});
+			btHome();
+			stage.close();
+		});
+	}
+
+	private void implementDragDropBehavior(VBox vbFiles, List<Document> arrDocuments) {
 		vbFiles.setOnDragOver(dragEvent -> {
 			if (dragEvent.getGestureSource() != vbFiles && dragEvent.getDragboard().hasFiles()) {
 				dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
@@ -163,33 +197,6 @@ public class HomePageController extends DefaultController implements Initializab
 
 			event.consume();
 		});
-
-		Stage stage = new Stage();
-		Scene scene = new Scene(vbFiles);
-		stage.setScene(scene);
-		stage.setTitle("File Handler");
-		stage.show();
-
-		submit.setOnAction(actionEvent -> {
-			arrDocuments.forEach(document -> {
-				try {
-					User currentUser = holder.getUser();
-					if (currentUser != null) {
-						String currentUserTeamName = new MongoDBHandler().findTeamName(currentUser.getTeamId());
-						new Document().uploadDocument(document.getDocumentPath(), currentUserTeamName, currentUser.getUserName());
-					} else {
-						// Handle the case where currentUser is null
-						System.out.println("Current user is null");
-					}
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
-			});
-			btHome();
-			stage.close();
-		});
-
-		vbFiles.getChildren().add(submit);
 	}
 
 
@@ -202,6 +209,14 @@ public class HomePageController extends DefaultController implements Initializab
 		ArrayList<User> listOfTeamMembers = new MongoDBHandler().listTeamMembers(user.getTeamId());
 		ObservableList<User> teamMembers = FXCollections.observableArrayList(listOfTeamMembers);
 
+		createTable(teamMembers, listOfTeamMembers);
+
+		// Add Table
+		usersTB.getColumns().setAll(firstNameCol, lastNameCol, emailCol, isAdminCol);
+
+	}
+
+	private void createTable(ObservableList<User> teamMembers, ArrayList<User> listOfTeamMembers) {
 		// Create table
 		usersTB.setItems(teamMembers);
 
@@ -215,12 +230,6 @@ public class HomePageController extends DefaultController implements Initializab
 		styleCol(lastNameCol, Color.BLACK);
 		styleCol(emailCol, Color.rgb(144, 204, 244));
 		styleCol(isAdminCol, Color.BLACK);
-
-
-		// Add Table
-		usersTB.getColumns().setAll(firstNameCol, lastNameCol, emailCol, isAdminCol);
-
-
 	}
 
 	@FXML
@@ -245,7 +254,7 @@ public class HomePageController extends DefaultController implements Initializab
 	}
 
 	@FXML
-	void btExit() {
+	public void btExit() {
 		Platform.exit();
 	}
 
@@ -296,83 +305,93 @@ public class HomePageController extends DefaultController implements Initializab
 
 		// Make new elements based on copied elements
 		listOfFiles.forEach(file -> {
-			HBox hbDocumentAsset = new HBox();
+			makeUIElement(file, currentUserTeamName, md);
+		});
+	}
 
-			// TODO when Button is clicked, it retrieves doc stats
-			Button btDoc = new Button();
-			btDoc.setText(file.getName().replace(currentUserTeamName + "/", ""));
+	private void makeUIElement(Blob file, String currentUserTeamName, MongoDBHandler md) {
+		HBox hbDocumentAsset = new HBox();
+
+		// TODO when Button is clicked, it retrieves doc stats
+		Button btDoc = new Button();
+		btDoc.setText(file.getName().replace(currentUserTeamName + "/", ""));
 
 
-			boolean checkedIn = md.findCheckedStatus(file.getName(), currentUserTeamName);
-			Label status = new Label("Checked-In Status: " + checkedIn + " by: " + md.findFileLastEditor(file.getName(), currentUserTeamName));
+		boolean checkedIn = md.findCheckedStatus(file.getName(), currentUserTeamName);
+		Label status = new Label("Checked-In Status: " + checkedIn + " by: " + md.findFileLastEditor(file.getName(), currentUserTeamName));
 
 
-			MenuButton mbButtonDoc = new MenuButton(":");
-			MenuItem checkOutFile = new MenuItem("Check Out File");
-			MenuItem checkInFile = new MenuItem("Check In File");
+		MenuButton mbButtonDoc = new MenuButton(":");
+		MenuItem checkOutFile = new MenuItem("Check Out File");
+		MenuItem checkInFile = new MenuItem("Check In File");
 
-			// when checked out, open
-			checkOutFile.setOnAction(action -> {
-				md.updateCheckedStatus(file.getName(), currentUserTeamName, false);
 
-				if (!checkedIn) {
-					showAlert("Cannot Check Out");
-				} else {
+		checkOutBehavior(file, currentUserTeamName, md, checkOutFile, checkedIn);
+		checkInBehavior(file, currentUserTeamName, md, checkInFile, checkedIn);
+
+		mbButtonDoc.getItems().addAll(checkOutFile, checkInFile);
+
+		// TODO Styling
+		hbDocumentAsset.setMinWidth(vbDocuments.getMinWidth());
+		hbDocumentAsset.setStyle("-fx-border-color: #000000");
+		hbDocumentAsset.getChildren().addAll(btDoc, status, mbButtonDoc);
+		vbDocuments.getChildren().add(hbDocumentAsset);
+	}
+
+	private void checkInBehavior(Blob file, String currentUserTeamName, MongoDBHandler md, MenuItem checkInFile, boolean checkedIn) {
+		checkInFile.setOnAction(action -> {
+
+			if (checkedIn) {
+				showAlert("Cannot Check In");
+			} else if (!user.getUserName().equalsIgnoreCase(md.findFileLastEditor(file.getName(), currentUserTeamName))) {
+				System.out.println(md.findFileLastEditor(file.getName(), currentUserTeamName));
+				showAlert("You are not the onw who checked out this document");
+			} else {
+				FileChooser fcCheckIn = new FileChooser();
+				fcCheckIn.setTitle("Choose CheckIn File");
+				fcCheckIn.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"));
+				File selectedFile = fcCheckIn.showOpenDialog(new Stage());
+
+				String fileNameWithoutPath = Paths.get(file.getName()).getFileName().toString();
+
+				if (selectedFile != null && fileNameWithoutPath.equalsIgnoreCase(selectedFile.getName())) {
+
 					try {
-						String destPathOfDownloadedFile = new GoogleCloudHandler()
-								.downloadFile(currentUserTeamName, file.getName());
-						openFile(destPathOfDownloadedFile);
-					} catch (NullPointerException e) {
-						showAlert("Download Failed, Try Again");
+						new GoogleCloudHandler().updateFile(file.getName(), selectedFile);
+						md.updateFile(file.getName(), selectedFile, currentUserTeamName, user.getUserName());
+						md.updateCheckedStatus(file.getName(), currentUserTeamName, true);
+						btHome();
+
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}
-					btHome();
-				}
-			});
-
-
-			checkInFile.setOnAction(action -> {
-
-				if (checkedIn) {
-					showAlert("Cannot Check In");
-				} else if (!user.getUserName().equalsIgnoreCase(md.findFileLastEditor(file.getName(), currentUserTeamName))) {
-					System.out.println(md.findFileLastEditor(file.getName(), currentUserTeamName));
-					showAlert("You are not the onw who checked out this document");
 				} else {
-					FileChooser fcCheckIn = new FileChooser();
-					fcCheckIn.setTitle("Choose CheckIn File");
-					fcCheckIn.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"));
-					File selectedFile = fcCheckIn.showOpenDialog(new Stage());
-
-					String fileNameWithoutPath = Paths.get(file.getName()).getFileName().toString();
-
-					if (selectedFile != null && fileNameWithoutPath.equalsIgnoreCase(selectedFile.getName())) {
-
-						try {
-							new GoogleCloudHandler().updateFile(file.getName(), selectedFile);
-							md.updateFile(file.getName(), selectedFile, currentUserTeamName, user.getUserName());
-							md.updateCheckedStatus(file.getName(), currentUserTeamName, true);
-							btHome();
-
-						} catch (IOException e) {
-							throw new RuntimeException(e);
-						}
-					} else {
-						showAlert("Selected wrong file");
-					}
-
-
+					showAlert("Selected wrong file");
 				}
-			});
-			mbButtonDoc.getItems().addAll(checkOutFile, checkInFile);
 
-			// TODO Styling
-			hbDocumentAsset.setMinWidth(vbDocuments.getMinWidth());
-			hbDocumentAsset.setStyle("-fx-border-color: #000000");
-			hbDocumentAsset.getChildren().addAll(btDoc, status, mbButtonDoc);
-			vbDocuments.getChildren().add(hbDocumentAsset);
 
+			}
+		});
+	}
+
+	private void checkOutBehavior(Blob file, String currentUserTeamName, MongoDBHandler md, MenuItem checkOutFile, boolean checkedIn) {
+		checkOutFile.setOnAction(action -> {
+			md.updateCheckedStatus(file.getName(), currentUserTeamName, false);
+
+			if (!checkedIn) {
+				showAlert("Cannot Check Out");
+			} else {
+				try {
+					String destPathOfDownloadedFile = new GoogleCloudHandler()
+							.downloadFile(currentUserTeamName, file.getName());
+					openFile(destPathOfDownloadedFile);
+				} catch (NullPointerException e) {
+					showAlert("Download Failed, Try Again");
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+				btHome();
+			}
 		});
 	}
 

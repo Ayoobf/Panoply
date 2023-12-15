@@ -41,7 +41,7 @@ public class LoginController extends DefaultController implements Initializable 
     }
 
     @FXML
-    void btLogin() {
+    public void btLogin() {
 
         if (tfUsername.getText().isEmpty() || tfPassword.getText().isEmpty()) {
             showAlert("one or more fields are empty");
@@ -78,24 +78,24 @@ public class LoginController extends DefaultController implements Initializable 
     }
 
     @FXML
-    void btExit() {
+    public void btExit() {
         Platform.exit();
     }
 
     @FXML
-    void lCreateAccount() {
+    public void lCreateAccount() {
         switchScene("createAccount.fxml");
 
     }
 
     @FXML
-    void tfPassword() {
+    public void tfPassword() {
         tfPassword.getText();
 
     }
 
     @FXML
-    void tfUsername() {
+    public void tfUsername() {
         tfUsername.getText();
 
     }

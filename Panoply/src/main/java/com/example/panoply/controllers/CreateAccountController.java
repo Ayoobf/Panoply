@@ -156,37 +156,37 @@ public class CreateAccountController extends DefaultController implements Initia
 
 
 	@FXML
-	void pfConfirmPassword() {
+	public void pfConfirmPassword() {
 		tryToEnableSubmitButton();
 	}
 
 	@FXML
-	void pfPassword() {
+	public void pfPassword() {
 		tryToEnableSubmitButton();
 	}
 
 	@FXML
-	void teamName() {
+	public void teamName() {
 		tryToEnableSubmitButton();
 	}
 
 	@FXML
-	void tfEmail() {
+	public void tfEmail() {
 		tryToEnableSubmitButton();
 	}
 
 	@FXML
-	void tfFirstName() {
+	public void tfFirstName() {
 		tryToEnableSubmitButton();
 	}
 
 	@FXML
-	void tfLastName() {
+	public void tfLastName() {
 		tryToEnableSubmitButton();
 	}
 
 	@FXML
-	void tfPhoneNumber() {
+	public void tfPhoneNumber() {
 		tryToEnableSubmitButton();
 	}
 
@@ -196,8 +196,6 @@ public class CreateAccountController extends DefaultController implements Initia
 
 	}
 
-	// Helper Methods
-	/*-------------------------------------------------------------------------------------------------------------------------*/
 
 	private void clearForm() {
 		tfFirstName.clear();
@@ -222,6 +220,7 @@ public class CreateAccountController extends DefaultController implements Initia
 				cbAdmin.getValue().isBlank() ||
 				!cbTOS.isSelected());
 	}
+
 
 	private void enableButton() {
 		if (textFieldsAreFull()) {

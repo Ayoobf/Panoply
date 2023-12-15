@@ -101,6 +101,7 @@ public class HomePageController extends DefaultController implements Initializab
 		// set User lbl
 		lblFirstName.setText(user.getFirstName());
 
+//		show(defaultHomePage);
 		if (!user.isAdmin()) {
 			show(defaultHomePage);
 		} else {
@@ -150,10 +151,9 @@ public class HomePageController extends DefaultController implements Initializab
 		submit.setOnAction(actionEvent -> {
 			arrDocuments.forEach(document -> {
 				try {
-					User currentUser = holder.getUser();
-					if (currentUser != null) {
-						String currentUserTeamName = new MongoDBHandler().findTeamName(currentUser.getTeamId());
-						new Document().uploadDocument(document.getDocumentPath(), currentUserTeamName, currentUser.getUserName());
+					if (user != null) {
+						String currentUserTeamName = user.getTeamName();
+						new Document().uploadDocument(document.getDocumentPath(), currentUserTeamName, user.getUserName());
 					} else {
 						// Handle the case where currentUser is null
 						System.out.println("Current user is null");
@@ -203,7 +203,7 @@ public class HomePageController extends DefaultController implements Initializab
 	@FXML
 	public void btUsers() {
 		show(users);
-		lblUsers.setText(new MongoDBHandler().findTeamName(user.getTeamId()) + "'s Users");
+		lblUsers.setText(user.getTeamName() + "'s Users");
 
 		// Get the list of members
 		ArrayList<User> listOfTeamMembers = new MongoDBHandler().listTeamMembers(user.getTeamId());
@@ -447,23 +447,7 @@ public class HomePageController extends DefaultController implements Initializab
 		List<User> selectedUser = new ArrayList<>();
 
 		listOfTeamMembers.forEach(user -> {
-			CheckBox cbUser = new CheckBox(user.getUserName());
-
-			cbUser.setTextOverrun(OverrunStyle.CLIP);
-			cbUser.setStyle("");
-			cbUser.setMinWidth(usersToRemove.getWidth());
-			cbUser.setOnAction(event -> {
-				// if selected, add to arr
-				if (cbUser.isSelected()) {
-					selectedUser.add(user);
-					// not selected but is in
-				} else if (!cbUser.isSelected()) {
-					selectedUser.remove(user);
-				}
-
-			});
-			// show to user
-			usersToRemove.getChildren().add(cbUser);
+			makeCheckBox(user, usersToRemove, selectedUser);
 		});
 
 		Scene scene = new Scene(usersToRemove);
@@ -484,9 +468,35 @@ public class HomePageController extends DefaultController implements Initializab
 
 	}
 
+	private void makeCheckBox(User user, VBox usersToRemove, List<User> selectedUser) {
+		CheckBox cbUser = new CheckBox(user.getUserName());
+
+		cbUser.setTextOverrun(OverrunStyle.CLIP);
+		cbUser.setStyle("");
+		cbUser.setMinWidth(usersToRemove.getWidth());
+		cbUser.setOnAction(event -> {
+			// if selected, add to arr
+			if (cbUser.isSelected()) {
+				selectedUser.add(user);
+				// not selected but is in
+			} else if (!cbUser.isSelected()) {
+				selectedUser.remove(user);
+			}
+
+		});
+		// show to user
+		usersToRemove.getChildren().add(cbUser);
+	}
+
 	public void btLeaveTeam() {
-		btLogout();
-		new MongoDBHandler().removeUser(user);
+		if (user.isAdmin() && user.getTeamSize() > 0) {
+			showAlert("You cannot leave team as you are an admin with team members still present");
+		} else {
+
+			btLogout();
+			new MongoDBHandler().removeUser(user);
+		}
+
 
 	}
 }

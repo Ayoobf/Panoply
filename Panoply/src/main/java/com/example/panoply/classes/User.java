@@ -6,13 +6,13 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class User {
+	private final boolean isAdmin;
+	private final String userName;
 	private String firstName;
 	private String lastName;
 	private String phoneNumber;
 	private String teamId;
 	private String teamName;
-	private boolean isAdmin;
-	private String userName;
 	private int teamSize;
 
 
@@ -34,14 +34,18 @@ public class User {
 		this.teamName = md.findTeamName(teamId);
 		this.isAdmin = isAdmin;
 		this.userName = userName;
+		this.teamSize = md.findTeamSize(teamId);
 
 		setFirstNameSP(firstName);
 		setLastNameSP(lastName);
 		setEmailSP(userName);
 		setAdminSP(String.valueOf(isAdmin));
 
-		teamSize = md.findTeamSize(teamId);
 
+	}
+
+	public int getTeamSize() {
+		return teamSize;
 	}
 
 	public boolean isAdmin() {
@@ -52,20 +56,8 @@ public class User {
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public int getTeamSize() {
-		return teamSize;
+	public String getTeamName() {
+		return teamName;
 	}
 
 	public String getTeamId() {

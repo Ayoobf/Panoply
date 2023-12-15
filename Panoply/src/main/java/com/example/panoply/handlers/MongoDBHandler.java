@@ -31,7 +31,6 @@ public class MongoDBHandler {
 	private static final BCryptPasswordEncoder authenticator = new BCryptPasswordEncoder();
 
 	public MongoDBHandler() {
-
 	}
 
 	public int authenticateUser(String username, String password) {
@@ -261,8 +260,7 @@ public class MongoDBHandler {
 					Filters.and(Filters.eq("file_name", fileName), Filters.eq("team", teamName)),
 					Updates.set("is_checked_in", b));
 
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ignored) {
 		}
 
 	}

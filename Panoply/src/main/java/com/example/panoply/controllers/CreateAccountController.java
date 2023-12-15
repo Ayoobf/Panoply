@@ -131,7 +131,7 @@ public class CreateAccountController extends DefaultController implements Initia
                             lastName,
                             email,
                             password,
-                            isAdmin,
+                            false,
                             teamId,
                             phoneNumber
                     );

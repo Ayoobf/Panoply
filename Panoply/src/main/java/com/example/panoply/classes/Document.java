@@ -25,7 +25,7 @@ public class Document {
 	public Document(String documentPath) {
 		this.documentPath = documentPath;
 		this.documentName = Paths.get(documentPath).getFileName().toString();
-		this.documentSize = (double) new File(documentPath).length() / (1024 * 1024);
+		this.documentSize = new File(documentPath).length() / (1024 * 1024);
 
 	}
 

@@ -457,9 +457,7 @@ public class HomePageController extends DefaultController implements Initializab
 		// remove users button action
 		rm.setOnAction(event -> {
 			// for each person in the arr, delete them
-			selectedUser.forEach(user -> {
-				new MongoDBHandler().removeUser(user);
-			});
+			selectedUser.forEach(user -> new MongoDBHandler().removeUser(user));
 			btUsers();
 			stage.close();
 		});

@@ -54,8 +54,13 @@ public class LoginController extends DefaultController implements Initializable 
             int authentication = finder.authenticateUser(username, password);
 
             if (authentication == 1) {
-                // TODO needs a better implementation
-                User user = new User(finder.findUserFirstName(username), finder.findUserLastName(username), finder.findUserPhoneNumber(username), finder.findUserAdminStatus(username), username);
+                User user = new User(
+                        finder.findUserFirstName(username),
+                        finder.findUserLastName(username),
+                        finder.findUserPhoneNumber(username),
+                        finder.findUserAdminStatus(username),
+                        username
+                );
                 UserHolder holder = UserHolder.getINSTANCE();
                 holder.setUser(user);
 
@@ -81,12 +86,6 @@ public class LoginController extends DefaultController implements Initializable 
     void lCreateAccount() {
         switchScene("createAccount.fxml");
 
-    }
-
-    @FXML
-    void lReset() {
-
-        switchScene("resetPassword.fxml");
     }
 
     @FXML

@@ -3,7 +3,6 @@ package com.example.panoply.handlers;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
@@ -19,8 +18,6 @@ public class GoogleCloudHandler {
 	final static String BUCKET_NAME = "dms-get-files";
 	private final Storage storage = StorageOptions.newBuilder().setProjectId(PROJECT_ID).build().getService();
 
-	public void GoogleCloudHandler() {
-	}
 
 	public void createTeamFolder(String teamName) {
 		String folderName = teamName + "/";
@@ -60,17 +57,13 @@ public class GoogleCloudHandler {
 
 		List<Blob> listOfFiles = new ArrayList<>();
 		for (Blob blob : blobs) {
-//            if (!blob.getContentType().equals("application/octet-stream"))
 			listOfFiles.add(blob);
 		}
 		return listOfFiles;
 	}
 
-	// TODO return path to file on server?
-	public void uploadFile(String fileName, String filePath, String teamName) throws IOException {
 
-		// Get a reference to the bucket
-		Bucket bucket = storage.get(BUCKET_NAME);
+	public void uploadFile(String fileName, String filePath, String teamName) throws IOException {
 
 		String appendedFile = teamName + "/" + fileName;
 		// Create a BlobId and BlobInfo to specify the file to be uploaded
@@ -78,34 +71,18 @@ public class GoogleCloudHandler {
 		BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
 
 		// Upload the file
-		try {
-			Blob blob = storage.create(blobInfo, Files.readAllBytes(Paths.get(filePath)));
-
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-
+		storage.create(blobInfo, Files.readAllBytes(Paths.get(filePath)));
 
 	}
 
 	public void updateFile(String oldFileName, File newFile) throws IOException {
-
-		// Get a reference to the bucket
-		Bucket bucket = storage.get(BUCKET_NAME);
-
 
 		// Create a BlobId and BlobInfo to specify the file to be uploaded
 		BlobId blobId = BlobId.of(BUCKET_NAME, oldFileName);
 		BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
 
 		// Upload the file
-		try {
-			Blob blob = storage.create(blobInfo, Files.readAllBytes(Paths.get(newFile.getAbsolutePath())));
-
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-
+		storage.create(blobInfo, Files.readAllBytes(Paths.get(newFile.getAbsolutePath())));
 
 	}
 

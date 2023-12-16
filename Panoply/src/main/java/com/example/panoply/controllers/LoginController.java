@@ -3,7 +3,10 @@ package com.example.panoply.controllers;
 import com.example.panoply.classes.User;
 import com.example.panoply.classes.UserHolder;
 import com.example.panoply.handlers.MongoDBHandler;
+import com.mongodb.MongoException;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.ResourceBundle;
@@ -50,29 +53,34 @@ public class LoginController extends DefaultController implements Initializable 
 			String username = tfUsername.getText().trim();
 			String password = tfPassword.getText().trim();
 
-			MongoDBHandler finder = new MongoDBHandler();
-			int authentication = finder.authenticateUser(username, password);
+			try {
 
-			if (authentication == 1) {
-				User user = new User(
-						finder.findUserFirstName(username),
-						finder.findUserLastName(username),
-						finder.findUserPhoneNumber(username),
-						finder.findUserAdminStatus(username),
-						username
-				);
-				UserHolder holder = UserHolder.getINSTANCE();
-				holder.setUser(user);
+				MongoDBHandler finder = new MongoDBHandler();
+				int authentication = finder.authenticateUser(username, password);
 
-				switchScene("homePage.fxml");
+				if (authentication == 1) {
+					User user = new User(
+							finder.findUserFirstName(username),
+							finder.findUserLastName(username),
+							finder.findUserPhoneNumber(username),
+							finder.findUserAdminStatus(username),
+							username
+					);
+					UserHolder holder = UserHolder.getINSTANCE();
+					holder.setUser(user);
+
+					switchScene("homePage.fxml");
+				}
+
+				if (authentication == 0) {
+					// alert user of wrong input
+					showAlert("Incorrect username/password");
+
+				}
+			} catch (Exception e) {
+				btLogin();
+				showAlert("MongoDB could not get a connection, Try configuring your project");
 			}
-
-			if (authentication == 0) {
-				// alert user of wrong input
-				showAlert("Incorrect username/password");
-
-			}
-
 		}
 
 	}

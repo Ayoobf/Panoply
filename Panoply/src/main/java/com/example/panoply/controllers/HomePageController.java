@@ -361,18 +361,19 @@ public class HomePageController extends DefaultController implements Initializab
 			if (checkedIn) {
 				showAlert("Cannot Check In");
 			} else if (!user.getUserName().equalsIgnoreCase(md.findFileLastEditor(file.getName(), currentUserTeamName))) {
-				System.out.println(md.findFileLastEditor(file.getName(), currentUserTeamName));
 				showAlert("You are not the one who checked out this document");
 			} else {
-
-				FileChooser fcCheckIn = new FileChooser();
-				fcCheckIn.setTitle("Choose CheckIn File");
-				fcCheckIn.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"));
-				File selectedFile = fcCheckIn.showOpenDialog(new Stage());
+				// below code is left over from checkIn function rework, Moight need later
+//				FileChooser fcCheckIn = new FileChooser();
+//				fcCheckIn.setTitle("Choose CheckIn File");
+//				fcCheckIn.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"));
+//				File selectedFile = fcCheckIn.showOpenDialog(new Stage());
 
 				String fileNameWithoutPath = Paths.get(file.getName()).getFileName().toString();
+				File selectedFile = new File("C:\\Panoply\\" + currentUserTeamName + "\\" + fileNameWithoutPath);
 
-				if (selectedFile != null && selectedFile.exists() && fileNameWithoutPath.equalsIgnoreCase(selectedFile.getName())) {
+
+				if (selectedFile.exists() && fileNameWithoutPath.equalsIgnoreCase(selectedFile.getName())) {
 
 					try {
 						new GoogleCloudHandler().updateFile(file.getName(), selectedFile);

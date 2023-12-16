@@ -14,10 +14,5 @@ public class testDocumentUpload {
 
 	public static void main(String[] args) throws IOException {
 
-
-		String fileName = "Gerald.txt";
-		String teamName = "FLorival";
-		File selectedFile = new File("C:\\Panoply\\" + teamName + "\\" + fileName);
-		System.out.println(selectedFile.exists());
 	}
 }

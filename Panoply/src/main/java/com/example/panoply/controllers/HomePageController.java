@@ -31,7 +31,9 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -156,17 +158,30 @@ public class HomePageController extends DefaultController implements Initializab
 					if (user != null) {
 						String currentUserTeamName = user.getTeamName();
 						new Document().uploadDocument(document.getDocumentPath(), currentUserTeamName, user.getUserName());
+						deleteFile(document.getDocumentPath());
 					} else {
 						// Handle the case where currentUser is null
 						System.out.println("Current user is null");
 					}
 				} catch (IOException e) {
-					throw new RuntimeException(e);
+					showAlert(e.getMessage());
 				}
 			});
+
 			btHome();
 			stage.close();
 		});
+	}
+
+	private void deleteFile(String documentPath) {
+		File file = new File(documentPath);
+
+		if (file.delete()) {
+			Platform.runLater(() -> {
+				Alert a = new Alert(Alert.AlertType.INFORMATION, "Success!", ButtonType.OK);
+				a.show();
+			});
+		}
 	}
 
 	private void implementDragDropBehavior(VBox vbFiles, List<Document> arrDocuments) {
@@ -349,6 +364,7 @@ public class HomePageController extends DefaultController implements Initializab
 				System.out.println(md.findFileLastEditor(file.getName(), currentUserTeamName));
 				showAlert("You are not the one who checked out this document");
 			} else {
+
 				FileChooser fcCheckIn = new FileChooser();
 				fcCheckIn.setTitle("Choose CheckIn File");
 				fcCheckIn.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"));
@@ -356,7 +372,7 @@ public class HomePageController extends DefaultController implements Initializab
 
 				String fileNameWithoutPath = Paths.get(file.getName()).getFileName().toString();
 
-				if (selectedFile != null && fileNameWithoutPath.equalsIgnoreCase(selectedFile.getName())) {
+				if (selectedFile != null && selectedFile.exists() && fileNameWithoutPath.equalsIgnoreCase(selectedFile.getName())) {
 
 					try {
 						new GoogleCloudHandler().updateFile(file.getName(), selectedFile);

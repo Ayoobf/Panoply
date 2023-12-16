@@ -1,6 +1,5 @@
 package com.example.panoply.handlers;
 
-import com.example.panoply.classes.AppProperties;
 import com.example.panoply.classes.User;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoClient;
@@ -23,7 +22,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class MongoDBHandler {
-	private static final String uri = AppProperties.getInstance().getProperty("db_url");
+	final static String PASSWORD = System.getenv("PASSWORD");
+	private static final String uri = "mongodb+srv://ayoobf:" + PASSWORD + "@documentmanagercluster.ewmjoau.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
 	private static final MongoClient client = MongoClients.create(uri);
 	private static final MongoDatabase database = client.getDatabase("dms_collections");
 	private static final MongoCollection<Document> userCollection = database.getCollection("users");

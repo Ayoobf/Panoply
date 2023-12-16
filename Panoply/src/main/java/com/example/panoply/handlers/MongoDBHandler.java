@@ -25,10 +25,10 @@ import java.util.Objects;
 public class MongoDBHandler {
 	private static final String uri = AppProperties.getInstance().getProperty("url");
 	private static final MongoClient client = MongoClients.create(uri);
-	private static final MongoDatabase database = client.getDatabase("dms_collections");
-	private static final MongoCollection<Document> userCollection = database.getCollection("users");
-	private static final MongoCollection<Document> teamsCollection = database.getCollection("teams");
-	private static final MongoCollection<Document> documentCollection = database.getCollection("documents");
+	private static final MongoDatabase database = client.getDatabase(AppProperties.getInstance().getProperty("db_name"));
+	private static final MongoCollection<Document> userCollection = database.getCollection(AppProperties.getInstance().getProperty("db_userCollectionName"));
+	private static final MongoCollection<Document> teamsCollection = database.getCollection(AppProperties.getInstance().getProperty("db_teamCollectionName"));
+	private static final MongoCollection<Document> documentCollection = database.getCollection(AppProperties.getInstance().getProperty("db_documentCollectionName"));
 	private static final BCryptPasswordEncoder authenticator = new BCryptPasswordEncoder();
 
 	public MongoDBHandler() {

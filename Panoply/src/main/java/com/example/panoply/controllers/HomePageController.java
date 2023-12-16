@@ -122,7 +122,7 @@ public class HomePageController extends DefaultController implements Initializab
 		show(defaultHomePage);
 		listOfFiles.clear();
 		vbDocuments.getChildren().clear();
-		vbDocuments.getChildren().add(hbPicturesOfTopFiles);
+
 
 		refreshDocumentsSelection();
 	}

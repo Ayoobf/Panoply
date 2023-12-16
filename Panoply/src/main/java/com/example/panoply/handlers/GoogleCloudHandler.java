@@ -1,5 +1,6 @@
 package com.example.panoply.handlers;
 
+import com.example.panoply.classes.AppProperties;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
@@ -16,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GoogleCloudHandler {
-	final static String PROJECT_ID = "ayoob-florival-capstone";
-	final static String BUCKET_NAME = "dms-get-files";
+	final static String PROJECT_ID = AppProperties.getInstance().getProperty("google_projectId");
+	final static String BUCKET_NAME = AppProperties.getInstance().getProperty("google_bucketName");
 	private final Storage storage = StorageOptions.newBuilder().setProjectId(PROJECT_ID).build().getService();
 
 

@@ -1,11 +1,16 @@
 package com.example.panoply.handlers;
 
 import com.example.panoply.classes.User;
+import com.mongodb.MongoCommandException;
+import com.mongodb.MongoException;
+import com.mongodb.MongoWriteConcernException;
+import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 
 import org.bson.BsonDateTime;
@@ -221,11 +226,11 @@ public class MongoDBHandler {
 
 	}
 
-	public void updateFile(String oldFilePlusTeamName, File selectedFile, String teamName, String userName) {
+	public void updateFile(String oldFilePlusTeamName, File selectedFile, String teamName, BsonDateTime dateTime) throws MongoException {
 		String oldFile = Paths.get(oldFilePlusTeamName).getFileName().toString();
 		Document updateFields = new Document();
 		updateFields.append("document_path", selectedFile.getAbsolutePath());
-		updateFields.append("last_editor", userName);
+		updateFields.append("edit_date", dateTime);
 		Document update = new Document("$set", updateFields);
 
 		documentCollection.updateOne(
@@ -252,16 +257,19 @@ public class MongoDBHandler {
 
 	}
 
-	public void updateCheckedStatus(String filePath, String teamName, boolean b) {
+	public void updateFileCheckedStatus(String filePath, String teamName, String currentUser, boolean b) throws MongoException {
 		String fileName = Paths.get(filePath).getFileName().toString();
 
-		try {
-			documentCollection.updateOne(
-					Filters.and(Filters.eq("file_name", fileName), Filters.eq("team", teamName)),
-					Updates.set("is_checked_in", b));
+		documentCollection.updateOne(
+				Filters.and(Filters.eq("file_name", fileName), Filters.eq("team", teamName)),
+				Updates.set("is_checked_in", b)
 
-		} catch (Exception ignored) {
-		}
+		);
+		documentCollection.updateOne(
+				Filters.and(Filters.eq("file_name", fileName), Filters.eq("team", teamName)),
+				Updates.set("last_editor", currentUser)
+
+		);
 
 	}
 

@@ -6,12 +6,15 @@ import com.example.panoply.classes.UserHolder;
 import com.example.panoply.handlers.GoogleCloudHandler;
 import com.example.panoply.handlers.MongoDBHandler;
 import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.StorageException;
+import com.mongodb.MongoException;
 
 import org.bson.BsonDateTime;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -304,12 +307,12 @@ public class HomePageController extends DefaultController implements Initializab
 		});
 
 		// Make new elements based on copied elements
-		listOfFiles.forEach(file -> {
-			makeUIElement(file, currentUserTeamName, md);
-		});
+		listOfFiles.forEach(file ->
+				makeDocumentUIElement(file, currentUserTeamName, md)
+		);
 	}
 
-	private void makeUIElement(Blob file, String currentUserTeamName, MongoDBHandler md) {
+	private void makeDocumentUIElement(Blob file, String currentUserTeamName, MongoDBHandler md) {
 		HBox hbDocumentAsset = new HBox();
 
 		// TODO when Button is clicked, it retrieves doc stats
@@ -345,7 +348,7 @@ public class HomePageController extends DefaultController implements Initializab
 				showAlert("Cannot Check In");
 			} else if (!user.getUserName().equalsIgnoreCase(md.findFileLastEditor(file.getName(), currentUserTeamName))) {
 				System.out.println(md.findFileLastEditor(file.getName(), currentUserTeamName));
-				showAlert("You are not the onw who checked out this document");
+				showAlert("You are not the one who checked out this document");
 			} else {
 				FileChooser fcCheckIn = new FileChooser();
 				fcCheckIn.setTitle("Choose CheckIn File");
@@ -358,13 +361,20 @@ public class HomePageController extends DefaultController implements Initializab
 
 					try {
 						new GoogleCloudHandler().updateFile(file.getName(), selectedFile);
-						md.updateFile(file.getName(), selectedFile, currentUserTeamName, user.getUserName());
-						md.updateCheckedStatus(file.getName(), currentUserTeamName, true);
+						md.updateFile(file.getName(), selectedFile, currentUserTeamName, new BsonDateTime(new Date().getTime()));
+						md.updateFileCheckedStatus(file.getName(), currentUserTeamName, user.getUserName(), true);
 						btHome();
 
+					} catch (MongoException e) {
+						showAlert(e.toString());
+					} catch (StorageException e) {
+						showAlert("Google Failed");
 					} catch (IOException e) {
-						throw new RuntimeException(e);
+						showAlert("File Selected Produced IO Exception");
+					} catch (InvalidPathException e) {
+						showAlert("Path got corrupted somewhere");
 					}
+
 				} else {
 					showAlert("Selected wrong file");
 				}
@@ -376,10 +386,11 @@ public class HomePageController extends DefaultController implements Initializab
 
 	private void checkOutBehavior(Blob file, String currentUserTeamName, MongoDBHandler md, MenuItem checkOutFile, boolean checkedIn) {
 		checkOutFile.setOnAction(action -> {
-			md.updateCheckedStatus(file.getName(), currentUserTeamName, false);
+			md.updateFileCheckedStatus(file.getName(), currentUserTeamName, user.getUserName(), false);
 
 			if (!checkedIn) {
 				showAlert("Cannot Check Out");
+
 			} else {
 				try {
 					String destPathOfDownloadedFile = new GoogleCloudHandler()
@@ -446,9 +457,7 @@ public class HomePageController extends DefaultController implements Initializab
 		ArrayList<User> listOfTeamMembers = new MongoDBHandler().listTeamMembers(user.getTeamId());
 		List<User> selectedUser = new ArrayList<>();
 
-		listOfTeamMembers.forEach(user -> {
-			makeCheckBox(user, usersToRemove, selectedUser);
-		});
+		listOfTeamMembers.forEach(user -> makeCheckBox(user, usersToRemove, selectedUser));
 
 		Scene scene = new Scene(usersToRemove);
 		usersToRemove.setPadding(new Insets(15));

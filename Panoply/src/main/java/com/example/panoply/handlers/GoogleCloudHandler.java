@@ -4,11 +4,13 @@ import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageException;
 import com.google.cloud.storage.StorageOptions;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +77,7 @@ public class GoogleCloudHandler {
 
 	}
 
-	public void updateFile(String oldFileName, File newFile) throws IOException {
+	public void updateFile(String oldFileName, File newFile) throws StorageException, IOException, InvalidPathException {
 
 		// Create a BlobId and BlobInfo to specify the file to be uploaded
 		BlobId blobId = BlobId.of(BUCKET_NAME, oldFileName);

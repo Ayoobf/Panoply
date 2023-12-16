@@ -101,8 +101,8 @@
             </Button>
         </VBox>
         <Pane fx:id="containerPane" minWidth="600.0">
-            <VBox fx:id="defaultHomePage" minHeight="780.0" minWidth="1189.0"
-                  style="-fx-border-radius: 15; -fx-background-color: #eeeeee;">
+            <VBox fx:id="defaultHomePage" disable="true" minHeight="780.0" minWidth="1189.0"
+                  style="-fx-border-radius: 15; -fx-background-color: #eeeeee;" visible="false">
                 <children>
                     <HBox maxHeight="83.0" maxWidth="1200.0" minHeight="83.0" prefHeight="83.0">
                         <children>
@@ -211,16 +211,25 @@
                </TableView>
             </children>
          </VBox>
-            <VBox fx:id="settings" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            <VBox fx:id="settings" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                   minHeight="782.0" minWidth="600.0" prefHeight="782.0" prefWidth="1100.0"
-                  style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;" visible="false">
+                  style="-fx-border-radius: 15; -fx-background-color: #EEEEEE;">
                 <children>
-                    <Label contentDisplay="RIGHT" ellipsisString="" prefHeight="147.0" prefWidth="402.0"
-                           text="LEAVE YOUR CURRENT TEAM: This action is permanent and cannot be undone. If you want to continue, Press the button."
-                           textOverrun="CLIP" wrapText="true">
+                    <Label text="User Settings">
+                        <font>
+                            <Font name="Segoe UI Bold Italic" size="41.89"/>
+                        </font>
+                        <VBox.margin>
+                            <Insets left="30.0" top="30.0"/>
+                        </VBox.margin>
+                    </Label>
+                    <Label contentDisplay="RIGHT" ellipsisString="" prefWidth="619.0"
+                           text="LEAVE YOUR CURRENT TEAM: This action is permanent and cannot be undone. "
+                           textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                         <graphic>
                             <Button mnemonicParsing="false" onAction="#btLeaveTeam"
-                                    style="-fx-background-color: #f78888;" text="Leave Team" textFill="WHITE">
+                                    style="-fx-background-color: #f78888; -fx-background-radius: 20;" text="Leave Team"
+                                    textFill="WHITE">
                                 <font>
                                     <Font name="Segoe UI Bold" size="18.0"/>
                                 </font>
@@ -230,7 +239,36 @@
                             <Font name="Segoe UI Bold" size="18.0"/>
                         </font>
                         <VBox.margin>
+                            <Insets left="30.0" top="5.0"/>
+                        </VBox.margin>
+                    </Label>
+                    <Label text="Admin Settings">
+                        <font>
+                            <Font name="Segoe UI Bold Italic" size="41.89"/>
+                        </font>
+                        <VBox.margin>
                             <Insets left="30.0" top="30.0"/>
+                        </VBox.margin>
+                    </Label>
+                    <Label contentDisplay="RIGHT" ellipsisString="" text="Change API Settings" textOverrun="CLIP"
+                           wrapText="true">
+                        <graphic>
+                            <Button mnemonicParsing="false" onAction="#btConfig"
+                                    style="-fx-background-color: #F3D250; -fx-border-radius: 20; -fx-background-radius: 20;"
+                                    text="Open Config File" textFill="WHITE">
+                                <font>
+                                    <Font name="Segoe UI Bold" size="18.0"/>
+                                </font>
+                                <opaqueInsets>
+                                    <Insets/>
+                                </opaqueInsets>
+                            </Button>
+                        </graphic>
+                        <font>
+                            <Font name="Segoe UI Bold" size="18.0"/>
+                        </font>
+                        <VBox.margin>
+                            <Insets left="30.0" top="5.0"/>
                         </VBox.margin>
                     </Label>
                 </children>

@@ -50,6 +50,12 @@ public class MongoDBHandler {
 		return 0;
 	}
 
+	public boolean userExists(String username) {
+		Document doc = userCollection.find(Filters.eq("username", username)).first();
+
+		return doc != null;
+	}
+
 	public void signUpUser(String firstName, String lastName, String email, String password, boolean isAdmin, String teamId, String phoneNumber) {
 
 		String securePassword = authenticator.encode(password);

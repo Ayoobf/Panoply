@@ -104,8 +104,10 @@ public class CreateAccountController extends DefaultController implements Initia
 				if (isAdmin) {
 					showAlert("Cannot Make team with already establish admin present");
 
-				} else {
+				} else if (mongoDBHandler.userExists(email)) {
+					showAlert("User already exists with that username");
 
+				} else {
 					// team was found and user is not admin
 					normalUserSignup(mongoDBHandler, firstName, lastName, email, password, teamId, phoneNumber);
 				}

@@ -82,7 +82,6 @@ public class HomePageController extends DefaultController implements Initializab
 	public Button btAddFile;
 	public ScrollPane sbDocuments;
 	public VBox vbDocuments;
-	public HBox hbPicturesOfTopFiles;
 	public Label lblUsers;
 	public HBox hbTopBar;
 	public Button btRemoveUser;
@@ -507,5 +506,13 @@ public class HomePageController extends DefaultController implements Initializab
 		}
 
 
+	}
+
+	public void btConfig() {
+		try {
+			openFile("app.properties");
+		} catch (IOException e) {
+			showAlert("Properties File not Found");
+		}
 	}
 }

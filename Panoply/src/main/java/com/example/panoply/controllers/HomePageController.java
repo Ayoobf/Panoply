@@ -53,7 +53,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -329,10 +328,29 @@ public class HomePageController extends DefaultController implements Initializab
 	private void makeDocumentUIElement(Blob file, String currentUserTeamName, MongoDBHandler md) {
 		HBox hbDocumentAsset = new HBox();
 
-		// TODO when Button is clicked, it retrieves doc stats
 		Button btDoc = new Button();
 		btDoc.setText(file.getName().replace(currentUserTeamName + "/", ""));
 
+		btDoc.setOnAction(action -> {
+			// style pane
+			Pane documentStats = new Pane();
+			double width = 300;
+			double height = 125;
+			documentStats.setPrefSize(width, height);
+
+			// get stats
+			Label stats = new Label();
+			stats.setText(md.findFileStats(file.getName(), currentUserTeamName));
+
+			// regular stuff
+			documentStats.getChildren().add(stats);
+			Scene sc = new Scene(documentStats);
+			Stage st = new Stage();
+			st.setTitle(file.getName().replace(currentUserTeamName + "/", ""));
+			st.setResizable(false);
+			st.setScene(sc);
+			st.show();
+		});
 
 		boolean checkedIn = md.findCheckedStatus(file.getName(), currentUserTeamName);
 		Label status = new Label("Checked-In Status: " + checkedIn + " by: " + md.findFileLastEditor(file.getName(), currentUserTeamName));
@@ -348,7 +366,6 @@ public class HomePageController extends DefaultController implements Initializab
 
 		mbButtonDoc.getItems().addAll(checkOutFile, checkInFile);
 
-		// TODO Styling
 		hbDocumentAsset.setMinWidth(vbDocuments.getMinWidth());
 		hbDocumentAsset.setStyle("-fx-border-color: #000000");
 		hbDocumentAsset.getChildren().addAll(btDoc, status, mbButtonDoc);

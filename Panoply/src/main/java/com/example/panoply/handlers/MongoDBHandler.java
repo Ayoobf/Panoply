@@ -491,5 +491,28 @@ public class MongoDBHandler {
 
 	}
 
+	public String findFileStats(String fileWithTeamName, String teamName) {
+		String file = Paths.get(fileWithTeamName).getFileName().toString();
+		Document doc = Objects
+				.requireNonNull(
+						documentCollection.find(
+								Filters.and(
+										Filters.eq("file_name", file),
+										Filters.eq("team", teamName))
+						).first());
 
+		String fileName = doc.getString("file_name");
+		double fileSize = doc.getDouble("file_size");
+		Date uploadDate = doc.getDate("upload_date");
+		Date lastEditDate = doc.getDate("edit_date");
+		String lastPersonToUpdate = doc.getString("last_editor");
+		boolean checked = doc.getBoolean("is_checked_in");
+
+		return "File Name: " + fileName +
+				"\nFile Size: " + fileSize +
+				"\nFile Upload Date: " + uploadDate +
+				"\nFile Last Edit Date: " + lastEditDate +
+				"\nFile Last Editor: " + lastPersonToUpdate +
+				"\nFile is Check In? " + checked;
+	}
 }

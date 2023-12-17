@@ -191,6 +191,13 @@ public class MongoDBHandler {
 				));
 	}
 
+	public void decrementTeamSize(String teamObjectId, int currentTeamSize) {
+		teamsCollection.updateOne(
+				Filters.eq("_id", new ObjectId(teamObjectId)),
+				Updates.set("team_size", currentTeamSize - 1
+				));
+	}
+
 
 	// returns a list of user Objects
 	public ArrayList<User> listTeamMembers(String teamId) {
@@ -275,7 +282,9 @@ public class MongoDBHandler {
 	}
 
 	public void removeUser(User user) {
+		decrementTeamSize(user.getTeamId(), user.getTeamSize());
 		userCollection.deleteOne(Filters.eq("username", user.getUserName()));
+
 	}
 
 

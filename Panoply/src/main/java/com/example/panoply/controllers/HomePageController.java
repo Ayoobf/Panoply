@@ -379,6 +379,7 @@ public class HomePageController extends DefaultController implements Initializab
 						new GoogleCloudHandler().updateFile(file.getName(), selectedFile);
 						md.updateFile(file.getName(), selectedFile, currentUserTeamName, new BsonDateTime(new Date().getTime()));
 						md.updateFileCheckedStatus(file.getName(), currentUserTeamName, user.getUserName(), true);
+						deleteFile(selectedFile.getPath());
 						btHome();
 
 					} catch (MongoException e) {

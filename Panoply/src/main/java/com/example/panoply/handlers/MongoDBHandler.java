@@ -212,7 +212,6 @@ public class MongoDBHandler {
 
 	}
 
-	// TODO Make Dates Better
 	public void uploadFile(String fileName, String documentPath, String teamName, double documentSize, String userName) {
 		documentCollection.insertOne(new Document()
 				.append("file_name", fileName)

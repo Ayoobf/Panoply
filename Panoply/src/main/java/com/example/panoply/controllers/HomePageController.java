@@ -163,10 +163,9 @@ public class HomePageController extends DefaultController implements Initializab
 						System.out.println("Current user is null");
 					}
 				} catch (IOException e) {
-					showAlert(e.getMessage());
+					showAlert("File exists in database. Rename or choose different file");
 				}
 			});
-
 			btHome();
 			stage.close();
 		});
@@ -380,7 +379,7 @@ public class HomePageController extends DefaultController implements Initializab
 			} else if (!user.getUserName().equalsIgnoreCase(md.findFileLastEditor(file.getName(), currentUserTeamName))) {
 				showAlert("You are not the one who checked out this document");
 			} else {
-				// below code is left over from checkIn function rework, Moight need later
+				// below code is left over from checkIn function rework, Might need later
 //				FileChooser fcCheckIn = new FileChooser();
 //				fcCheckIn.setTitle("Choose CheckIn File");
 //				fcCheckIn.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"));

@@ -16,6 +16,7 @@ import org.bson.types.ObjectId;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.File;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
@@ -514,5 +515,20 @@ public class MongoDBHandler {
 				"\nFile Last Edit Date: " + lastEditDate +
 				"\nFile Last Editor: " + lastPersonToUpdate +
 				"\nFile is Check In? " + checked;
+	}
+
+	public boolean fileExists(String fileName, String currentUserTeamName) {
+		Document doc = documentCollection.find(Filters.and(Filters.eq("file_name", fileName), Filters.eq("team", currentUserTeamName))).first();
+
+		return doc != null;
+	}
+
+	public void updateFileSize(String fileName, String currentUserTeamName, double newSize) {
+		documentCollection.updateOne(
+				Filters.and(Filters.eq("file_name", fileName), Filters.eq("team", currentUserTeamName)),
+				Updates.set("file_size", newSize
+				));
+
+
 	}
 }

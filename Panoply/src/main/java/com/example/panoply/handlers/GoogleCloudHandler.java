@@ -153,4 +153,11 @@ public class GoogleCloudHandler {
 		storage.create(blobInfo, Files.readAllBytes(Paths.get(newFile.getAbsolutePath())));
 
 	}
+
+	public double getFileSize(String fileName, String currentUserTeamName) {
+		Storage storage = StorageOptions.newBuilder().setProjectId(PROJECT_ID).build().getService();
+		Blob blob = storage.get(BlobId.of(BUCKET_NAME, currentUserTeamName + "/" + fileName));
+
+		return blob.getSize();
+	}
 }

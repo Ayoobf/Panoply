@@ -6,6 +6,7 @@ import com.example.panoply.handlers.MongoDBHandler;
 import org.bson.BsonDateTime;
 
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Paths;
 
 /**
@@ -35,7 +36,6 @@ public class Document {
 	public Document(String documentPath) {
 		this.documentPath = documentPath;
 		this.documentName = Paths.get(documentPath).getFileName().toString();
-
 	}
 
 	/**
@@ -52,9 +52,20 @@ public class Document {
 	public void uploadDocument(String documentPath, String currentUserTeamName, String userName) throws IOException {
 
 		String fileName = Paths.get(documentPath).getFileName().toString();
-		new MongoDBHandler().uploadFile(fileName, documentPath, currentUserTeamName, documentSize, userName);
-		new GoogleCloudHandler().uploadFile(fileName, documentPath, currentUserTeamName);
+		MongoDBHandler md = new MongoDBHandler();
+		GoogleCloudHandler gc = new GoogleCloudHandler();
 
+		if (md.fileExists(fileName, currentUserTeamName)) {
+			throw new IOException();
+		} else {
+			md.uploadFile(fileName, documentPath, currentUserTeamName, 0, userName);
+			gc.uploadFile(fileName, documentPath, currentUserTeamName);
+
+			// set document size
+			double newSizeBytes = gc.getFileSize(fileName, currentUserTeamName);
+			double newSizeKB = newSizeBytes / 1024;
+			md.updateFileSize(fileName, currentUserTeamName, newSizeKB);
+		}
 	}
 
 	/**

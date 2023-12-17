@@ -492,6 +492,13 @@ public class MongoDBHandler {
 
 	}
 
+	/**
+	 * Retrieves file statistics as a string
+	 *
+	 * @param fileWithTeamName target file with team name in it (EXAMPLE/file.txt)
+	 * @param teamName         team name of current user
+	 * @return document stats
+	 */
 	public String findFileStats(String fileWithTeamName, String teamName) {
 		String file = Paths.get(fileWithTeamName).getFileName().toString();
 		Document doc = Objects
@@ -517,12 +524,26 @@ public class MongoDBHandler {
 				"\nFile is Check In? " + checked;
 	}
 
+	/**
+	 * check if file exists
+	 *
+	 * @param fileName            file name of target
+	 * @param currentUserTeamName team name of current user
+	 * @return true if found. false if not
+	 */
 	public boolean fileExists(String fileName, String currentUserTeamName) {
 		Document doc = documentCollection.find(Filters.and(Filters.eq("file_name", fileName), Filters.eq("team", currentUserTeamName))).first();
 
 		return doc != null;
 	}
 
+	/**
+	 * updates the target's file size on MongoDB by querying Google Cloud bucket
+	 *
+	 * @param fileName            file name of target
+	 * @param currentUserTeamName current users team name
+	 * @param newSize             size in bytes to change db value
+	 */
 	public void updateFileSize(String fileName, String currentUserTeamName, double newSize) {
 		documentCollection.updateOne(
 				Filters.and(Filters.eq("file_name", fileName), Filters.eq("team", currentUserTeamName)),

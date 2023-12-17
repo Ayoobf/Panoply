@@ -154,6 +154,16 @@ public class GoogleCloudHandler {
 
 	}
 
+	/**
+	 * get the size of a specified file
+	 * <p>
+	 * queries the Google Cloud Bucket to get the file size. Usually used after uploading a file
+	 * </p>
+	 *
+	 * @param fileName            file name of target not including teamName in the beginning
+	 * @param currentUserTeamName current user team name
+	 * @return size of file in Bytes as double
+	 */
 	public double getFileSize(String fileName, String currentUserTeamName) {
 		Storage storage = StorageOptions.newBuilder().setProjectId(PROJECT_ID).build().getService();
 		Blob blob = storage.get(BlobId.of(BUCKET_NAME, currentUserTeamName + "/" + fileName));

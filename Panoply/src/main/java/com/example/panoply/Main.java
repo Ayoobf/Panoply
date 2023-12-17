@@ -38,8 +38,6 @@ public class Main extends Application {
         psg.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
 
-
-
     }
 
     public void changeScene(String newScreen) throws IOException {

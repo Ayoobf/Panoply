@@ -22,25 +22,65 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * @author Ayoob Florival
+ */
 public class MongoDBHandler {
+	/**
+	 * uri comes from the app.properties file under "url"
+	 */
 	private static final String uri = AppProperties.getInstance().getProperty("url");
+	/**
+	 * creates client from uri
+	 */
 	private static final MongoClient client = MongoClients.create(uri);
-	private static final MongoDatabase database = client.getDatabase(AppProperties.getInstance().getProperty("db_name"));
-	private static final MongoCollection<Document> userCollection = database.getCollection(AppProperties.getInstance().getProperty("db_userCollectionName"));
-	private static final MongoCollection<Document> teamsCollection = database.getCollection(AppProperties.getInstance().getProperty("db_teamCollectionName"));
-	private static final MongoCollection<Document> documentCollection = database.getCollection(AppProperties.getInstance().getProperty("db_documentCollectionName"));
+	/**
+	 * MongoDB database Object created from client using app.properties' "db_name"
+	 */
+	private static final MongoDatabase database = client
+			.getDatabase(AppProperties.getInstance().getProperty("db_name"));
+	/**
+	 * user collection created using the "db_userCollectionName" specified in app.properties file
+	 */
+	private static final MongoCollection<Document> userCollection = database
+			.getCollection(AppProperties.getInstance().getProperty("db_userCollectionName"));
+	/**
+	 * teams collection created using the "db_teamCollectionName" specified in app.properties file
+	 */
+	private static final MongoCollection<Document> teamsCollection = database
+			.getCollection(AppProperties.getInstance().getProperty("db_teamCollectionName"));
+	/**
+	 * document collection created using the "db_documentCollectionName" specified in app.properties file
+	 */
+	private static final MongoCollection<Document> documentCollection = database
+			.getCollection(AppProperties.getInstance().getProperty("db_documentCollectionName"));
+	/**
+	 * authenticator Object used for password encryption and decryption
+	 */
 	private static final BCryptPasswordEncoder authenticator = new BCryptPasswordEncoder();
 
+	/**
+	 * Empty Constructor used for instantiation. There is probably a better way to handle this but, it is what it is.
+	 */
 	public MongoDBHandler() {
 	}
 
+	/**
+	 * Used to authenticate user
+	 * <p>
+	 * Authenticator for username and password.
+	 * </p>
+	 *
+	 * @param username username of the user to be checked
+	 * @param password password of the user to be checked
+	 * @return 1 if user is found. 0 if no user is found
+	 */
 	public int authenticateUser(String username, String password) {
 
 		Document query = new Document("username", username);
 		Document retrievedDoc = userCollection.find(query).first();
 
 		if (retrievedDoc != null) {
-
 			String storedPassword = retrievedDoc.getString("password");
 
 			if (authenticator.matches(password, storedPassword)) {
@@ -50,12 +90,35 @@ public class MongoDBHandler {
 		return 0;
 	}
 
+	/**
+	 * Checks if user exist within the database
+	 * <p>
+	 * Checks whether that username exists within the MongoDB.
+	 * </p>
+	 *
+	 * @param username username of the user to be checked
+	 * @return true if user exists. false if user does not exist already.
+	 */
 	public boolean userExists(String username) {
 		Document doc = userCollection.find(Filters.eq("username", username)).first();
 
 		return doc != null;
 	}
 
+	/**
+	 * Signup user
+	 * <p>
+	 * Signup user with given fields. Used in cases where the user is not an admin.
+	 * </p>
+	 *
+	 * @param firstName   first name of the user
+	 * @param lastName    last name of the user
+	 * @param email       email of the user
+	 * @param password    non-hashed password of the user
+	 * @param isAdmin     bool of if user is an admin (usually false in this case)
+	 * @param teamId      team id (or team name) of the user
+	 * @param phoneNumber phone number of the user
+	 */
 	public void signUpUser(String firstName, String lastName, String email, String password, boolean isAdmin, String teamId, String phoneNumber) {
 
 		String securePassword = authenticator.encode(password);
@@ -72,13 +135,22 @@ public class MongoDBHandler {
 		);
 
 		incrementTeamSize(teamId, findTeamSize(teamId));
-
-
 	}
 
+	/**
+	 * Signs up user
+	 * <p>
+	 * Signs up user with given params
+	 * </p>
+	 *
+	 * @param firstName   first name of user
+	 * @param lastName    last name of user
+	 * @param email       email of user
+	 * @param password    password of user
+	 * @param isAdmin     admin bool (usually true)
+	 * @param phoneNumber phone number of user
+	 */
 	public void signUpUser(String firstName, String lastName, String email, String password, boolean isAdmin, String phoneNumber) {
-
-
 		String securePassword = authenticator.encode(password);
 
 		userCollection.insertOne(new Document()
@@ -92,18 +164,33 @@ public class MongoDBHandler {
 				.append("phone_number", phoneNumber)
 		);
 
-
 	}
 
+	/**
+	 * Used to update user's teamId
+	 * <p>
+	 * Used to update user's teamId. Usually called right after using signUpUser().
+	 * </p>
+	 *
+	 * @param userObjectId object ID of current user
+	 * @param teamObjectId Object ID of the team to assign to the specified user
+	 */
 	public void updateUser(String userObjectId, String teamObjectId) {
-
 		userCollection.updateOne(
 				Filters.eq("_id", new ObjectId(userObjectId)),
 				Updates.set("team_id", new ObjectId(teamObjectId)
 				));
 	}
 
-
+	/**
+	 * Makes team
+	 * <p>
+	 * Makes team for the user. Usually called right before calling updateUser();
+	 * </p>
+	 *
+	 * @param teamName  name of the team to make
+	 * @param adminName name of the admin for the team (usually current user at signup)
+	 */
 	public void makeTeam(String teamName, String adminName) {
 
 		teamsCollection.insertOne(new Document()
@@ -112,11 +199,17 @@ public class MongoDBHandler {
 				.append("team_size", 1)
 				.append("admin", new ObjectId(adminName))
 		);
-
-
 	}
 
-	// Finds User ObjectID
+	/**
+	 * Finds user by email
+	 * <p>
+	 * Finds user by email and returns the id as a String. Mainly used to feed other methods with values at signup.
+	 * </p>
+	 *
+	 * @param email email of the user
+	 * @return ID of the user if found. Null if not.
+	 */
 	public String findUser(String email) {
 		Document doc = userCollection.find(Filters.eq("username", email)).first();
 
@@ -127,37 +220,67 @@ public class MongoDBHandler {
 		return null;
 	}
 
-	// Finds User FirstName (String)
+	/**
+	 * finds user first name by username/email
+	 *
+	 * @param userName username/email of target
+	 * @return users' first name
+	 */
 	public String findUserFirstName(String userName) {
 		return userCollection.distinct("first_name", Filters.eq("username", userName), String.class).first();
 
 	}
 
-	// Finds User LastName (String)
+	/**
+	 * finds user last name by username/email
+	 *
+	 * @param userName username/email of target
+	 * @return users' last name
+	 */
 	public String findUserLastName(String userName) {
 		return userCollection.distinct("last_name", Filters.eq("username", userName), String.class).first();
 
 	}
 
-	// Finds User PhoneNumber (String)
+	/**
+	 * finds user phone number by username/email
+	 *
+	 * @param userName username/email of target
+	 * @return users' phone number
+	 */
 	public String findUserPhoneNumber(String userName) {
 		return userCollection.distinct("phone_number", Filters.eq("username", userName), String.class).first();
 
 	}
 
-	// Finds User adminStatus (bool)
+	/**
+	 * finds user admin status as bool by target username/email
+	 *
+	 * @param userName username/email of target
+	 * @return admin status
+	 */
 	public boolean findUserAdminStatus(String userName) {
 		return Boolean.TRUE.equals(userCollection.distinct("is_admin", Filters.eq("username", userName), Boolean.class).first());
 
 	}
 
-	// Finds User TeamID via Username
+	/**
+	 * finds user team id by username
+	 *
+	 * @param userName username of target
+	 * @return users' team's ID as String
+	 */
 	public String findUserTeamId(String userName) {
 		return Objects.requireNonNull(userCollection.distinct("team_id", Filters.eq("username", userName), ObjectId.class).first()).toString();
 
 	}
 
-	// Returns Team Object
+	/**
+	 * finds team id using team's name
+	 *
+	 * @param teamName team of target
+	 * @return id of target team
+	 */
 	public String findTeam(String teamName) {
 		Document doc = teamsCollection.find(Filters.eq("team_name", teamName)).first();
 
@@ -168,12 +291,23 @@ public class MongoDBHandler {
 		return null;
 	}
 
+	/**
+	 * finds team name via team id
+	 *
+	 * @param teamId teamId of target
+	 * @return team name of target
+	 */
 	public String findTeamName(String teamId) {
 		return Objects.requireNonNull(teamsCollection.distinct("team_name", Filters.eq("_id", new ObjectId(teamId)), String.class).first());
 
 	}
 
-	// finds the size of a team with teamId
+	/**
+	 * finds team's size via team id
+	 *
+	 * @param teamIdStr id of the target team
+	 * @return number of team members. 0 if none.
+	 */
 	public int findTeamSize(String teamIdStr) {
 		ObjectId teamId = new ObjectId(teamIdStr);
 		Integer result = teamsCollection.distinct("team_size", Filters.eq("_id", teamId), Integer.class).first();
@@ -184,6 +318,12 @@ public class MongoDBHandler {
 
 	}
 
+	/**
+	 * increments the team's size by 1
+	 *
+	 * @param teamObjectId    object id of target team
+	 * @param currentTeamSize size of team before incrementing
+	 */
 	public void incrementTeamSize(String teamObjectId, int currentTeamSize) {
 		teamsCollection.updateOne(
 				Filters.eq("_id", new ObjectId(teamObjectId)),
@@ -191,6 +331,12 @@ public class MongoDBHandler {
 				));
 	}
 
+	/**
+	 * decrements the team's size by 1
+	 *
+	 * @param teamObjectId    object id of target team
+	 * @param currentTeamSize size of team before decrementing
+	 */
 	public void decrementTeamSize(String teamObjectId, int currentTeamSize) {
 		teamsCollection.updateOne(
 				Filters.eq("_id", new ObjectId(teamObjectId)),
@@ -199,7 +345,15 @@ public class MongoDBHandler {
 	}
 
 
-	// returns a list of user Objects
+	/**
+	 * lists all the team members
+	 * <p>
+	 * populates an arraylist with User Objects that belong to the specified team
+	 * </p>
+	 *
+	 * @param teamId target teams' ID
+	 * @return A populated arraylist of user object that belong to that specified team
+	 */
 	public ArrayList<User> listTeamMembers(String teamId) {
 		List<Document> resultList = new ArrayList<>();
 		ArrayList<User> userList = new ArrayList<>();
@@ -214,11 +368,21 @@ public class MongoDBHandler {
 					iUser.get("username").toString());
 			userList.add(user);
 		}
-
 		return userList;
-
 	}
 
+	/**
+	 * uploads file to mongo
+	 * <p>
+	 * uploads file to mongodb with the given params. Usually used in conjunction with the Google counterpart
+	 * </p>
+	 *
+	 * @param fileName     file name to be uploaded
+	 * @param documentPath path of file to be uploaded
+	 * @param teamName     team name of the current user
+	 * @param documentSize size of the document
+	 * @param userName     username of current user
+	 */
 	public void uploadFile(String fileName, String documentPath, String teamName, double documentSize, String userName) {
 		documentCollection.insertOne(new Document()
 				.append("file_name", fileName)
@@ -229,11 +393,21 @@ public class MongoDBHandler {
 				.append("edit_date", new BsonDateTime(new Date().getTime()))
 				.append("last_editor", userName)
 				.append("is_checked_in", true)
-
 		);
-
 	}
 
+	/**
+	 * updates a files team name and file name
+	 * <p>
+	 * updates file for use in the check in and out system
+	 * </p>
+	 *
+	 * @param oldFilePlusTeamName path of the old file which contains the team name and file name
+	 * @param selectedFile        the File object of target to update
+	 * @param teamName            current user team name
+	 * @param dateTime            new date time
+	 * @throws MongoException yes :)
+	 */
 	public void updateFile(String oldFilePlusTeamName, File selectedFile, String teamName, BsonDateTime dateTime) throws MongoException {
 		String oldFile = Paths.get(oldFilePlusTeamName).getFileName().toString();
 		Document updateFields = new Document();
@@ -250,6 +424,13 @@ public class MongoDBHandler {
 		);
 	}
 
+	/**
+	 * finds the last editor of a file
+	 *
+	 * @param filePath path of file to find last editor
+	 * @param teamName current user team name
+	 * @return last user to edit/checkin/checkout file
+	 */
 	public String findFileLastEditor(String filePath, String teamName) {
 		String file = Paths.get(filePath).getFileName().toString();
 
@@ -257,7 +438,13 @@ public class MongoDBHandler {
 	}
 
 
-	// finds if ile checked in
+	/**
+	 * finds out if file is checked in or out
+	 *
+	 * @param filePath path to file its checking
+	 * @param teamName current user team name
+	 * @return true if file is checked in. false if file is checked out
+	 */
 	public boolean findCheckedStatus(String filePath, String teamName) {
 		String fileName = Paths.get(filePath).getFileName().toString();
 
@@ -265,6 +452,18 @@ public class MongoDBHandler {
 
 	}
 
+	/**
+	 * updates a filed checked status
+	 * <p>
+	 * updates the checked status as well as the last editor with the new editor name
+	 * </p>
+	 *
+	 * @param filePath    path to target file
+	 * @param teamName    current user team name
+	 * @param currentUser current user username
+	 * @param b           new bool status
+	 * @throws MongoException deal with it
+	 */
 	public void updateFileCheckedStatus(String filePath, String teamName, String currentUser, boolean b) throws MongoException {
 		String fileName = Paths.get(filePath).getFileName().toString();
 
@@ -273,14 +472,19 @@ public class MongoDBHandler {
 				Updates.set("is_checked_in", b)
 
 		);
+
 		documentCollection.updateOne(
 				Filters.and(Filters.eq("file_name", fileName), Filters.eq("team", teamName)),
 				Updates.set("last_editor", currentUser)
 
 		);
-
 	}
 
+	/**
+	 * removes a user from MongoDB
+	 *
+	 * @param user the user to remove
+	 */
 	public void removeUser(User user) {
 		decrementTeamSize(user.getTeamId(), user.getTeamSize());
 		userCollection.deleteOne(Filters.eq("username", user.getUserName()));

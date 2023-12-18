@@ -3,6 +3,7 @@ package com.example.panoply.classes;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.RuleBasedCollator;
 import java.util.Properties;
 
 /**
@@ -20,14 +21,21 @@ public class AppProperties {
 		InputStream input = null;
 
 		try {
-			// Store and protect it where ever you want
-			String FILENAME = "app.properties";
-			input = new FileInputStream(FILENAME);
 
-			// Load a properties
+//			// Store and protect it where ever you want
+//			String FILENAME = "src/main/resources/com/example/panoply/app.properties";
+//			input = new FileInputStream(FILENAME);
+//
+//			// Load a properties
+//			prop.load(input);
+			input = getClass().getClassLoader().getResourceAsStream("app.properties");
+			if (input == null) {
+				throw new IOException("app.properties file not found in classpath");
+			}
 			prop.load(input);
 		} catch (IOException ex) {
 			ex.printStackTrace();
+			throw new RuntimeException("Error Loading app.properties", ex);
 		} finally {
 			if (input != null) {
 				try {

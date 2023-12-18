@@ -50,6 +50,11 @@ public class GoogleCloudHandler {
 		storage.create(blobInfo, new byte[0]); // Empty byte array creates a zero-byte object
 	}
 
+	/**
+	 * tests google Connection on startup
+	 *
+	 * @return true if connection is good. false otherwise.
+	 */
 	public boolean testConnection() {
 		try {
 			storage.list(BUCKET_NAME, Storage.BlobListOption.pageSize(1));

@@ -51,18 +51,14 @@ public class GoogleCloudHandler {
 	}
 
 	/**
-	 * tests google Connection on startup
+	 * tests connection to Google Cloud Bucket
 	 *
-	 * @return true if connection is good. false otherwise.
+	 * @throws StorageException Handle later
 	 */
-	public boolean testConnection() {
-		try {
-			storage.list(BUCKET_NAME, Storage.BlobListOption.pageSize(1));
-			return true;
-		} catch (StorageException e) {
-			System.err.println("Failed to make connection");
-			return false;
-		}
+	public void testConnection() throws StorageException {
+
+		storage.list(BUCKET_NAME, Storage.BlobListOption.pageSize(1));
+
 	}
 
 	/**

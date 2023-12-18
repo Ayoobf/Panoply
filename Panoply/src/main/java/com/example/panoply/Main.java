@@ -1,6 +1,8 @@
 package com.example.panoply;
 
+import com.example.panoply.handlers.GoogleCloudHandler;
 import com.example.panoply.handlers.MongoDBHandler;
+import com.google.cloud.storage.StorageException;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -28,10 +30,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         MongoDBHandler md = new MongoDBHandler();
-
+        GoogleCloudHandler gc = new GoogleCloudHandler();
         // tests if mongo is configured correctly
         try {
             md.testConnection();
+            gc.testConnection();
+
+
         } catch (Exception e) {
             Alert alert = new Alert(
                     Alert.AlertType.ERROR,

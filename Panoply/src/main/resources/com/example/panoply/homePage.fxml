@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="homePage" minHeight="782.0" minWidth="1366.0" prefHeight="782.0"
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="homePage" minHeight="782.0" minWidth="1366.0" prefHeight="813.0"
       prefWidth="1366.0" style="-fx-background-color: #eeeeee;" xmlns="http://javafx.com/javafx/21"
       fx:controller="com.example.panoply.controllers.HomePageController">
     <HBox fx:id="TitleBar" minWidth="1366.0" prefWidth="780.0" style="-fx-border-color: #000000;">

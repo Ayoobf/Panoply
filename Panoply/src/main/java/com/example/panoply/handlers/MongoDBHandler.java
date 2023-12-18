@@ -530,7 +530,7 @@ public class MongoDBHandler {
 		boolean checked = doc.getBoolean("is_checked_in");
 
 		return "File Name: " + fileName +
-				"\nFile Size: " + fileSize / 1024 +
+				"\nFile Size: " + (int) fileSize +
 				"KB\nFile Upload Date: " + uploadDate +
 				"\nFile Last Edit Date: " + lastEditDate +
 				"\nFile Last Editor: " + lastPersonToUpdate +

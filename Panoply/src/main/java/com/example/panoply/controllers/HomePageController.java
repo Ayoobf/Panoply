@@ -91,7 +91,7 @@ public class HomePageController extends DefaultController implements Initializab
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		user = holder.getUser();
 
-		changeWindowSize(1366, 782);
+		changeWindowSize(1366, 813);
 		makeDraggable(homePage);
 
 		// make buttons more dynamic looking

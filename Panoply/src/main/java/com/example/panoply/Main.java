@@ -28,8 +28,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         MongoDBHandler md = new MongoDBHandler();
-        // tests if mongo is configured correctly
 
+        // tests if mongo is configured correctly
         try {
             md.testConnection();
         } catch (Exception e) {
@@ -40,8 +40,8 @@ public class Main extends Application {
             alert.showAndWait();
             System.exit(0);
         }
-        applicationInstance = this;
         // preserve primary stage state for changeScene()
+        applicationInstance = this;
         psg = primaryStage;
 
         // default bs

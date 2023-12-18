@@ -15,6 +15,7 @@ Panoply is a document management solution designed for small businesses. This pr
 - Proper java runtime variables
 
 ### If downloading from source
+
 > Note: This step is not needed if you are just downloading the executable located in the `Releases` tab
 
 - MongoDB Username and Password from @Ayoobf

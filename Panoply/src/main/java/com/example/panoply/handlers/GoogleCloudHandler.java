@@ -50,6 +50,16 @@ public class GoogleCloudHandler {
 		storage.create(blobInfo, new byte[0]); // Empty byte array creates a zero-byte object
 	}
 
+	public boolean testConnection() {
+		try {
+			storage.list(BUCKET_NAME, Storage.BlobListOption.pageSize(1));
+			return true;
+		} catch (StorageException e) {
+			System.err.println("Failed to make connection");
+			return false;
+		}
+	}
+
 	/**
 	 * downloads file from Google cloud bucket
 	 * <p>

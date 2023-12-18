@@ -35,7 +35,7 @@ public class Main extends Application {
         } catch (Exception e) {
             Alert alert = new Alert(
                     Alert.AlertType.ERROR,
-                    "MongoDB Failed, try checking app.properties file or contact Ayoob",
+                    "MongoDB or Google Cloud Failed, try checking the app.properties file or contact Ayoob",
                     ButtonType.CLOSE);
             alert.showAndWait();
             System.exit(0);

@@ -22,9 +22,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-
 /**
  * @author Ayoob Florival
  */
@@ -74,7 +71,7 @@ public class MongoDBHandler {
 	 *
 	 * @throws Exception handle this with popup
 	 */
-	public void testConnection() throws Exception {
+	public void testConnection() {
 		userCollection.countDocuments();
 
 	}

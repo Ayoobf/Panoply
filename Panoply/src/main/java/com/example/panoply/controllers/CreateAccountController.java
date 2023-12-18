@@ -127,6 +127,7 @@ public class CreateAccountController extends DefaultController implements Initia
 				phoneNumber
 		);
 		clearForm();
+		switchScene("login.fxml");
 	}
 
 	private void adminUserSignup(MongoDBHandler mongoDBHandler, String firstName, String lastName, String email, String password, String phoneNumber, String teamNameLocal) {
@@ -148,6 +149,7 @@ public class CreateAccountController extends DefaultController implements Initia
 		);
 		new GoogleCloudHandler().createTeamFolder(teamNameLocal);
 		clearForm();
+		switchScene("login.fxml");
 	}
 
 	@FXML

@@ -351,6 +351,20 @@ public class HomePageController extends DefaultController implements Initializab
 			st.show();
 		});
 
+		Button btOpenDoc = new Button("Open File");
+		btOpenDoc.setVisible(!md.findCheckedStatus(file.getName(), currentUserTeamName));
+		btOpenDoc.setDisable(md.findCheckedStatus(file.getName(), currentUserTeamName));
+		btOpenDoc.setOnAction(action -> {
+			String destPathOfDownloadedFile = new GoogleCloudHandler()
+					.downloadFile(currentUserTeamName, file.getName());
+			try {
+				openFile(destPathOfDownloadedFile);
+
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		});
+
 		boolean checkedIn = md.findCheckedStatus(file.getName(), currentUserTeamName);
 		Label status = new Label("Checked-In Status: " + checkedIn + " by: " + md.findFileLastEditor(file.getName(), currentUserTeamName));
 
@@ -360,18 +374,18 @@ public class HomePageController extends DefaultController implements Initializab
 		MenuItem checkInFile = new MenuItem("Check In File");
 
 
-		checkOutBehavior(file, currentUserTeamName, md, checkOutFile, checkedIn);
-		checkInBehavior(file, currentUserTeamName, md, checkInFile, checkedIn);
+		checkOutBehavior(file, currentUserTeamName, md, checkOutFile, checkedIn, btOpenDoc);
+		checkInBehavior(file, currentUserTeamName, md, checkInFile, checkedIn, btOpenDoc);
 
 		mbButtonDoc.getItems().addAll(checkOutFile, checkInFile);
 
 		hbDocumentAsset.setMinWidth(vbDocuments.getMinWidth());
 		hbDocumentAsset.setStyle("-fx-border-color: #000000");
-		hbDocumentAsset.getChildren().addAll(btDoc, status, mbButtonDoc);
+		hbDocumentAsset.getChildren().addAll(btDoc, status, mbButtonDoc, btOpenDoc);
 		vbDocuments.getChildren().add(hbDocumentAsset);
 	}
 
-	private void checkInBehavior(Blob file, String currentUserTeamName, MongoDBHandler md, MenuItem checkInFile, boolean checkedIn) {
+	private void checkInBehavior(Blob file, String currentUserTeamName, MongoDBHandler md, MenuItem checkInFile, boolean checkedIn, Button btOpenDoc) {
 		checkInFile.setOnAction(action -> {
 
 			if (checkedIn) {
@@ -379,12 +393,6 @@ public class HomePageController extends DefaultController implements Initializab
 			} else if (!user.getUserName().equalsIgnoreCase(md.findFileLastEditor(file.getName(), currentUserTeamName))) {
 				showAlert("You are not the one who checked out this document");
 			} else {
-				// below code is left over from checkIn function rework, Might need later
-//				FileChooser fcCheckIn = new FileChooser();
-//				fcCheckIn.setTitle("Choose CheckIn File");
-//				fcCheckIn.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"));
-//				File selectedFile = fcCheckIn.showOpenDialog(new Stage());
-
 				String fileNameWithoutPath = Paths.get(file.getName()).getFileName().toString();
 				File selectedFile = new File("C:\\Panoply\\" + currentUserTeamName + "\\" + fileNameWithoutPath);
 
@@ -396,7 +404,10 @@ public class HomePageController extends DefaultController implements Initializab
 						md.updateFile(file.getName(), selectedFile, currentUserTeamName, new BsonDateTime(new Date().getTime()));
 						md.updateFileCheckedStatus(file.getName(), currentUserTeamName, user.getUserName(), true);
 						deleteFile(selectedFile.getPath());
+						btOpenDoc.setDisable(true);
+						btOpenDoc.setVisible(false);
 						btHome();
+
 
 					} catch (MongoException e) {
 						showAlert(e.toString());
@@ -417,7 +428,7 @@ public class HomePageController extends DefaultController implements Initializab
 		});
 	}
 
-	private void checkOutBehavior(Blob file, String currentUserTeamName, MongoDBHandler md, MenuItem checkOutFile, boolean checkedIn) {
+	private void checkOutBehavior(Blob file, String currentUserTeamName, MongoDBHandler md, MenuItem checkOutFile, boolean checkedIn, Button btOpenDoc) {
 		checkOutFile.setOnAction(action -> {
 			md.updateFileCheckedStatus(file.getName(), currentUserTeamName, user.getUserName(), false);
 
@@ -428,6 +439,8 @@ public class HomePageController extends DefaultController implements Initializab
 				try {
 					String destPathOfDownloadedFile = new GoogleCloudHandler()
 							.downloadFile(currentUserTeamName, file.getName());
+					btOpenDoc.setDisable(false);
+					btOpenDoc.setVisible(true);
 					openFile(destPathOfDownloadedFile);
 				} catch (NullPointerException e) {
 					showAlert("Download Failed, Try Again");
@@ -507,7 +520,6 @@ public class HomePageController extends DefaultController implements Initializab
 			stage.close();
 		});
 
-
 	}
 
 	private void makeCheckBox(User user, VBox usersToRemove, List<User> selectedUser) {
@@ -524,7 +536,6 @@ public class HomePageController extends DefaultController implements Initializab
 			} else if (!cbUser.isSelected()) {
 				selectedUser.remove(user);
 			}
-
 		});
 		// show to user
 		usersToRemove.getChildren().add(cbUser);
@@ -534,12 +545,9 @@ public class HomePageController extends DefaultController implements Initializab
 		if (user.isAdmin() && user.getTeamSize() > 0) {
 			showAlert("You cannot leave team as you are an admin with team members still present");
 		} else {
-
 			btLogout();
 			new MongoDBHandler().removeUser(user);
 		}
-
-
 	}
 
 	public void btConfig() {

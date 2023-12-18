@@ -1,5 +1,7 @@
 package com.example.panoply;
 
+import com.example.panoply.handlers.MongoDBHandler;
+
 import java.io.IOException;
 import java.util.Objects;
 
@@ -7,6 +9,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -23,8 +27,20 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        applicationInstance = this;
+        MongoDBHandler md = new MongoDBHandler();
+        // tests if mongo is configured correctly
 
+        try {
+            md.testConnection();
+        } catch (Exception e) {
+            Alert alert = new Alert(
+                    Alert.AlertType.ERROR,
+                    "MongoDB Failed, try checking app.properties file or contact Ayoob",
+                    ButtonType.CLOSE);
+            alert.showAndWait();
+            System.exit(0);
+        }
+        applicationInstance = this;
         // preserve primary stage state for changeScene()
         psg = primaryStage;
 

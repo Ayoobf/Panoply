@@ -16,12 +16,14 @@ import org.bson.types.ObjectId;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.File;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 /**
  * @author Ayoob Florival
@@ -64,6 +66,17 @@ public class MongoDBHandler {
 	 * Empty Constructor used for instantiation. There is probably a better way to handle this but, it is what it is.
 	 */
 	public MongoDBHandler() {
+
+	}
+
+	/**
+	 * test program to check connection
+	 *
+	 * @throws Exception handle this with popup
+	 */
+	public void testConnection() throws Exception {
+		userCollection.countDocuments();
+
 	}
 
 	/**

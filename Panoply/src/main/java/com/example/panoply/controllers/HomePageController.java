@@ -88,6 +88,8 @@ public class HomePageController extends DefaultController implements Initializab
 	public Label lblUsers;
 	public HBox hbTopBar;
 	public Button btRemoveUser;
+	public Label lblAdminSettings;
+	public Label lblConfig;
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -252,7 +254,10 @@ public class HomePageController extends DefaultController implements Initializab
 	@FXML
 	public void btSettings() {
 		show(settings);
-
+		if (user.isAdmin()){
+			lblConfig.setVisible(true);
+			lblAdminSettings.setVisible(true);
+		}
 	}
 
 

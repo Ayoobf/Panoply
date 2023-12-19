@@ -12,7 +12,9 @@ import com.mongodb.MongoException;
 import org.bson.BsonDateTime;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
@@ -519,7 +521,6 @@ public class HomePageController extends DefaultController implements Initializab
 			btUsers();
 			stage.close();
 		});
-
 	}
 
 	private void makeCheckBox(User user, VBox usersToRemove, List<User> selectedUser) {
@@ -552,7 +553,22 @@ public class HomePageController extends DefaultController implements Initializab
 
 	public void btConfig() {
 		try {
-			openFile("app.properties");
+			InputStream io = getClass().getClassLoader().getResourceAsStream("app.properties");
+			if (io ==null){
+				showAlert("Properties File not Found");
+				return;
+			}
+			File temp = File.createTempFile("resource-",".properties");
+			temp.deleteOnExit();
+			try(FileOutputStream out = new FileOutputStream(temp)){
+				byte[] buffer = new byte[1024];
+				int bytesRead;
+				while ((bytesRead = io.read(buffer))!= -1){
+					out.write(buffer, 0, bytesRead);
+				}
+			}
+
+			openFile(temp.getAbsolutePath());
 		} catch (IOException e) {
 			showAlert("Properties File not Found");
 		}

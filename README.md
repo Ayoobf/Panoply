@@ -1,5 +1,7 @@
 # Panoply
 
+## Project Satus:  MAJOR REFACTORING (BROKEN and Unsecure)
+
 Panoply is a document management solution designed for small businesses. This program offers a free, efficient, and clutter-free experience for handling documents in the cloud to recreate a paper-based office environment
 
 - Free file management.
